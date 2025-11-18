@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sets – Practice Page</title>
+
+  <!-- Basic layout styles -->
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1rem 2rem;
+      background: #fff;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.08);
+      border-radius: 8px;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .pdf-wrapper {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.8rem;
+    }
+
+    .problem {
+      border-top: 1px solid #eee;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .problem:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .problem-title {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .problem-text {
+      margin-bottom: 0.6rem;
+    }
+
+    .latex-input {
+      width: 100%;
+      min-height: 70px;
+      padding: 0.5rem;
+      font-family: "Fira Code", "JetBrains Mono", Menlo, Monaco,
+                   Consolas, "Courier New", monospace;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+    }
+
+    .rendered-output {
+      min-height: 2rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px dashed #ccc;
+      background: #fafafa;
+      margin-bottom: 0.5rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .copy-btn {
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn:active {
+      transform: scale(0.97);
+    }
+
+    .copy-btn.copied::after {
+      content: " ✓";
+    }
+  </style>
+
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(","\\)"], ["$","$"]],
+        displayMath: [["\\[","\\]"], ["$$","$$"]]
+      },
+      svg: { fontCache: "global" }
+    };
+  </script>
+  <script id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+          async></script>
+</head>
+<body>
+  <header>
+    <h1>Sets – Beamer Slides & Problem Set</h1>
+  </header>
+
+  <main>
+    <!-- PDF viewer -->
+    <section>
+      <h2>Slides</h2>
+      <p class="note">
+        Replace <code>sets-slides.pdf</code> with the name of your Beamer PDF
+        file (keep it in the same folder as this HTML file).
+      </p>
+      <div class="pdf-wrapper">
+        <!-- Adjust src to your actual PDF filename -->
+        <embed src="1-1.pdf"
+               type="application/pdf"
+               width="100%"
+               height="600px" />
+      </div>
+    </section>
+
+    <!-- Problem set -->
+    <section>
+      <h2>Problem Set</h2>
+      <p class="note">
+        Type your solution in LaTeX in the box under each problem.
+        The rendered math will update automatically.
+        Use “Copy problem + solution” to copy both the problem text
+        and your LaTeX answer to the clipboard.
+      </p>
+
+      <!-- Problem 1 -->
+      <div class="problem">
+        <div class="problem-title">Problem 1</div>
+        <div class="problem-text">
+          Let \(A, B,\) and \(C\) be sets.
+          If \(a \notin A \setminus B\) and \(a \in A\), show that \(a \in B\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="problem">
+        <div class="problem-title">Problem 2</div>
+        <div class="problem-text">
+          Show that if \(A \subseteq B\), then \(C \setminus B \subseteq C \setminus A\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 3 -->
+      <div class="problem">
+        <div class="problem-title">Problem 3</div>
+        <div class="problem-text">
+          Suppose \(A \setminus B \subseteq C\).
+          Show that \(A \setminus C \subseteq B\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 4 -->
+      <div class="problem">
+        <div class="problem-title">Problem 4</div>
+        <div class="problem-text">
+          Suppose \(A \subseteq B\) and \(A \subseteq C\).
+          Show that \(A \subseteq B \cap C\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 5 -->
+      <div class="problem">
+        <div class="problem-title">Problem 5</div>
+        <div class="problem-text">
+          Suppose \(A \subseteq B\) and \(B \cap C = \varnothing\).
+          Show that \(A \subseteq B \setminus C\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 6 -->
+      <div class="problem">
+        <div class="problem-title">Problem 6</div>
+        <div class="problem-text">
+          Show that \(A \setminus (B \setminus C) \subseteq (A \setminus B) \cup C\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 7 -->
+      <div class="problem">
+        <div class="problem-title">Problem 7</div>
+        <div class="problem-text">
+          Show that if \(A \setminus B \subseteq C\) and \(A \nsubseteq C\),
+          then \(A \cap B \neq \varnothing\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 8 -->
+      <div class="problem">
+        <div class="problem-title">Problem 8</div>
+        <div class="problem-text">
+          Let \(P(x)\) be the property \(x &gt; 1/x\).
+          Are the assertions \(P(2)\), \(P(-2)\), \(P(1/2)\), \(P(-1/2)\)
+          true or false?
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 9 -->
+      <div class="problem">
+        <div class="problem-title">Problem 9</div>
+        <div class="problem-text">
+          Show that each of the following sets can be expressed as an interval:
+          <br>
+          (a) \(( -3, 2 ) \cap (1, 3)\).<br>
+          (b) \(( -3, 4 ) \cup (0, \infty)\).<br>
+          (c) \(( -3, 2 ) \setminus [1, 3)\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 10 -->
+      <div class="problem">
+        <div class="problem-title">Problem 10</div>
+        <div class="problem-text">
+          Express the following sets as truth sets:
+          <br>
+          (a) \(A = \{1, 4, 9, 16, 25, \dots\}\).<br>
+          (b) \(B = \{\dots, -15, -10, -5, 0, 5, 10, 15, \dots\}\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 11 -->
+      <div class="problem">
+        <div class="problem-title">Problem 11</div>
+        <div class="problem-text">
+          Show that each of the following sets can be expressed as an interval:
+          <br>
+          (a) \(\{x \in \mathbb{R} : x^2 - 1 \le 3\}\).<br>
+          (b) \(\{x \in \mathbb{R} : x &gt; 0 \text{ and } (x - 1)^2 &lt; 1\}\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+
+      <!-- Problem 12 -->
+      <div class="problem">
+        <div class="problem-title">Problem 12</div>
+        <div class="problem-text">
+          Evaluate the truth sets:
+          <br>
+          (a) \(A = \{x \in \mathbb{N} : 0 &lt; x^2 &lt; 24\}\).<br>
+          (b) \(B = \{y \in \mathbb{Z} : y \text{ evenly divides } 12\}\).<br>
+          (c) \(C = \{z \in \mathbb{N} : 4 \text{ evenly divides } z\}\).<br>
+          (d) \(D = \{y \in \mathbb{R}^- : 1 \le y^2 \le 4\}\).
+        </div>
+        <textarea class="latex-input"
+                  placeholder="Type your LaTeX solution here..."></textarea>
+        <div class="rendered-output"></div>
+        <div class="controls">
+          <button class="copy-btn">Copy problem + solution</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Live LaTeX rendering and copy behavior
+    document.addEventListener("DOMContentLoaded", function () {
+      const problems = document.querySelectorAll(".problem");
+
+      problems.forEach(problem => {
+        const textarea = problem.querySelector(".latex-input");
+        const output   = problem.querySelector(".rendered-output");
+        const button   = problem.querySelector(".copy-btn");
+        const textEl   = problem.querySelector(".problem-text");
+
+        function render() {
+          const latex = textarea.value.trim();
+          if (!latex) {
+            output.innerHTML = "";
+            return;
+          }
+          // Wrap in inline math delimiters and typeset
+          output.innerHTML = "\\(" + latex + "\\)";
+          if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([output]).catch(err => console.error(err));
+          }
+        }
+
+        textarea.addEventListener("input", render);
+
+        button.addEventListener("click", async () => {
+          const problemText = textEl.textContent.trim();
+          const latex = textarea.value.trim();
+          const combined =
+            "Problem:\n" + problemText + "\n\nSolution (LaTeX):\n" + latex + "\n";
+
+          try {
+            await navigator.clipboard.writeText(combined);
+            button.classList.add("copied");
+            setTimeout(() => button.classList.remove("copied"), 1200);
+          } catch (err) {
+            console.error("Clipboard error:", err);
+            alert("Copy failed – your browser may block clipboard access.");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
