@@ -126,6 +126,42 @@
     .copy-btn.copied::after {
       content: " ✓";
     }
+
+    /* Note board styles */
+    .note-board {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.75rem;
+      background: #fafafa;
+    }
+
+    .note-board h3 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+    }
+
+    .note-section {
+      margin-bottom: 1rem;
+    }
+
+    .canvas-wrapper {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    #note-canvas {
+      display: block;
+      width: 100%;
+      height: 300px;
+      touch-action: none; /* for better touch drawing */
+    }
+
+    #clear-canvas {
+      margin-top: 0.4rem;
+    }
   </style>
 
   <!-- MathJax for LaTeX rendering -->
@@ -161,6 +197,42 @@
                type="application/pdf"
                width="100%"
                height="600px" />
+      </div>
+    </section>
+
+    <!-- NOTE-TAKING BOARD -->
+    <section>
+      <div class="note-board">
+        <h3>Note-taking Board</h3>
+
+        <!-- LaTeX note area -->
+        <div class="note-section">
+          <div class="note">
+            Type LaTeX notes here. The preview updates automatically.
+          </div>
+          <textarea id="note-latex"
+                    class="latex-input"
+                    placeholder="e.g. A \\setminus B = \\{x \\in A : x \\notin B\\}"></textarea>
+          <div id="note-render" class="rendered-output"></div>
+          <div class="controls">
+            <button id="copy-notes" class="copy-btn">
+              Copy notes (LaTeX)
+            </button>
+          </div>
+        </div>
+
+        <!-- Drawing pad -->
+        <div class="note-section">
+          <div class="note">
+            Draw/write here (mouse or touch). Use “Clear” to reset.
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="note-canvas"></canvas>
+          </div>
+          <button id="clear-canvas" class="copy-btn">
+            Clear drawing
+          </button>
+        </div>
       </div>
     </section>
 
@@ -367,8 +439,8 @@
   </main>
 
   <script>
-    // Live LaTeX rendering and copy behavior
     document.addEventListener("DOMContentLoaded", function () {
+      /* --------- Problem boxes: live render + copy ---------- */
       const problems = document.querySelectorAll(".problem");
 
       problems.forEach(problem => {
@@ -383,7 +455,6 @@
             output.innerHTML = "";
             return;
           }
-          // Wrap in inline math delimiters and typeset
           output.innerHTML = "\\(" + latex + "\\)";
           if (window.MathJax && MathJax.typesetPromise) {
             MathJax.typesetPromise([output]).catch(err => console.error(err));
@@ -407,6 +478,120 @@
             alert("Copy failed – your browser may block clipboard access.");
           }
         });
+      });
+
+      /* --------- Note board: LaTeX area ---------- */
+      const noteTextarea = document.getElementById("note-latex");
+      const noteRender   = document.getElementById("note-render");
+      const copyNotesBtn = document.getElementById("copy-notes");
+
+      function renderNotes() {
+        const latex = noteTextarea.value.trim();
+        if (!latex) {
+          noteRender.innerHTML = "";
+          return;
+        }
+        noteRender.innerHTML = "\\(" + latex + "\\)";
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([noteRender]).catch(err => console.error(err));
+        }
+      }
+
+      noteTextarea.addEventListener("input", renderNotes);
+
+      copyNotesBtn.addEventListener("click", async () => {
+        const latex = noteTextarea.value.trim();
+        const content = "Notes (LaTeX):\n" + latex + "\n";
+        try {
+          await navigator.clipboard.writeText(content);
+          copyNotesBtn.classList.add("copied");
+          setTimeout(() => copyNotesBtn.classList.remove("copied"), 1200);
+        } catch (err) {
+          console.error("Clipboard error:", err);
+          alert("Copy failed – your browser may block clipboard access.");
+        }
+      });
+
+      /* --------- Note board: drawing canvas ---------- */
+      const canvas = document.getElementById("note-canvas");
+      const clearBtn = document.getElementById("clear-canvas");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width  = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 2;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", () => {
+        // reset transform before resizing
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        resizeCanvas();
+      });
+
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      function getPos(evt) {
+        const rect = canvas.getBoundingClientRect();
+        if (evt.touches && evt.touches[0]) {
+          return {
+            x: evt.touches[0].clientX - rect.left,
+            y: evt.touches[0].clientY - rect.top
+          };
+        } else {
+          return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+          };
+        }
+      }
+
+      function startDraw(evt) {
+        evt.preventDefault();
+        drawing = true;
+        const pos = getPos(evt);
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function draw(evt) {
+        if (!drawing) return;
+        evt.preventDefault();
+        const pos = getPos(evt);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function endDraw(evt) {
+        if (!drawing) return;
+        evt.preventDefault();
+        drawing = false;
+      }
+
+      canvas.addEventListener("mousedown", startDraw);
+      canvas.addEventListener("mousemove", draw);
+      window.addEventListener("mouseup", endDraw);
+
+      canvas.addEventListener("touchstart", startDraw, {passive: false});
+      canvas.addEventListener("touchmove", draw, {passive: false});
+      canvas.addEventListener("touchend", endDraw, {passive: false});
+      canvas.addEventListener("touchcancel", endDraw, {passive: false});
+
+      clearBtn.addEventListener("click", () => {
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
       });
     });
   </script>
