@@ -162,18 +162,37 @@
     #clear-canvas {
       margin-top: 0.4rem;
     }
+
+    /* Center MathJax output */
+.rendered-output,
+#note-render {
+  text-align: center;
+}
+
+/* Center the MathJax SVG/HTML container itself */
+.rendered-output mjx-container,
+#note-render mjx-container {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
   </style>
 
   <!-- MathJax for LaTeX rendering -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [["\\(","\\)"], ["$","$"]],
-        displayMath: [["\\[","\\]"], ["$$","$$"]]
-      },
-      svg: { fontCache: "global" }
-    };
-  </script>
+<script>
+  window.MathJax = {
+    tex: {
+      // include amsmath so align / align* / aligned etc. work
+      packages: { "[+]": ["ams"] },
+
+      inlineMath: [["\\(","\\)"], ["$","$"]],
+      displayMath: [["\\[","\\]"], ["$$","$$"]]
+    },
+    svg: { fontCache: "global" }
+  };
+</script>
+
   <script id="MathJax-script"
           src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
           async></script>
@@ -440,6 +459,46 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+            // Render textarea contents as *block* TeX (supports align, etc.)
+            // Render textarea contents as *block* TeX and
+      // auto-wrap multi-line input in an aligned environment.
+      function renderBlockTeX(textarea, outputElement) {
+        const raw = textarea.value.trim();
+        if (!raw) {
+          outputElement.innerHTML = "";
+          return;
+        }
+
+        let tex = raw;
+
+        // If the user explicitly starts with display delimiters or an environment,
+        // respect that and do NOT auto-wrap.
+        const explicitDisplayOrEnv = /^(\$\$|\\\[|\\begin\{)/.test(raw);
+
+        // Detect "multi-line-like" content: either explicit \\ or actual newlines.
+        const looksMultiline = raw.includes("\\\\") || raw.includes("\n");
+
+        if (!explicitDisplayOrEnv) {
+          if (looksMultiline) {
+            // Auto-wrap in an aligned environment inside display math.
+                tex = "\\begin{gather*}\n" + raw + "\n\\end{gather*}";
+
+
+          } else {
+            // Single-line: just display math.
+            tex = "\\[" + raw + "\\]";
+          }
+        }
+
+        // Use textContent so MathJax receives raw TeX, not HTML.
+        outputElement.textContent = tex;
+
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([outputElement]).catch(err => console.error(err));
+        }
+      }
+
+
       /* --------- Problem boxes: live render + copy ---------- */
       const problems = document.querySelectorAll(".problem");
 
@@ -450,15 +509,7 @@
         const textEl   = problem.querySelector(".problem-text");
 
         function render() {
-          const latex = textarea.value.trim();
-          if (!latex) {
-            output.innerHTML = "";
-            return;
-          }
-          output.innerHTML = "\\(" + latex + "\\)";
-          if (window.MathJax && MathJax.typesetPromise) {
-            MathJax.typesetPromise([output]).catch(err => console.error(err));
-          }
+          renderBlockTeX(textarea, output);
         }
 
         textarea.addEventListener("input", render);
@@ -486,15 +537,7 @@
       const copyNotesBtn = document.getElementById("copy-notes");
 
       function renderNotes() {
-        const latex = noteTextarea.value.trim();
-        if (!latex) {
-          noteRender.innerHTML = "";
-          return;
-        }
-        noteRender.innerHTML = "\\(" + latex + "\\)";
-        if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([noteRender]).catch(err => console.error(err));
-        }
+        renderBlockTeX(noteTextarea, noteRender);
       }
 
       noteTextarea.addEventListener("input", renderNotes);
