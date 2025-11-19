@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sets – Practice Page</title>
+
+  <!-- Basic layout styles -->
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1rem 2rem;
+      background: #fff;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.08);
+      border-radius: 8px;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .pdf-wrapper {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.8rem;
+    }
+
+    .latex-input {
+      width: 100%;
+      min-height: 70px;
+      padding: 0.5rem;
+      font-family: "Fira Code", "JetBrains Mono", Menlo, Monaco,
+                   Consolas, "Courier New", monospace;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+    }
+
+    .rendered-output {
+      min-height: 2rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px dashed #ccc;
+      background: #fafafa;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .rendered-output mjx-container,
+    #note-render mjx-container {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .copy-btn {
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background: #333;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn:active {
+      transform: scale(0.97);
+    }
+
+    .copy-btn.copied::after {
+      content: " ✓";
+    }
+
+    /* Note board styles */
+    .note-board {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.75rem;
+      background: #fafafa;
+    }
+
+    .note-board h3 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+    }
+
+    .note-section {
+      margin-bottom: 1rem;
+    }
+
+    .canvas-wrapper {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    #note-canvas {
+      display: block;
+      width: 100%;
+      height: 300px;
+      touch-action: none; /* for better touch drawing */
+    }
+
+    #clear-canvas {
+      margin-top: 0.4rem;
+    }
+
+    /* Center MathJax output */
+    .rendered-output,
+    #note-render {
+      text-align: center;
+    }
+
+    /* Level links */
+    .level-links {
+      list-style: none;
+      padding-left: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .level-links li a {
+      display: block;
+      text-align: center;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      text-decoration: none;
+      background: #f0f0f0;
+      color: #222;
+      font-weight: 500;
+      border: 1px solid #ddd;
+      transition: background 0.15s ease, transform 0.1s ease,
+                  box-shadow 0.15s ease;
+    }
+
+    .level-links li a:hover {
+      background: #e4e4ff;
+      box-shadow: 0 0.2rem 0.4rem rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .level-links li a:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* ===== Global floating LaTeX toolbar (right side) ===== */
+    #global-toolbar-container {
+      position: fixed;
+      top: 6rem;
+      right: 1rem;
+      z-index: 1000;
+      max-height: calc(100vh - 8rem);
+      width: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+      border-radius: 8px;
+      background: #ffffffee;
+      backdrop-filter: blur(4px);
+    }
+
+    #global-toolbar-header {
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 0.3rem 0.2rem;
+      border-bottom: 1px solid #ddd;
+      background: #f5f5f5;
+      border-radius: 8px 8px 0 0;
+    }
+
+    #global-latex-toolbar {
+      padding: 0.3rem;
+      overflow-y: auto;
+    }
+
+    .latex-btn {
+      display: block;
+      width: 100%;
+      padding: 0.2rem 0.1rem;
+      margin-bottom: 0.2rem;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .latex-btn:hover {
+      background: #e8e8ff;
+    }
+
+    .latex-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Mobile-ish: shrink toolbar & move slightly */
+    @media (max-width: 768px) {
+      #global-toolbar-container {
+        top: auto;
+        bottom: 1rem;
+        right: 0.5rem;
+        width: 60px;
+        max-height: 60vh;
+      }
+    }
+  </style>
+
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        // include amsmath so align / align* / aligned etc. work
+        packages: { "[+]": ["ams"] },
+        inlineMath: [["\\(","\\)"], ["$","$"]],
+        displayMath: [["\\[","\\]"], ["$$","$$"]]
+      },
+      svg: { fontCache: "global" }
+    };
+  </script>
+
+  <script id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+          async></script>
+</head>
+<body>
+  <header>
+    <h1>Sets – Beamer Slides & Problem Set</h1>
+  </header>
+
+  <!-- Global floating LaTeX toolbar -->
+  <div id="global-toolbar-container">
+    <div id="global-toolbar-header">LaTeX</div>
+    <div id="global-latex-toolbar"></div>
+  </div>
+
+  <main>
+    <!-- PDF viewer -->
+    <section>
+      <h2>Slides</h2>
+      <p class="note">
+        Replace <code>logic0-1.pdf</code> with the name of your Beamer PDF
+        file (keep it in the same folder as this HTML file).
+      </p>
+      <div class="pdf-wrapper">
+        <!-- Adjust src to your actual PDF filename -->
+        <embed src="logic0-1.pdf"
+               type="application/pdf"
+               width="100%"
+               height="600px" />
+      </div>
+    </section>
+
+    <!-- NOTE-TAKING BOARD -->
+    <section>
+      <div class="note-board">
+        <h3>Note-taking Board</h3>
+
+        <!-- LaTeX note area -->
+        <div class="note-section">
+          <div class="note">
+            Type LaTeX notes here. The preview updates automatically.
+            Click in this box, then use the right-side toolbar to insert symbols.
+          </div>
+          <textarea id="note-latex"
+                    class="latex-input"
+                    placeholder="e.g. A \\setminus B = \\{x \\in A : x \\notin B\\}"></textarea>
+          <div id="note-render" class="rendered-output"></div>
+          <div class="controls">
+            <button id="copy-notes" class="copy-btn">
+              Copy notes (LaTeX)
+            </button>
+          </div>
+        </div>
+
+        <!-- Drawing pad -->
+        <div class="note-section">
+          <div class="note">
+            Draw/write here (mouse or touch). Use “Clear” to reset.
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="note-canvas"></canvas>
+          </div>
+          <button id="clear-canvas" class="copy-btn">
+            Clear drawing
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEVEL LINKS INSTEAD OF INLINE PROBLEMS -->
+    <section>
+      <h2>Problem Levels</h2>
+      <p class="note">
+        Choose a level to open its dedicated problem page.
+        All level pages are stored in the <code>logic0-1</code> folder.
+      </p>
+      <ul class="level-links">
+        <li><a href="logic0-1/level1.html">Level 1</a></li>
+        <li><a href="logic0-1/level2.html">Level 2</a></li>
+        <li><a href="logic0-1/level3.html">Level 3</a></li>
+        <li><a href="logic0-1/level4.html">Level 4</a></li>
+        <li><a href="logic0-1/level5.html">Level 5</a></li>
+        <li><a href="logic0-1/level6.html">Level 6</a></li>
+        <li><a href="logic0-1/level6plus.html">Level 6+</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Render textarea contents as *block* TeX and
+      // auto-wrap multi-line input in a gather* environment.
+      function renderBlockTeX(textarea, outputElement) {
+        const raw = textarea.value.trim();
+        if (!raw) {
+          outputElement.innerHTML = "";
+          return;
+        }
+
+        let tex = raw;
+
+        // If the user explicitly starts with display delimiters or an environment,
+        // respect that and do NOT auto-wrap.
+        const explicitDisplayOrEnv = /^(\$\$|\\\[|\\begin\{)/.test(raw);
+
+        // Detect "multi-line-like" content: either explicit \\ or actual newlines.
+        const looksMultiline = raw.includes("\\\\") || raw.includes("\n");
+
+        if (!explicitDisplayOrEnv) {
+          if (looksMultiline) {
+            tex = "\\begin{gather*}\n" + raw + "\n\\end{gather*}";
+          } else {
+            tex = "\\[" + raw + "\\]";
+          }
+        }
+
+        // Use textContent so MathJax receives raw TeX, not HTML.
+        outputElement.textContent = tex;
+
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([outputElement]).catch(err => console.error(err));
+        }
+      }
+
+      // Insert text into a textarea at the cursor position
+      function insertAtCursor(textarea, text) {
+        if (!textarea) return;
+        const start = textarea.selectionStart ?? textarea.value.length;
+        const end   = textarea.selectionEnd ?? textarea.value.length;
+        const value = textarea.value;
+
+        textarea.value = value.slice(0, start) + text + value.slice(end);
+        const newPos = start + text.length;
+
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = newPos;
+      }
+
+      // Symbol buttons data
+      const SYMBOL_BUTTONS = [
+        // Logic / basic
+        { label: "⇒", code: "\\Rightarrow" },
+        { label: "⇐", code: "\\Leftarrow" },
+        { label: "⇔", code: "\\Leftrightarrow" },
+        { label: "∈", code: "\\in" },
+        { label: "∉", code: "\\notin" },
+        { label: "=", code: "=" },
+        { label: "≠", code: "\\neq" },
+        { label: "⊨", code: "\\models" },
+        { label: "⊭", code: "\\not\models" },
+        { label: "Σ", code: "\\Sigma" },
+        { label: "τ", code: "\\tau" },
+
+        // Sets
+        { label: "∅", code: "\\varnothing" },
+        { label: "{", code: "\\{" },
+        { label: "}", code: "\\}" },
+        { label: "{x | …}", code: "\\{x \\mid \\dots\\}" },
+        { label: "⊆", code: "\\subseteq" },
+        { label: "𝒫A", code: "\\mathcal{P}A" },
+        { label: "∪", code: "\\cup" },
+        { label: "∩", code: "\\cap" },
+        { label: "⋃A", code: "\\bigcup A" },
+        { label: "⋂A", code: "\\bigcap A" },
+        { label: "⋃ₙ Aₙ", code: "\\bigcup_{n\\in\\mathbb{N}} A_n" },
+
+        // Number systems / dots
+        { label: "ℕ", code: "\\mathbb{N}" },
+        { label: "ℤ", code: "\\mathbb{Z}" },
+        { label: "ℝ", code: "\\mathbb{R}" },
+        { label: "0,1,2,…", code: "0,1,2,\\ldots" },
+        { label: "…", code: "\\ldots" },
+
+        // Tuples / products
+        { label: "⟨x,y⟩", code: "\\langle x,y\\rangle" },
+        { label: "⟨x₁,…,xₙ⟩", code: "\\langle x_1,\\ldots,x_n\\rangle" },
+        { label: "A×B", code: "A \\times B" },
+        { label: "Aⁿ", code: "A^n" },
+        { label: "⟨⟨x,y⟩,z⟩", code: "\\langle\\langle x,y\\rangle,z\\rangle" },
+
+        // Order / functions / arithmetic
+        { label: "<", code: "<" },
+        { label: "≤", code: "\\leq" },
+        { label: "→", code: "\\rightarrow" },
+        { label: "f∘g", code: "f \\circ g" },
+        { label: "+", code: "+" },
+        { label: "2^{f(a₀)+1}", code: "2^{f(a_0)+1}" },
+
+        // dom / ran / fld / Id / [x]
+        { label: "dom R", code: "\\operatorname{dom} R" },
+        { label: "ran R", code: "\\operatorname{ran} R" },
+        { label: "fld R", code: "\\text{fld}\\,R" },
+        { label: "Id", code: "\\mathrm{Id}" },
+        { label: "[x]", code: "[x]" }
+      ];
+
+      /* --------- Note board: LaTeX area ---------- */
+      const noteTextarea = document.getElementById("note-latex");
+      const noteRender   = document.getElementById("note-render");
+      const copyNotesBtn = document.getElementById("copy-notes");
+
+      function renderNotes() {
+        renderBlockTeX(noteTextarea, noteRender);
+      }
+
+      // Track active textarea (only one here, but keeps parity with level pages)
+      let activeTextarea = noteTextarea;
+
+      noteTextarea.addEventListener("focus", () => {
+        activeTextarea = noteTextarea;
+      });
+      noteTextarea.addEventListener("click", () => {
+        activeTextarea = noteTextarea;
+      });
+      noteTextarea.addEventListener("input", renderNotes);
+
+      copyNotesBtn.addEventListener("click", async () => {
+        const latex = noteTextarea.value.trim();
+        const content = "Notes (LaTeX):\n" + latex + "\n";
+        try {
+          await navigator.clipboard.writeText(content);
+          copyNotesBtn.classList.add("copied");
+          setTimeout(() => copyNotesBtn.classList.remove("copied"), 1200);
+        } catch (err) {
+          console.error("Clipboard error:", err);
+          alert("Copy failed – your browser may block clipboard access.");
+        }
+      });
+
+      /* --------- Build global toolbar ---------- */
+      const globalToolbar = document.getElementById("global-latex-toolbar");
+      SYMBOL_BUTTONS.forEach(sym => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "latex-btn";
+        btn.textContent = sym.label;
+        btn.setAttribute("data-latex", sym.code);
+        globalToolbar.appendChild(btn);
+      });
+
+      globalToolbar.addEventListener("click", (evt) => {
+        const target = evt.target.closest(".latex-btn");
+        if (!target || !activeTextarea) return;
+        const code = target.getAttribute("data-latex") || "";
+        insertAtCursor(activeTextarea, code);
+        renderNotes();
+      });
+
+      /* --------- Note board: drawing canvas ---------- */
+      const canvas = document.getElementById("note-canvas");
+      const clearBtn = document.getElementById("clear-canvas");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+
+        // Reset transform before changing width/height to avoid compounding scale
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+        canvas.width  = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 2;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      function getPos(evt) {
+        const rect = canvas.getBoundingClientRect();
+        if (evt.touches && evt.touches[0]) {
+          return {
+            x: evt.touches[0].clientX - rect.left,
+            y: evt.touches[0].clientY - rect.top
+          };
+        } else {
+          return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+          };
+        }
+      }
+
+      function startDraw(evt) {
+        evt.preventDefault();
+        drawing = true;
+        const pos = getPos(evt);
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function draw(evt) {
+        if (!drawing) return;
+        evt.preventDefault();
+        const pos = getPos(evt);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function endDraw(evt) {
+        if (!drawing) return;
+        evt.preventDefault();
+        drawing = false;
+      }
+
+      canvas.addEventListener("mousedown", startDraw);
+      canvas.addEventListener("mousemove", draw);
+      window.addEventListener("mouseup", endDraw);
+
+      canvas.addEventListener("touchstart", startDraw, {passive: false});
+      canvas.addEventListener("touchmove", draw, {passive: false});
+      canvas.addEventListener("touchend", endDraw, {passive: false});
+      canvas.addEventListener("touchcancel", endDraw, {passive: false});
+
+      clearBtn.addEventListener("click", () => {
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+      });
+    });
+  </script>
+</body>
+</html>
