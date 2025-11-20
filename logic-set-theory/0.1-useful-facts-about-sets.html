@@ -538,7 +538,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Load symbols.json (same pattern as Logic Level 1)
-      fetch("../../symbols.json")
+      fetch("../symbols.json")
         .then((res) => res.json())
         .then((data) => {
           window.SYMBOLS = Array.isArray(data) ? data : (data.symbols || []);
