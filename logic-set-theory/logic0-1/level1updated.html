@@ -1106,7 +1106,38 @@
 
       // ---------- Notes textareas ----------
       const allTextareas = document.querySelectorAll(".latex-input");
+
+      // ========================================================
+      // Opens the popup based on the textarea cursor position
+      // ========================================================
+      function openPopupAtTextareaCursor(ta) {
+        const rect = ta.getBoundingClientRect();
+        const x = rect.left + window.scrollX + 40;
+        const y = rect.top + window.scrollY + 20;
+
+        const pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+        const value = ta.value;
+
+        let initialQuery = "";
+        const lastBackslash = value.lastIndexOf("\\", pos - 1);
+        if (lastBackslash !== -1 && lastBackslash < pos) {
+          initialQuery = value.slice(lastBackslash + 1, pos);
+        }
+
+        if (window.showSymbolPopup) {
+          window.showSymbolPopup({
+            x,
+            y,
+            initialQuery,
+            onSelect(symbol) {
+              insertAtCursor(ta, symbol.latex);
+            }
+          });
+        }
+      }
+
       allTextareas.forEach((ta) => {
+        // Live render on input
         ta.addEventListener("input", () => {
           const box = ta.closest(".group-notes");
           if (!box) return;
@@ -1114,46 +1145,36 @@
           renderBlockTeX(ta, out);
         });
 
+        // ========================================================
+        // Double-backslash detection
+        // ========================================================
+        let lastBackslashTime = 0;
+
         ta.addEventListener("keydown", (e) => {
           if (e.key === "\\") {
-            e.preventDefault();
+            const now = Date.now();
 
-            const rect = ta.getBoundingClientRect();
-            const x = rect.left + window.scrollX + 40;
-            const y = rect.top + window.scrollY + 20;
-
-            const pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
-            const value = ta.value;
-
-            let initialQuery = "";
-            const lastBackslash = value.lastIndexOf("\\", pos - 1);
-            if (lastBackslash !== -1 && lastBackslash < pos) {
-              initialQuery = value.slice(lastBackslash + 1, pos);
+            // Detect rapid double press (within 250ms)
+            if (now - lastBackslashTime < 250) {
+              e.preventDefault();   // don't type second "\" into textarea
+              openPopupAtTextareaCursor(ta);
+              lastBackslashTime = 0;
+              return;
             }
 
-            if (window.showSymbolPopup) {
-              window.showSymbolPopup({
-                x,
-                y,
-                initialQuery,
-                onSelect(symbol) {
-                  insertAtCursor(ta, symbol.latex);
-                }
-              });
-            } else {
-              // fallback: just insert a backslash if React isn't ready
-              insertAtCursor(ta, "\\");
-            }
+            // First backslash → let it type normally
+            lastBackslashTime = now;
           }
         });
 
-        // initial render
+        // Optional: initial render if there is default content
         const box = ta.closest(".group-notes");
         if (box) {
           const out = box.querySelector(".rendered-output");
           renderBlockTeX(ta, out);
         }
       });
+
 
       // ---------- Copy buttons ----------
       const noteGroups = document.querySelectorAll(".group-notes");
