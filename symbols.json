@@ -5,12 +5,9 @@
     "latex": "string",
     "keywords": ["string"],
     "categories": ["string"],
-    "priority": "number (0–1)"
+    "priority": "number"
   },
   "symbols": [
-    /* =========================
-     * BASIC RELATIONS & LOGIC
-     * ========================= */
     {
       "label": "=",
       "latex": "=",
@@ -216,10 +213,6 @@
       "categories": ["logic", "quantifiers"],
       "priority": 0.86
     },
-
-    /* =========================
-     * SET THEORY & RELATIONS
-     * ========================= */
     {
       "label": "∈",
       "latex": "\\in",
@@ -250,7 +243,7 @@
     },
     {
       "label": "⊄",
-      "latex": "\\nsubseteq",
+      "latex": "\\not\\subset",
       "keywords": ["not subset", "not subseteq", "⊄"],
       "categories": ["sets"],
       "priority": 0.82
@@ -369,10 +362,6 @@
       "categories": ["number-systems"],
       "priority": 0.95
     },
-
-    /* =========================
-     * TUPLES / PRODUCTS
-     * ========================= */
     {
       "label": "⟨x,y⟩",
       "latex": "\\langle x,y\\rangle",
@@ -408,10 +397,6 @@
       "categories": ["tuples", "sets"],
       "priority": 0.88
     },
-
-    /* =========================
-     * BASIC ARITHMETIC & ALGEBRA
-     * ========================= */
     {
       "label": "+",
       "latex": "+",
@@ -504,10 +489,6 @@
       "categories": ["basic", "matrices"],
       "priority": 0.9
     },
-
-    /* =========================
-     * GREEK LETTERS (lowercase)
-     * ========================= */
     {
       "label": "α",
       "latex": "\\alpha",
@@ -662,10 +643,6 @@
       "categories": ["greek", "physics"],
       "priority": 0.9
     },
-
-    /* =========================
-     * GREEK LETTERS (uppercase)
-     * ========================= */
     {
       "label": "Γ",
       "latex": "\\Gamma",
@@ -736,10 +713,6 @@
       "categories": ["greek", "probability"],
       "priority": 0.9
     },
-
-    /* =========================
-     * CALCULUS & ANALYSIS
-     * ========================= */
     {
       "label": "∑",
       "latex": "\\sum",
@@ -810,10 +783,6 @@
       "categories": ["calculus", "vector-calculus"],
       "priority": 0.92
     },
-
-    /* =========================
-     * LINEAR ALGEBRA / MATRICES
-     * ========================= */
     {
       "label": "Aᵀ",
       "latex": "A^T",
@@ -849,10 +818,6 @@
       "categories": ["linear-algebra"],
       "priority": 0.9
     },
-
-    /* =========================
-     * MISC COMMON SYMBOLS
-     * ========================= */
     {
       "label": "∝",
       "latex": "\\propto",
@@ -916,10 +881,6 @@
       "categories": ["algebra"],
       "priority": 0.75
     },
-
-    /* =========================
-     * YOUR CUSTOM SET-THEORY UTILITIES
-     * ========================= */
     {
       "label": "dom R",
       "latex": "\\operatorname{dom} R",
