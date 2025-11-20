@@ -1145,35 +1145,46 @@
           renderBlockTeX(ta, out);
         });
 
-        // ========================================================
-        // Double-backslash detection
-        // ========================================================
         let lastBackslashTime = 0;
 
         ta.addEventListener("keydown", (e) => {
           if (e.key === "\\") {
             const now = Date.now();
 
-            // Detect rapid double press (within 250ms)
+            // Rapid double press → treat as shortcut
             if (now - lastBackslashTime < 250) {
-              e.preventDefault();   // don't type second "\" into textarea
+              e.preventDefault(); // don't type this second "\"
+
+              // 🔥 Remove the *previous* "\" that was just typed
+              const pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+              const value = ta.value;
+
+              if (pos > 0 && value[pos - 1] === "\\") {
+                ta.value = value.slice(0, pos - 1) + value.slice(pos);
+                ta.selectionStart = ta.selectionEnd = pos - 1;
+                // re-render after change
+                ta.dispatchEvent(new Event("input", { bubbles: true }));
+              }
+
+              // Open the popup at the cursor
               openPopupAtTextareaCursor(ta);
-              lastBackslashTime = 0;
+              lastBackslashTime = 0; // reset
               return;
             }
 
-            // First backslash → let it type normally
+            // First "\" → let it type normally
             lastBackslashTime = now;
           }
         });
 
-        // Optional: initial render if there is default content
+        // Optional: initial render
         const box = ta.closest(".group-notes");
         if (box) {
           const out = box.querySelector(".rendered-output");
           renderBlockTeX(ta, out);
         }
       });
+
 
 
       // ---------- Copy buttons ----------
