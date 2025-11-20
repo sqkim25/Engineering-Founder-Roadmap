@@ -172,13 +172,6 @@
       "priority": 0.9
     },
     {
-      "label": "⊭",
-      "latex": "\\not\\models",
-      "keywords": ["not models", "does not satisfy", "not entail"],
-      "categories": ["logic"],
-      "priority": 0.85
-    },
-    {
       "label": "∴",
       "latex": "\\therefore",
       "keywords": ["therefore", "so", "hence", "thus", "conclusion"],
@@ -240,13 +233,6 @@
       "keywords": ["proper subset", "subset", "⊂"],
       "categories": ["sets"],
       "priority": 0.9
-    },
-    {
-      "label": "⊄",
-      "latex": "\\not\\subset",
-      "keywords": ["not subset", "not subseteq", "⊄"],
-      "categories": ["sets"],
-      "priority": 0.82
     },
     {
       "label": "⊆",
