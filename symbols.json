@@ -173,7 +173,7 @@
     },
     {
       "label": "⊭",
-      "latex": "\\not\models",
+      "latex": "\\not\\models",
       "keywords": ["not models", "does not satisfy", "not entail"],
       "categories": ["logic"],
       "priority": 0.85
