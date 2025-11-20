@@ -1,0 +1,959 @@
+{
+  "version": 1,
+  "schema": {
+    "label": "string",
+    "latex": "string",
+    "keywords": ["string"],
+    "categories": ["string"],
+    "priority": "number (0–1)"
+  },
+  "symbols": [
+    /* =========================
+     * BASIC RELATIONS & LOGIC
+     * ========================= */
+    {
+      "label": "=",
+      "latex": "=",
+      "keywords": ["equals", "equal", "equality", "=", "equation"],
+      "categories": ["basic", "relations"],
+      "priority": 1.0
+    },
+    {
+      "label": "≠",
+      "latex": "\\neq",
+      "keywords": ["not equal", "inequality", "!=", "≠"],
+      "categories": ["basic", "relations"],
+      "priority": 0.99
+    },
+    {
+      "label": "≈",
+      "latex": "\\approx",
+      "keywords": ["approximately", "approx", "approx equal", "~"],
+      "categories": ["relations"],
+      "priority": 0.9
+    },
+    {
+      "label": "≃",
+      "latex": "\\simeq",
+      "keywords": ["simeq", "asymptotically equal", "similar"],
+      "categories": ["relations"],
+      "priority": 0.85
+    },
+    {
+      "label": "≅",
+      "latex": "\\cong",
+      "keywords": ["congruent", "congruence", "≅"],
+      "categories": ["relations", "geometry"],
+      "priority": 0.88
+    },
+    {
+      "label": "∼",
+      "latex": "\\sim",
+      "keywords": ["similar", "proportional", "tilde", "~"],
+      "categories": ["relations"],
+      "priority": 0.85
+    },
+    {
+      "label": "<",
+      "latex": "<",
+      "keywords": ["less than", "inequality", "<"],
+      "categories": ["relations", "order"],
+      "priority": 0.98
+    },
+    {
+      "label": "≤",
+      "latex": "\\leq",
+      "keywords": ["less or equal", "leq", "≤"],
+      "categories": ["relations", "order"],
+      "priority": 0.98
+    },
+    {
+      "label": ">",
+      "latex": ">",
+      "keywords": ["greater than", ">", "inequality"],
+      "categories": ["relations", "order"],
+      "priority": 0.98
+    },
+    {
+      "label": "≥",
+      "latex": "\\geq",
+      "keywords": ["greater or equal", "geq", "≥"],
+      "categories": ["relations", "order"],
+      "priority": 0.98
+    },
+
+    {
+      "label": "⇒",
+      "latex": "\\Rightarrow",
+      "keywords": ["implies", "implication", "then", "right arrow", "logical implies"],
+      "categories": ["logic", "arrows"],
+      "priority": 0.95
+    },
+    {
+      "label": "⇐",
+      "latex": "\\Leftarrow",
+      "keywords": ["implied by", "left arrow", "reverse implication"],
+      "categories": ["logic", "arrows"],
+      "priority": 0.9
+    },
+    {
+      "label": "⇔",
+      "latex": "\\Leftrightarrow",
+      "keywords": ["iff", "if and only if", "equivalent", "equivalence", "bi-implication"],
+      "categories": ["logic", "arrows"],
+      "priority": 0.97
+    },
+    {
+      "label": "→",
+      "latex": "\\rightarrow",
+      "keywords": ["arrow", "to", "mapsto", "function arrow", "right arrow"],
+      "categories": ["arrows", "functions"],
+      "priority": 0.97
+    },
+    {
+      "label": "←",
+      "latex": "\\leftarrow",
+      "keywords": ["left arrow", "back arrow", "←"],
+      "categories": ["arrows"],
+      "priority": 0.9
+    },
+    {
+      "label": "↦",
+      "latex": "\\mapsto",
+      "keywords": ["mapsto", "maps to", "function map"],
+      "categories": ["arrows", "functions"],
+      "priority": 0.88
+    },
+    {
+      "label": "↔",
+      "latex": "\\leftrightarrow",
+      "keywords": ["left right arrow", "bidirectional arrow", "↔"],
+      "categories": ["arrows"],
+      "priority": 0.87
+    },
+
+    {
+      "label": "∧",
+      "latex": "\\land",
+      "keywords": ["and", "logical and", "conjunction"],
+      "categories": ["logic"],
+      "priority": 0.98
+    },
+    {
+      "label": "∨",
+      "latex": "\\lor",
+      "keywords": ["or", "logical or", "disjunction"],
+      "categories": ["logic"],
+      "priority": 0.98
+    },
+    {
+      "label": "¬",
+      "latex": "\\lnot",
+      "keywords": ["not", "negation", "logical not", "¬"],
+      "categories": ["logic"],
+      "priority": 0.95
+    },
+    {
+      "label": "⊢",
+      "latex": "\\vdash",
+      "keywords": ["provable", "turnstile", "derives", "syntactic entailment"],
+      "categories": ["logic"],
+      "priority": 0.9
+    },
+    {
+      "label": "⊣",
+      "latex": "\\dashv",
+      "keywords": ["dashv", "reverse turnstile"],
+      "categories": ["logic"],
+      "priority": 0.75
+    },
+    {
+      "label": "⊨",
+      "latex": "\\models",
+      "keywords": ["models", "satisfies", "semantic entailment", "⊨"],
+      "categories": ["logic"],
+      "priority": 0.9
+    },
+    {
+      "label": "⊭",
+      "latex": "\\not\models",
+      "keywords": ["not models", "does not satisfy", "not entail"],
+      "categories": ["logic"],
+      "priority": 0.85
+    },
+    {
+      "label": "∴",
+      "latex": "\\therefore",
+      "keywords": ["therefore", "so", "hence", "thus", "conclusion"],
+      "categories": ["logic", "proof"],
+      "priority": 0.92
+    },
+    {
+      "label": "∵",
+      "latex": "\\because",
+      "keywords": ["because", "since", "reason", "premise"],
+      "categories": ["logic", "proof"],
+      "priority": 0.85
+    },
+    {
+      "label": "∀",
+      "latex": "\\forall",
+      "keywords": ["forall", "for all", "universal quantifier"],
+      "categories": ["logic", "quantifiers"],
+      "priority": 0.98
+    },
+    {
+      "label": "∃",
+      "latex": "\\exists",
+      "keywords": ["exists", "there exists", "existential quantifier"],
+      "categories": ["logic", "quantifiers"],
+      "priority": 0.98
+    },
+    {
+      "label": "∄",
+      "latex": "\\nexists",
+      "keywords": ["not exists", "no such that", "does not exist"],
+      "categories": ["logic", "quantifiers"],
+      "priority": 0.86
+    },
+
+    /* =========================
+     * SET THEORY & RELATIONS
+     * ========================= */
+    {
+      "label": "∈",
+      "latex": "\\in",
+      "keywords": ["in", "element of", "membership", "belongs to"],
+      "categories": ["sets", "relations"],
+      "priority": 0.99
+    },
+    {
+      "label": "∉",
+      "latex": "\\notin",
+      "keywords": ["not in", "not element of", "non-membership"],
+      "categories": ["sets", "relations"],
+      "priority": 0.96
+    },
+    {
+      "label": "∅",
+      "latex": "\\varnothing",
+      "keywords": ["empty set", "null set", "nothing", "phi"],
+      "categories": ["sets"],
+      "priority": 0.98
+    },
+    {
+      "label": "⊂",
+      "latex": "\\subset",
+      "keywords": ["proper subset", "subset", "⊂"],
+      "categories": ["sets"],
+      "priority": 0.9
+    },
+    {
+      "label": "⊄",
+      "latex": "\\nsubseteq",
+      "keywords": ["not subset", "not subseteq", "⊄"],
+      "categories": ["sets"],
+      "priority": 0.82
+    },
+    {
+      "label": "⊆",
+      "latex": "\\subseteq",
+      "keywords": ["subset", "subseteq", "contained in", "subset equal"],
+      "categories": ["sets"],
+      "priority": 0.97
+    },
+    {
+      "label": "⊇",
+      "latex": "\\supseteq",
+      "keywords": ["superset", "supseteq", "contains", "superset equal"],
+      "categories": ["sets"],
+      "priority": 0.93
+    },
+    {
+      "label": "⊃",
+      "latex": "\\supset",
+      "keywords": ["proper superset", "superset", "⊃"],
+      "categories": ["sets"],
+      "priority": 0.86
+    },
+    {
+      "label": "∪",
+      "latex": "\\cup",
+      "keywords": ["union", "set union"],
+      "categories": ["sets"],
+      "priority": 0.97
+    },
+    {
+      "label": "∩",
+      "latex": "\\cap",
+      "keywords": ["intersection", "set intersection"],
+      "categories": ["sets"],
+      "priority": 0.97
+    },
+    {
+      "label": "⋃",
+      "latex": "\\bigcup",
+      "keywords": ["big union", "union over", "indexed union"],
+      "categories": ["sets", "operators"],
+      "priority": 0.9
+    },
+    {
+      "label": "⋂",
+      "latex": "\\bigcap",
+      "keywords": ["big intersection", "intersection over", "indexed intersection"],
+      "categories": ["sets", "operators"],
+      "priority": 0.9
+    },
+    {
+      "label": "∖",
+      "latex": "\\setminus",
+      "keywords": ["set minus", "difference", "relative complement"],
+      "categories": ["sets"],
+      "priority": 0.9
+    },
+
+    {
+      "label": "{",
+      "latex": "\\{",
+      "keywords": ["left brace", "left curly", "set open"],
+      "categories": ["delimiters", "sets"],
+      "priority": 0.9
+    },
+    {
+      "label": "}",
+      "latex": "\\}",
+      "keywords": ["right brace", "right curly", "set close"],
+      "categories": ["delimiters", "sets"],
+      "priority": 0.9
+    },
+    {
+      "label": "{x | …}",
+      "latex": "\\{x \\mid \\dots\\}",
+      "keywords": ["set builder", "such that", "mid", "condition", "set notation"],
+      "categories": ["sets", "templates"],
+      "priority": 0.92
+    },
+
+    {
+      "label": "ℕ",
+      "latex": "\\mathbb{N}",
+      "keywords": ["N", "naturals", "natural numbers"],
+      "categories": ["number-systems"],
+      "priority": 0.99
+    },
+    {
+      "label": "ℤ",
+      "latex": "\\mathbb{Z}",
+      "keywords": ["Z", "integers", "integer numbers"],
+      "categories": ["number-systems"],
+      "priority": 0.99
+    },
+    {
+      "label": "ℚ",
+      "latex": "\\mathbb{Q}",
+      "keywords": ["Q", "rationals", "rational numbers"],
+      "categories": ["number-systems"],
+      "priority": 0.95
+    },
+    {
+      "label": "ℝ",
+      "latex": "\\mathbb{R}",
+      "keywords": ["R", "reals", "real numbers"],
+      "categories": ["number-systems"],
+      "priority": 0.99
+    },
+    {
+      "label": "ℂ",
+      "latex": "\\mathbb{C}",
+      "keywords": ["C", "complex numbers", "complex plane"],
+      "categories": ["number-systems"],
+      "priority": 0.95
+    },
+
+    /* =========================
+     * TUPLES / PRODUCTS
+     * ========================= */
+    {
+      "label": "⟨x,y⟩",
+      "latex": "\\langle x,y\\rangle",
+      "keywords": ["tuple", "ordered pair", "pair", "angle brackets"],
+      "categories": ["tuples", "sets"],
+      "priority": 0.94
+    },
+    {
+      "label": "⟨x₁,…,xₙ⟩",
+      "latex": "\\langle x_1,\\ldots,x_n\\rangle",
+      "keywords": ["tuple", "n-tuple", "sequence", "angle brackets"],
+      "categories": ["tuples", "sequences"],
+      "priority": 0.9
+    },
+    {
+      "label": "A×B",
+      "latex": "A \\times B",
+      "keywords": ["cartesian product", "cross product", "AxB", "product of sets"],
+      "categories": ["sets", "tuples"],
+      "priority": 0.95
+    },
+    {
+      "label": "Aⁿ",
+      "latex": "A^n",
+      "keywords": ["power of set", "A^n", "n-th power", "cartesian power"],
+      "categories": ["sets", "tuples"],
+      "priority": 0.9
+    },
+    {
+      "label": "⟨⟨x,y⟩,z⟩",
+      "latex": "\\langle\\langle x,y\\rangle,z\\rangle",
+      "keywords": ["nested pair", "triple", "kuratowski", "ordered triple"],
+      "categories": ["tuples", "sets"],
+      "priority": 0.88
+    },
+
+    /* =========================
+     * BASIC ARITHMETIC & ALGEBRA
+     * ========================= */
+    {
+      "label": "+",
+      "latex": "+",
+      "keywords": ["plus", "addition", "add"],
+      "categories": ["arithmetic"],
+      "priority": 0.99
+    },
+    {
+      "label": "−",
+      "latex": "-",
+      "keywords": ["minus", "subtraction", "subtract", "-"],
+      "categories": ["arithmetic"],
+      "priority": 0.99
+    },
+    {
+      "label": "±",
+      "latex": "\\pm",
+      "keywords": ["plus minus", "pm", "±"],
+      "categories": ["arithmetic"],
+      "priority": 0.9
+    },
+    {
+      "label": "∓",
+      "latex": "\\mp",
+      "keywords": ["minus plus", "mp", "∓"],
+      "categories": ["arithmetic"],
+      "priority": 0.8
+    },
+    {
+      "label": "×",
+      "latex": "\\times",
+      "keywords": ["times", "multiplication", "cross", "×"],
+      "categories": ["arithmetic", "algebra"],
+      "priority": 0.95
+    },
+    {
+      "label": "⋅",
+      "latex": "\\cdot",
+      "keywords": ["dot", "multiplication dot", "center dot"],
+      "categories": ["arithmetic", "algebra"],
+      "priority": 0.93
+    },
+    {
+      "label": "÷",
+      "latex": "\\div",
+      "keywords": ["divide", "division", "÷"],
+      "categories": ["arithmetic"],
+      "priority": 0.8
+    },
+    {
+      "label": "√",
+      "latex": "\\sqrt{}",
+      "keywords": ["sqrt", "square root", "radical"],
+      "categories": ["arithmetic", "algebra"],
+      "priority": 0.95
+    },
+    {
+      "label": "∛",
+      "latex": "\\sqrt[3]{}",
+      "keywords": ["cube root", "third root"],
+      "categories": ["arithmetic", "algebra"],
+      "priority": 0.85
+    },
+
+    {
+      "label": "…",
+      "latex": "\\ldots",
+      "keywords": ["ellipsis", "dots", "..."],
+      "categories": ["basic"],
+      "priority": 0.95
+    },
+    {
+      "label": "⋯",
+      "latex": "\\cdots",
+      "keywords": ["center dots", "horizontal dots", "⋯"],
+      "categories": ["basic"],
+      "priority": 0.9
+    },
+    {
+      "label": "⋮",
+      "latex": "\\vdots",
+      "keywords": ["vertical dots", "⋮"],
+      "categories": ["basic", "matrices"],
+      "priority": 0.9
+    },
+    {
+      "label": "⋱",
+      "latex": "\\ddots",
+      "keywords": ["diagonal dots", "⋱"],
+      "categories": ["basic", "matrices"],
+      "priority": 0.9
+    },
+
+    /* =========================
+     * GREEK LETTERS (lowercase)
+     * ========================= */
+    {
+      "label": "α",
+      "latex": "\\alpha",
+      "keywords": ["alpha", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "β",
+      "latex": "\\beta",
+      "keywords": ["beta", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "γ",
+      "latex": "\\gamma",
+      "keywords": ["gamma", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "δ",
+      "latex": "\\delta",
+      "keywords": ["delta", "small delta", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "ε",
+      "latex": "\\varepsilon",
+      "keywords": ["epsilon", "varepsilon", "greek", "small epsilon"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "ζ",
+      "latex": "\\zeta",
+      "keywords": ["zeta", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "η",
+      "latex": "\\eta",
+      "keywords": ["eta", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "θ",
+      "latex": "\\theta",
+      "keywords": ["theta", "angle", "greek"],
+      "categories": ["greek"],
+      "priority": 0.95
+    },
+    {
+      "label": "ι",
+      "latex": "\\iota",
+      "keywords": ["iota", "greek"],
+      "categories": ["greek"],
+      "priority": 0.7
+    },
+    {
+      "label": "κ",
+      "latex": "\\kappa",
+      "keywords": ["kappa", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "λ",
+      "latex": "\\lambda",
+      "keywords": ["lambda", "eigenvalue", "wavelength", "greek"],
+      "categories": ["greek", "linear-algebra"],
+      "priority": 0.95
+    },
+    {
+      "label": "μ",
+      "latex": "\\mu",
+      "keywords": ["mu", "mean", "micro", "greek"],
+      "categories": ["greek", "statistics"],
+      "priority": 0.9
+    },
+    {
+      "label": "ν",
+      "latex": "\\nu",
+      "keywords": ["nu", "greek"],
+      "categories": ["greek"],
+      "priority": 0.7
+    },
+    {
+      "label": "ξ",
+      "latex": "\\xi",
+      "keywords": ["xi", "greek"],
+      "categories": ["greek"],
+      "priority": 0.7
+    },
+    {
+      "label": "π",
+      "latex": "\\pi",
+      "keywords": ["pi", "constant", "3.1415", "greek"],
+      "categories": ["greek", "constants"],
+      "priority": 0.98
+    },
+    {
+      "label": "ρ",
+      "latex": "\\rho",
+      "keywords": ["rho", "density", "greek"],
+      "categories": ["greek", "physics"],
+      "priority": 0.85
+    },
+    {
+      "label": "σ",
+      "latex": "\\sigma",
+      "keywords": ["sigma", "std dev", "standard deviation", "greek"],
+      "categories": ["greek", "statistics"],
+      "priority": 0.9
+    },
+    {
+      "label": "τ",
+      "latex": "\\tau",
+      "keywords": ["tau", "greek"],
+      "categories": ["greek"],
+      "priority": 0.7
+    },
+    {
+      "label": "φ",
+      "latex": "\\varphi",
+      "keywords": ["phi", "varphi", "angle", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "χ",
+      "latex": "\\chi",
+      "keywords": ["chi", "characteristic function", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "ψ",
+      "latex": "\\psi",
+      "keywords": ["psi", "wavefunction", "greek"],
+      "categories": ["greek", "physics"],
+      "priority": 0.85
+    },
+    {
+      "label": "ω",
+      "latex": "\\omega",
+      "keywords": ["omega", "angular frequency", "greek"],
+      "categories": ["greek", "physics"],
+      "priority": 0.9
+    },
+
+    /* =========================
+     * GREEK LETTERS (uppercase)
+     * ========================= */
+    {
+      "label": "Γ",
+      "latex": "\\Gamma",
+      "keywords": ["Gamma", "gamma function", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "Δ",
+      "latex": "\\Delta",
+      "keywords": ["Delta", "difference", "change", "greek"],
+      "categories": ["greek"],
+      "priority": 0.9
+    },
+    {
+      "label": "Θ",
+      "latex": "\\Theta",
+      "keywords": ["Theta", "asymptotic", "big theta", "greek"],
+      "categories": ["greek", "cs"],
+      "priority": 0.85
+    },
+    {
+      "label": "Λ",
+      "latex": "\\Lambda",
+      "keywords": ["Lambda", "eigenvalue", "greek"],
+      "categories": ["greek", "linear-algebra"],
+      "priority": 0.85
+    },
+    {
+      "label": "Ξ",
+      "latex": "\\Xi",
+      "keywords": ["Xi", "greek"],
+      "categories": ["greek"],
+      "priority": 0.7
+    },
+    {
+      "label": "Π",
+      "latex": "\\Pi",
+      "keywords": ["Pi", "product", "capital pi", "product operator"],
+      "categories": ["greek", "operators"],
+      "priority": 0.85
+    },
+    {
+      "label": "Σ",
+      "latex": "\\Sigma",
+      "keywords": ["Sigma", "sum", "summation", "capital sigma"],
+      "categories": ["greek", "operators"],
+      "priority": 0.9
+    },
+    {
+      "label": "Φ",
+      "latex": "\\Phi",
+      "keywords": ["Phi", "golden ratio", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "Ψ",
+      "latex": "\\Psi",
+      "keywords": ["Psi", "greek"],
+      "categories": ["greek"],
+      "priority": 0.8
+    },
+    {
+      "label": "Ω",
+      "latex": "\\Omega",
+      "keywords": ["Omega", "ohm", "sample space", "greek"],
+      "categories": ["greek", "probability"],
+      "priority": 0.9
+    },
+
+    /* =========================
+     * CALCULUS & ANALYSIS
+     * ========================= */
+    {
+      "label": "∑",
+      "latex": "\\sum",
+      "keywords": ["sum", "summation", "series", "sigma"],
+      "categories": ["operators", "calculus"],
+      "priority": 0.98
+    },
+    {
+      "label": "∏",
+      "latex": "\\prod",
+      "keywords": ["product", "product operator", "capital pi"],
+      "categories": ["operators", "calculus"],
+      "priority": 0.9
+    },
+    {
+      "label": "∫",
+      "latex": "\\int",
+      "keywords": ["integral", "∫", "integrate"],
+      "categories": ["calculus"],
+      "priority": 0.98
+    },
+    {
+      "label": "∬",
+      "latex": "\\iint",
+      "keywords": ["double integral", "surface integral"],
+      "categories": ["calculus"],
+      "priority": 0.88
+    },
+    {
+      "label": "∭",
+      "latex": "\\iiint",
+      "keywords": ["triple integral", "volume integral"],
+      "categories": ["calculus"],
+      "priority": 0.86
+    },
+    {
+      "label": "∮",
+      "latex": "\\oint",
+      "keywords": ["contour integral", "line integral", "closed integral"],
+      "categories": ["calculus"],
+      "priority": 0.85
+    },
+    {
+      "label": "∞",
+      "latex": "\\infty",
+      "keywords": ["infinity", "limit", "unbounded"],
+      "categories": ["calculus", "analysis"],
+      "priority": 0.98
+    },
+    {
+      "label": "lim",
+      "latex": "\\lim",
+      "keywords": ["limit", "lim", "tends to"],
+      "categories": ["calculus", "analysis"],
+      "priority": 0.96
+    },
+    {
+      "label": "∂",
+      "latex": "\\partial",
+      "keywords": ["partial derivative", "partial", "∂"],
+      "categories": ["calculus"],
+      "priority": 0.95
+    },
+    {
+      "label": "∇",
+      "latex": "\\nabla",
+      "keywords": ["nabla", "gradient", "del", "vector calculus"],
+      "categories": ["calculus", "vector-calculus"],
+      "priority": 0.92
+    },
+
+    /* =========================
+     * LINEAR ALGEBRA / MATRICES
+     * ========================= */
+    {
+      "label": "Aᵀ",
+      "latex": "A^T",
+      "keywords": ["transpose", "A^T"],
+      "categories": ["linear-algebra"],
+      "priority": 0.9
+    },
+    {
+      "label": "det A",
+      "latex": "\\det A",
+      "keywords": ["det", "determinant"],
+      "categories": ["linear-algebra"],
+      "priority": 0.9
+    },
+    {
+      "label": "|A|",
+      "latex": "|A|",
+      "keywords": ["determinant brackets", "absolute value of matrix"],
+      "categories": ["linear-algebra"],
+      "priority": 0.85
+    },
+    {
+      "label": "⟨u,v⟩",
+      "latex": "\\langle u,v\\rangle",
+      "keywords": ["inner product", "dot product", "angle brackets"],
+      "categories": ["linear-algebra"],
+      "priority": 0.9
+    },
+    {
+      "label": "‖v‖",
+      "latex": "\\|v\\|",
+      "keywords": ["norm", "length", "double bar", "||v||"],
+      "categories": ["linear-algebra"],
+      "priority": 0.9
+    },
+
+    /* =========================
+     * MISC COMMON SYMBOLS
+     * ========================= */
+    {
+      "label": "∝",
+      "latex": "\\propto",
+      "keywords": ["proportional to", "propto", "∝"],
+      "categories": ["relations"],
+      "priority": 0.9
+    },
+    {
+      "label": "∋",
+      "latex": "\\ni",
+      "keywords": ["contains as element", "reverse in", "∋"],
+      "categories": ["sets", "relations"],
+      "priority": 0.75
+    },
+    {
+      "label": "⊥",
+      "latex": "\\perp",
+      "keywords": ["perpendicular", "orthogonal", "independent"],
+      "categories": ["geometry", "linear-algebra"],
+      "priority": 0.9
+    },
+    {
+      "label": "∠",
+      "latex": "\\angle",
+      "keywords": ["angle", "geometry"],
+      "categories": ["geometry"],
+      "priority": 0.85
+    },
+    {
+      "label": "°",
+      "latex": "^{\\circ}",
+      "keywords": ["degree", "degrees symbol"],
+      "categories": ["geometry"],
+      "priority": 0.9
+    },
+    {
+      "label": "ℏ",
+      "latex": "\\hbar",
+      "keywords": ["hbar", "reduced Planck", "quantum"],
+      "categories": ["physics"],
+      "priority": 0.8
+    },
+    {
+      "label": "⊗",
+      "latex": "\\otimes",
+      "keywords": ["tensor product", "otimes", "kronecker"],
+      "categories": ["linear-algebra", "algebra"],
+      "priority": 0.85
+    },
+    {
+      "label": "⊕",
+      "latex": "\\oplus",
+      "keywords": ["direct sum", "oplus"],
+      "categories": ["algebra", "linear-algebra"],
+      "priority": 0.85
+    },
+    {
+      "label": "⊙",
+      "latex": "\\odot",
+      "keywords": ["odot", "circle dot"],
+      "categories": ["algebra"],
+      "priority": 0.75
+    },
+
+    /* =========================
+     * YOUR CUSTOM SET-THEORY UTILITIES
+     * ========================= */
+    {
+      "label": "dom R",
+      "latex": "\\operatorname{dom} R",
+      "keywords": ["domain", "dom", "dom R"],
+      "categories": ["functions", "relations"],
+      "priority": 0.9
+    },
+    {
+      "label": "ran R",
+      "latex": "\\operatorname{ran} R",
+      "keywords": ["range", "image", "ran", "ran R"],
+      "categories": ["functions", "relations"],
+      "priority": 0.9
+    },
+    {
+      "label": "fld R",
+      "latex": "\\text{fld}\\,R",
+      "keywords": ["field of relation", "fld", "universe", "underlying set"],
+      "categories": ["relations", "sets"],
+      "priority": 0.86
+    },
+    {
+      "label": "Id",
+      "latex": "\\mathrm{Id}",
+      "keywords": ["identity", "identity function", "identity map", "Id"],
+      "categories": ["functions"],
+      "priority": 0.9
+    },
+    {
+      "label": "[x]",
+      "latex": "[x]",
+      "keywords": ["equivalence class", "class of x", "brackets"],
+      "categories": ["relations", "equivalence"],
+      "priority": 0.9
+    }
+  ]
+}
