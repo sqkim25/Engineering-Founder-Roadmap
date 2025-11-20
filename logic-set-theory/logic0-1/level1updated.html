@@ -797,7 +797,7 @@
     </section>
   </main>
 
-    <!-- Root for the React symbol popup -->
+  <!-- Root for the React symbol popup -->
   <div id="symbol-popup-root"></div>
 
   <!-- React + ReactDOM + Babel (for JSX in this example) -->
@@ -805,474 +805,478 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script type="text/babel">
-  // ---------- Symbol data (you can expand this later) ----------
-  // Will be filled from symbols.json
-  window.SYMBOLS = [];
+  <!-- React + JSX: ONLY the popup component + showSymbolPopup -->
+  <script type="text/babel" data-presets="env,react">
+    // ---------- Symbol data (you can expand this later) ----------
+    window.SYMBOLS = [];
 
-  // ---------- Simple search ----------
-  function searchSymbols(symbols, query) {
-    const q = query.trim().toLowerCase();
-    if (!q) {
-      return [...symbols]
-        .sort((a, b) => b.priority - a.priority)
+    // ---------- Simple search ----------
+    function searchSymbols(symbols, query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        return [...symbols]
+          .sort((a, b) => (b.priority || 0) - (a.priority || 0))
+          .slice(0, 20);
+      }
+
+      return symbols
+        .map((s) => {
+          const haystack = [
+            s.label,
+            s.latex,
+            ...(s.keywords || []),
+            ...(s.categories || [])
+          ].join(" ").toLowerCase();
+
+          if (!haystack.includes(q)) return null;
+
+          let score = s.priority || 0;
+
+          if (s.latex.toLowerCase().startsWith("\\" + q)) score += 0.7;
+          if ((s.keywords || []).some((k) => k.toLowerCase() === q)) score += 0.5;
+          if (s.label.toLowerCase() === q) score += 0.4;
+
+          const idx = haystack.indexOf(q);
+          if (idx >= 0) score += Math.max(0, 0.3 - idx / 50);
+
+          return { s, score };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score)
+        .map((x) => x.s)
         .slice(0, 20);
     }
 
-    return symbols
-      .map((s) => {
-        const haystack = [
-          s.label,
-          s.latex,
-          ...(s.keywords || []),
-          ...(s.categories || [])
-        ].join(" ").toLowerCase();
+    // ---------- React popup component ----------
+    const SymbolPopup = ({ x, y, initialQuery = "", onSelect, onClose }) => {
+      const [query, setQuery] = React.useState(initialQuery);
+      const [highlightIndex, setHighlightIndex] = React.useState(0);
+      const containerRef = React.useRef(null);
+      const inputRef = React.useRef(null);
 
-        if (!haystack.includes(q)) return null;
+      const results = React.useMemo(
+        () => searchSymbols(window.SYMBOLS || [], query),
+        [query]
+      );
 
-        let score = s.priority ?? 0;
+      React.useEffect(() => {
+        setQuery(initialQuery);
+        setHighlightIndex(0);
+      }, [initialQuery]);
 
-        if (s.latex.toLowerCase().startsWith("\\" + q)) score += 0.7;
-        if ((s.keywords || []).some((k) => k.toLowerCase() === q)) score += 0.5;
-        if (s.label.toLowerCase() === q) score += 0.4;
+      React.useEffect(() => {
+        if (inputRef.current) {
+          setTimeout(() => inputRef.current.focus(), 0);
+        }
+      }, []);
 
-        const idx = haystack.indexOf(q);
-        if (idx >= 0) score += Math.max(0, 0.3 - idx / 50);
+      React.useEffect(() => {
+        function handleClickOutside(e) {
+          if (!containerRef.current) return;
+          if (!containerRef.current.contains(e.target)) {
+            onClose();
+          }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+      }, [onClose]);
 
-        return { s, score };
-      })
-      .filter(Boolean)
-      .sort((a, b) => b.score - a.score)
-      .map((x) => x.s)
-      .slice(0, 20);
-  }
-
-  // ---------- React popup component ----------
-  const SymbolPopup = ({ x, y, initialQuery = "", onSelect, onClose }) => {
-    const [query, setQuery] = React.useState(initialQuery);
-    const [highlightIndex, setHighlightIndex] = React.useState(0);
-    const containerRef = React.useRef(null);
-    const inputRef = React.useRef(null);
-
-    const results = React.useMemo(
-      () => searchSymbols(window.SYMBOLS || [], query),
-      [query]
-    );
-
-    React.useEffect(() => {
-      setQuery(initialQuery);
-      setHighlightIndex(0);
-    }, [initialQuery]);
-
-    React.useEffect(() => {
-      if (inputRef.current) {
-        setTimeout(() => inputRef.current.focus(), 0);
-      }
-    }, []);
-
-    React.useEffect(() => {
-      function handleClickOutside(e) {
-        if (!containerRef.current) return;
-        if (!containerRef.current.contains(e.target)) {
+      const handleKeyDown = (e) => {
+        const count = results.length;
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (count === 0) return;
+          setHighlightIndex((prev) => (prev + 1) % count);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (count === 0) return;
+          setHighlightIndex((prev) => (prev - 1 + count) % count);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (count === 0) return;
+          onSelect(results[highlightIndex]);
+        } else if (e.key === "Escape") {
+          e.preventDefault();
           onClose();
         }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [onClose]);
+      };
 
-    const handleKeyDown = (e) => {
-      const count = results.length;
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (count === 0) return;
-        setHighlightIndex((prev) => (prev + 1) % count);
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (count === 0) return;
-        setHighlightIndex((prev) => (prev - 1 + count) % count);
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        if (count === 0) return;
-        onSelect(results[highlightIndex]);
-      } else if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-      }
-    };
-
-    return (
-      <div
-        ref={containerRef}
-        style={{
-          position: "absolute",
-          left: x,
-          top: y,
-          zIndex: 9999,
-          minWidth: 260,
-          maxWidth: 360,
-          background: "#fff",
-          border: "1px solid #ddd",
-          borderRadius: 6,
-          boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-          padding: 8,
-          fontFamily:
-            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          fontSize: 13
-        }}
-      >
-        <input
-          ref={inputRef}
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setHighlightIndex(0);
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder="Search symbol or LaTeX…"
+      return (
+        <div
+          ref={containerRef}
           style={{
-            width: "100%",
-            boxSizing: "border-box",
-            padding: "4px 6px",
-            marginBottom: 6,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-            outline: "none"
+            position: "absolute",
+            left: x,
+            top: y,
+            zIndex: 9999,
+            minWidth: 260,
+            maxWidth: 360,
+            background: "#fff",
+            border: "1px solid #ddd",
+            borderRadius: 6,
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+            padding: 8,
+            fontFamily:
+              'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            fontSize: 13
           }}
-        />
+        >
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setHighlightIndex(0);
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder="Search symbol or LaTeX…"
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "4px 6px",
+              marginBottom: 6,
+              borderRadius: 4,
+              border: "1px solid #ccc",
+              outline: "none"
+            }}
+          />
 
-        <div style={{ maxHeight: 260, overflowY: "auto" }}>
-          {results.map((sym, idx) => (
-            <div
-              key={sym.latex + idx}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "4px 6px",
-                borderRadius: 4,
-                background: idx === highlightIndex ? "#eef3ff" : "transparent",
-                cursor: "pointer"
-              }}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                onSelect(sym);
-              }}
-            >
-              <span
-                style={{
-                  width: 32,
-                  textAlign: "center",
-                  fontSize: 18,
-                  marginRight: 6
-                }}
-              >
-                {sym.label}
-              </span>
+          <div style={{ maxHeight: 260, overflowY: "auto" }}>
+            {results.map((sym, idx) => (
               <div
+                key={sym.latex + idx}
                 style={{
                   display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  overflow: "hidden"
+                  alignItems: "center",
+                  padding: "4px 6px",
+                  borderRadius: 4,
+                  background: idx === highlightIndex ? "#eef3ff" : "transparent",
+                  cursor: "pointer"
+                }}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onSelect(sym);
                 }}
               >
                 <span
                   style={{
-                    fontFamily: "monospace",
-                    fontSize: 12,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis"
+                    width: 32,
+                    textAlign: "center",
+                    fontSize: 18,
+                    marginRight: 6
                   }}
                 >
-                  {sym.latex}
+                  {sym.label}
                 </span>
-                {sym.keywords && sym.keywords.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                    overflow: "hidden"
+                  }}
+                >
                   <span
                     style={{
-                      fontSize: 11,
-                      color: "#777",
+                      fontFamily: "monospace",
+                      fontSize: 12,
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis"
                     }}
                   >
-                    {sym.keywords.slice(0, 4).join(", ")}
+                    {sym.latex}
                   </span>
-                )}
+                  {sym.keywords && sym.keywords.length > 0 && (
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: "#777",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}
+                    >
+                      {sym.keywords.slice(0, 4).join(", ")}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          {results.length === 0 && (
-            <div
-              style={{
-                padding: "4px 6px",
-                fontSize: 12,
-                color: "#888"
-              }}
-            >
-              No matches
-            </div>
-          )}
+            {results.length === 0 && (
+              <div
+                style={{
+                  padding: "4px 6px",
+                  fontSize: 12,
+                  color: "#888"
+                }}
+              >
+                No matches
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    );
-  };
-
-  // ---------- Helper: show popup from vanilla JS ----------
-  const popupRoot = ReactDOM.createRoot(
-    document.getElementById("symbol-popup-root")
-  );
-
-  function showSymbolPopup({ x, y, initialQuery, onSelect }) {
-    const handleSelect = (symbol) => {
-      onSelect(symbol);
-      popupRoot.render(null);
-    };
-    const handleClose = () => {
-      popupRoot.render(null);
+      );
     };
 
-    popupRoot.render(
-      <SymbolPopup
-        x={x}
-        y={y}
-        initialQuery={initialQuery}
-        onSelect={handleSelect}
-        onClose={handleClose}
-      />
+    // ---------- Helper: show popup from vanilla JS ----------
+    const popupRoot = ReactDOM.createRoot(
+      document.getElementById("symbol-popup-root")
     );
-  }
 
-  // ---------- Non-React stuff: MathJax, canvases, copy buttons ----------
-  document.addEventListener("DOMContentLoaded", function () {
-    // Load symbols.json
-    fetch("../../symbols.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // support both { symbols: [...] } and bare [...]
-        window.SYMBOLS = Array.isArray(data) ? data : (data.symbols || []);
-        console.log("Loaded symbols:", window.SYMBOLS.length);
-      })
-      .catch((err) => {
-        console.error("Failed to load symbols.json", err);
-        window.SYMBOLS = []; // fallback
-      });
+    window.showSymbolPopup = function ({ x, y, initialQuery, onSelect }) {
+      const handleSelect = (symbol) => {
+        onSelect(symbol);
+        popupRoot.render(null);
+      };
+      const handleClose = () => {
+        popupRoot.render(null);
+      };
 
-    function renderBlockTeX(textarea, outputElement) {
-      const raw = textarea.value.trim();
-      if (!raw) {
-        outputElement.innerHTML = "";
-        return;
-      }
+      popupRoot.render(
+        <SymbolPopup
+          x={x}
+          y={y}
+          initialQuery={initialQuery}
+          onSelect={handleSelect}
+          onClose={handleClose}
+        />
+      );
+    };
+  </script>
 
-      let tex = raw;
-      const explicitDisplayOrEnv = /^(\$\$|\\\[|\\begin\{)/.test(raw);
-      const looksMultiline = raw.includes("\\\\") || raw.includes("\n");
+  <!-- Plain JS: MathJax rendering, copy, canvas, backslash trigger -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Load symbols.json
+      fetch("../../symbols.json")
+        .then((res) => res.json())
+        .then((data) => {
+          window.SYMBOLS = Array.isArray(data) ? data : (data.symbols || []);
+          console.log("Loaded symbols:", window.SYMBOLS.length);
+        })
+        .catch((err) => {
+          console.error("Failed to load symbols.json", err);
+          window.SYMBOLS = [];
+        });
 
-      if (!explicitDisplayOrEnv) {
-        if (looksMultiline) {
-          tex = "\\begin{gather*}\n" + raw + "\n\\end{gather*}";
-        } else {
-          tex = "\\[" + raw + "\\]";
+      function renderBlockTeX(textarea, outputElement) {
+        const raw = textarea.value.trim();
+        if (!raw) {
+          if (outputElement) outputElement.innerHTML = "";
+          return;
+        }
+
+        let tex = raw;
+        const explicitDisplayOrEnv = /^(\$\$|\\\[|\\begin\{)/.test(raw);
+        const looksMultiline = raw.includes("\\\\") || raw.includes("\n");
+
+        if (!explicitDisplayOrEnv) {
+          if (looksMultiline) {
+            tex = "\\begin{gather*}\n" + raw + "\n\\end{gather*}";
+          } else {
+            tex = "\\[" + raw + "\\]";
+          }
+        }
+
+        if (!outputElement) return;
+        outputElement.textContent = tex;
+
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([outputElement]).catch((err) =>
+            console.error(err)
+          );
         }
       }
 
-      outputElement.textContent = tex;
+      function insertAtCursor(textarea, text) {
+        if (!textarea) return;
+        const start = textarea.selectionStart != null ? textarea.selectionStart : textarea.value.length;
+        const end   = textarea.selectionEnd != null ? textarea.selectionEnd : textarea.value.length;
+        const value = textarea.value;
 
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([outputElement]).catch((err) =>
-          console.error(err)
-        );
+        textarea.value = value.slice(0, start) + text + value.slice(end);
+        const newPos = start + text.length;
+
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = newPos;
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
       }
-    }
 
-    function insertAtCursor(textarea, text) {
-      if (!textarea) return;
-      const start = textarea.selectionStart ?? textarea.value.length;
-      const end = textarea.selectionEnd ?? textarea.value.length;
-      const value = textarea.value;
+      // ---------- Notes textareas ----------
+      const allTextareas = document.querySelectorAll(".latex-input");
+      allTextareas.forEach((ta) => {
+        ta.addEventListener("input", () => {
+          const box = ta.closest(".group-notes");
+          if (!box) return;
+          const out = box.querySelector(".rendered-output");
+          renderBlockTeX(ta, out);
+        });
 
-      textarea.value = value.slice(0, start) + text + value.slice(end);
-      const newPos = start + text.length;
+        ta.addEventListener("keydown", (e) => {
+          if (e.key === "\\") {
+            e.preventDefault();
 
-      textarea.focus();
-      textarea.selectionStart = textarea.selectionEnd = newPos;
-      textarea.dispatchEvent(new Event("input", { bubbles: true }));
-    }
+            const rect = ta.getBoundingClientRect();
+            const x = rect.left + window.scrollX + 40;
+            const y = rect.top + window.scrollY + 20;
 
-    let activeTextarea = null;
+            const pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+            const value = ta.value;
 
-    // ---------- Notes textareas: focus, live render, backslash trigger ----------
-    const allTextareas = document.querySelectorAll(".latex-input");
-    allTextareas.forEach((ta) => {
-      ta.addEventListener("focus", () => {
-        activeTextarea = ta;
-      });
-      ta.addEventListener("click", () => {
-        activeTextarea = ta;
-      });
-      ta.addEventListener("input", () => {
-        const out = ta.closest(".group-notes").querySelector(".rendered-output");
-        renderBlockTeX(ta, out);
-      });
-
-      ta.addEventListener("keydown", (e) => {
-        if (e.key === "\\") {
-          e.preventDefault();
-
-          const rect = ta.getBoundingClientRect();
-          const x = rect.left + window.scrollX + 40;
-          const y = rect.top + window.scrollY + 20;
-
-          const pos = ta.selectionStart ?? ta.value.length;
-          const value = ta.value;
-
-          // Optional: infer initial query based on previous backslash
-          let initialQuery = "";
-          const lastBackslash = value.lastIndexOf("\\", pos - 1);
-          if (lastBackslash !== -1 && lastBackslash < pos) {
-            initialQuery = value.slice(lastBackslash + 1, pos);
-          }
-
-          showSymbolPopup({
-            x,
-            y,
-            initialQuery,
-            onSelect(symbol) {
-              // we treat "\" purely as a trigger; we only insert the symbol latex
-              insertAtCursor(ta, symbol.latex);
+            let initialQuery = "";
+            const lastBackslash = value.lastIndexOf("\\", pos - 1);
+            if (lastBackslash !== -1 && lastBackslash < pos) {
+              initialQuery = value.slice(lastBackslash + 1, pos);
             }
+
+            if (window.showSymbolPopup) {
+              window.showSymbolPopup({
+                x,
+                y,
+                initialQuery,
+                onSelect(symbol) {
+                  insertAtCursor(ta, symbol.latex);
+                }
+              });
+            } else {
+              // fallback: just insert a backslash if React isn't ready
+              insertAtCursor(ta, "\\");
+            }
+          }
+        });
+
+        // initial render
+        const box = ta.closest(".group-notes");
+        if (box) {
+          const out = box.querySelector(".rendered-output");
+          renderBlockTeX(ta, out);
+        }
+      });
+
+      // ---------- Copy buttons ----------
+      const noteGroups = document.querySelectorAll(".group-notes");
+      noteGroups.forEach((group) => {
+        const section  = group.closest(".problem-group");
+        const textarea = group.querySelector(".latex-input");
+        const button   = group.querySelector(".copy-btn");
+
+        if (!button || !textarea || !section) return;
+
+        button.addEventListener("click", async () => {
+          const problems = Array.from(
+            section.querySelectorAll(":scope > p")
+          ).map((p) => p.textContent.trim());
+
+          const problemBlock =
+            "Problems:\n" +
+            problems.map((t, i) => `${i + 1}. ${t}`).join("\n") +
+            "\n\n";
+
+          const latex = textarea.value.trim();
+          const notesBlock = "Notes (LaTeX):\n" + latex + "\n";
+
+          const combined = problemBlock + notesBlock;
+
+          try {
+            await navigator.clipboard.writeText(combined);
+            button.classList.add("copied");
+            setTimeout(() => button.classList.remove("copied"), 1200);
+          } catch (err) {
+            console.error("Clipboard error:", err);
+            alert("Copy failed – your browser may block clipboard access.");
+          }
+        });
+      });
+
+      // ---------- Drawing canvases ----------
+      const canvases = document.querySelectorAll(".note-canvas");
+      canvases.forEach((canvas) => {
+        const ctx = canvas.getContext("2d");
+        const clearBtn = canvas.closest(".canvas-block").querySelector(".clear-canvas");
+
+        function resizeCanvas() {
+          const rect = canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+
+          canvas.width  = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          ctx.lineWidth = 2;
+        }
+
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        let drawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function getPos(evt) {
+          const rect = canvas.getBoundingClientRect();
+          if (evt.touches && evt.touches[0]) {
+            return {
+              x: evt.touches[0].clientX - rect.left,
+              y: evt.touches[0].clientY - rect.top
+            };
+          } else {
+            return {
+              x: evt.clientX - rect.left,
+              y: evt.clientY - rect.top
+            };
+          }
+        }
+
+        function startDraw(evt) {
+          evt.preventDefault();
+          drawing = true;
+          const pos = getPos(evt);
+          lastX = pos.x;
+          lastY = pos.y;
+        }
+
+        function draw(evt) {
+          if (!drawing) return;
+          evt.preventDefault();
+          const pos = getPos(evt);
+          ctx.beginPath();
+          ctx.moveTo(lastX, lastY);
+          ctx.lineTo(pos.x, pos.y);
+          ctx.stroke();
+          lastX = pos.x;
+          lastY = pos.y;
+        }
+
+        function endDraw(evt) {
+          if (!drawing) return;
+          evt.preventDefault();
+          drawing = false;
+        }
+
+        canvas.addEventListener("mousedown", startDraw);
+        canvas.addEventListener("mousemove", draw);
+        window.addEventListener("mouseup", endDraw);
+
+        canvas.addEventListener("touchstart", startDraw, { passive: false });
+        canvas.addEventListener("touchmove", draw, { passive: false });
+        canvas.addEventListener("touchend", endDraw, { passive: false });
+        canvas.addEventListener("touchcancel", endDraw, { passive: false });
+
+        if (clearBtn) {
+          clearBtn.addEventListener("click", () => {
+            const rect = canvas.getBoundingClientRect();
+            ctx.clearRect(0, 0, rect.width, rect.height);
           });
         }
       });
-
-      // initial render (if any default text)
-      const out = ta.closest(".group-notes").querySelector(".rendered-output");
-      renderBlockTeX(ta, out);
     });
-
-    // ---------- Per-group: copy problems + notes ----------
-    const noteGroups = document.querySelectorAll(".group-notes");
-    noteGroups.forEach((group) => {
-      const section = group.closest(".problem-group");
-      const textarea = group.querySelector(".latex-input");
-      const button = group.querySelector(".copy-btn");
-
-      button.addEventListener("click", async () => {
-        const problems = Array.from(
-          section.querySelectorAll(":scope > p")
-        ).map((p) => p.textContent.trim());
-
-        const problemBlock =
-          "Problems:\n" +
-          problems.map((t, i) => `${i + 1}. ${t}`).join("\n") +
-          "\n\n";
-
-        const latex = textarea.value.trim();
-        const notesBlock = "Notes (LaTeX):\n" + latex + "\n";
-
-        const combined = problemBlock + notesBlock;
-
-        try {
-          await navigator.clipboard.writeText(combined);
-          button.classList.add("copied");
-          setTimeout(() => button.classList.remove("copied"), 1200);
-        } catch (err) {
-          console.error("Clipboard error:", err);
-          alert("Copy failed – your browser may block clipboard access.");
-        }
-      });
-    });
-
-    // ---------- Drawing canvases ----------
-    const canvases = document.querySelectorAll(".note-canvas");
-    canvases.forEach((canvas) => {
-      const ctx = canvas.getContext("2d");
-      const clearBtn = canvas.closest(".canvas-block").querySelector(".clear-canvas");
-
-      function resizeCanvas() {
-        const rect = canvas.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
-
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.scale(dpr, dpr);
-
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 2;
-      }
-
-      resizeCanvas();
-      window.addEventListener("resize", resizeCanvas);
-
-      let drawing = false;
-      let lastX = 0;
-      let lastY = 0;
-
-      function getPos(evt) {
-        const rect = canvas.getBoundingClientRect();
-        if (evt.touches && evt.touches[0]) {
-          return {
-            x: evt.touches[0].clientX - rect.left,
-            y: evt.touches[0].clientY - rect.top
-          };
-        } else {
-          return {
-            x: evt.clientX - rect.left,
-            y: evt.clientY - rect.top
-          };
-        }
-      }
-
-      function startDraw(evt) {
-        evt.preventDefault();
-        drawing = true;
-        const pos = getPos(evt);
-        lastX = pos.x;
-        lastY = pos.y;
-      }
-
-      function draw(evt) {
-        if (!drawing) return;
-        evt.preventDefault();
-        const pos = getPos(evt);
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        lastX = pos.x;
-        lastY = pos.y;
-      }
-
-      function endDraw(evt) {
-        if (!drawing) return;
-        evt.preventDefault();
-        drawing = false;
-      }
-
-      canvas.addEventListener("mousedown", startDraw);
-      canvas.addEventListener("mousemove", draw);
-      window.addEventListener("mouseup", endDraw);
-
-      canvas.addEventListener("touchstart", startDraw, { passive: false });
-      canvas.addEventListener("touchmove", draw, { passive: false });
-      canvas.addEventListener("touchend", endDraw, { passive: false });
-      canvas.addEventListener("touchcancel", endDraw, { passive: false });
-
-      clearBtn.addEventListener("click", () => {
-        const rect = canvas.getBoundingClientRect();
-        ctx.clearRect(0, 0, rect.width, rect.height);
-      });
-    });
-  });
-</script>
-
-
+  </script>
 
 </body>
 </html>
