@@ -190,70 +190,6 @@
       transform: translateY(0);
       box-shadow: none;
     }
-
-    /* ===== Global floating LaTeX toolbar (right side) ===== */
-    #global-toolbar-container {
-      position: fixed;
-      top: 6rem;
-      right: 1rem;
-      z-index: 1000;
-      max-height: calc(100vh - 8rem);
-      width: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
-      border-radius: 8px;
-      background: #ffffffee;
-      backdrop-filter: blur(4px);
-    }
-
-    #global-toolbar-header {
-      font-size: 0.7rem;
-      text-align: center;
-      padding: 0.3rem 0.2rem;
-      border-bottom: 1px solid #ddd;
-      background: #f5f5f5;
-      border-radius: 8px 8px 0 0;
-    }
-
-    #global-latex-toolbar {
-      padding: 0.3rem;
-      overflow-y: auto;
-    }
-
-    .latex-btn {
-      display: block;
-      width: 100%;
-      padding: 0.2rem 0.1rem;
-      margin-bottom: 0.2rem;
-      font-size: 0.8rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-      cursor: pointer;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .latex-btn:hover {
-      background: #e8e8ff;
-    }
-
-    .latex-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* Mobile-ish: shrink toolbar & move slightly */
-    @media (max-width: 768px) {
-      #global-toolbar-container {
-        top: auto;
-        bottom: 1rem;
-        right: 0.5rem;
-        width: 60px;
-        max-height: 60vh;
-      }
-    }
   </style>
 
   <!-- MathJax for LaTeX rendering -->
@@ -277,12 +213,6 @@
   <header>
     <h1>Sets – Beamer Slides & Problem Set</h1>
   </header>
-
-  <!-- Global floating LaTeX toolbar -->
-  <div id="global-toolbar-container">
-    <div id="global-toolbar-header">LaTeX</div>
-    <div id="global-latex-toolbar"></div>
-  </div>
 
   <main>
     <!-- PDF viewer -->
@@ -310,7 +240,7 @@
         <div class="note-section">
           <div class="note">
             Type LaTeX notes here. The preview updates automatically.
-            Click in this box, then use the right-side toolbar to insert symbols.
+            Click in this box, then use the backslash shortcut to open the symbol popup.
           </div>
           <textarea id="note-latex"
                     class="latex-input"
@@ -357,8 +287,268 @@
     </section>
   </main>
 
+  <!-- Root for the React symbol popup -->
+  <div id="symbol-popup-root"></div>
+
+  <!-- React + ReactDOM + Babel (for JSX popup) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- React + JSX: popup component + showSymbolPopup (same behavior as Logic Level 1) -->
+  <script type="text/babel" data-presets="env,react">
+    // ---------- Symbol data ----------
+    window.SYMBOLS = [];
+
+    // ---------- Simple search ----------
+    function searchSymbols(symbols, query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        return [...symbols]
+          .sort((a, b) => (b.priority || 0) - (a.priority || 0))
+          .slice(0, 20);
+      }
+
+      return symbols
+        .map((s) => {
+          const haystack = [
+            s.label,
+            s.latex,
+            ...(s.keywords || []),
+            ...(s.categories || [])
+          ].join(" ").toLowerCase();
+
+          if (!haystack.includes(q)) return null;
+
+          let score = s.priority || 0;
+
+          if (s.latex.toLowerCase().startsWith("\\" + q)) score += 0.7;
+          if ((s.keywords || []).some((k) => k.toLowerCase() === q)) score += 0.5;
+          if (s.label.toLowerCase() === q) score += 0.4;
+
+          const idx = haystack.indexOf(q);
+          if (idx >= 0) score += Math.max(0, 0.3 - idx / 50);
+
+          return { s, score };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score)
+        .map((x) => x.s)
+        .slice(0, 20);
+    }
+
+    const SymbolPopup = ({ x, y, initialQuery = "", onSelect, onClose }) => {
+      const [query, setQuery] = React.useState(initialQuery);
+      const [highlightIndex, setHighlightIndex] = React.useState(0);
+      const containerRef = React.useRef(null);
+      const inputRef = React.useRef(null);
+
+      const results = React.useMemo(
+        () => searchSymbols(window.SYMBOLS || [], query),
+        [query]
+      );
+
+      React.useEffect(() => {
+        setQuery(initialQuery);
+        setHighlightIndex(0);
+      }, [initialQuery]);
+
+      React.useEffect(() => {
+        if (inputRef.current) {
+          setTimeout(() => inputRef.current.focus(), 0);
+        }
+      }, []);
+
+      React.useEffect(() => {
+        function handleClickOutside(e) {
+          if (!containerRef.current) return;
+          if (!containerRef.current.contains(e.target)) {
+            onClose();
+          }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+      }, [onClose]);
+
+      const handleKeyDown = (e) => {
+        const count = results.length;
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (count === 0) return;
+          setHighlightIndex((prev) => (prev + 1) % count);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (count === 0) return;
+          setHighlightIndex((prev) => (prev - 1 + count) % count);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (count === 0) return;
+          onSelect(results[highlightIndex]);
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          onClose();
+        }
+      };
+
+      return (
+        <div
+          ref={containerRef}
+          style={{
+            position: "absolute",
+            left: x,
+            top: y,
+            zIndex: 9999,
+            minWidth: 260,
+            maxWidth: 360,
+            background: "#fff",
+            border: "1px solid #ddd",
+            borderRadius: 6,
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+            padding: 8,
+            fontFamily:
+              'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            fontSize: 13
+          }}
+        >
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setHighlightIndex(0);
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder="Search symbol or LaTeX…"
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "4px 6px",
+              marginBottom: 6,
+              borderRadius: 4,
+              border: "1px solid #ccc",
+              outline: "none"
+            }}
+          />
+
+          <div style={{ maxHeight: 260, overflowY: "auto" }}>
+            {results.map((sym, idx) => (
+              <div
+                key={sym.latex + idx}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "4px 6px",
+                  borderRadius: 4,
+                  background: idx === highlightIndex ? "#eef3ff" : "transparent",
+                  cursor: "pointer"
+                }}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  onSelect(sym);
+                }}
+              >
+                <span
+                  style={{
+                    width: 32,
+                    textAlign: "center",
+                    fontSize: 18,
+                    marginRight: 6
+                  }}
+                >
+                  {sym.label}
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                    overflow: "hidden"
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "monospace",
+                      fontSize: 12,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis"
+                    }}
+                  >
+                    {sym.latex}
+                  </span>
+                  {sym.keywords && sym.keywords.length > 0 && (
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: "#777",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}
+                    >
+                      {sym.keywords.slice(0, 4).join(", ")}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {results.length === 0 && (
+              <div
+                style={{
+                  padding: "4px 6px",
+                  fontSize: 12,
+                  color: "#888"
+                }}
+              >
+                No matches
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    const popupRoot = ReactDOM.createRoot(
+      document.getElementById("symbol-popup-root")
+    );
+
+    window.showSymbolPopup = function ({ x, y, initialQuery, onSelect }) {
+      const handleSelect = (symbol) => {
+        onSelect(symbol);
+        popupRoot.render(null);
+      };
+      const handleClose = () => {
+        popupRoot.render(null);
+      };
+
+      popupRoot.render(
+        <SymbolPopup
+          x={x}
+          y={y}
+          initialQuery={initialQuery}
+          onSelect={handleSelect}
+          onClose={handleClose}
+        />
+      );
+    };
+  </script>
+
+  <!-- Plain JS: MathJax, copy, canvas, and backslash-triggered popup -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      // Load symbols.json (same pattern as Logic Level 1)
+      fetch("../../symbols.json")
+        .then((res) => res.json())
+        .then((data) => {
+          window.SYMBOLS = Array.isArray(data) ? data : (data.symbols || []);
+          console.log("Loaded symbols:", window.SYMBOLS.length);
+        })
+        .catch((err) => {
+          console.error("Failed to load symbols.json", err);
+          window.SYMBOLS = [];
+        });
+
       // Render textarea contents as *block* TeX and
       // auto-wrap multi-line input in a gather* environment.
       function renderBlockTeX(textarea, outputElement) {
@@ -370,11 +560,7 @@
 
         let tex = raw;
 
-        // If the user explicitly starts with display delimiters or an environment,
-        // respect that and do NOT auto-wrap.
         const explicitDisplayOrEnv = /^(\$\$|\\\[|\\begin\{)/.test(raw);
-
-        // Detect "multi-line-like" content: either explicit \\ or actual newlines.
         const looksMultiline = raw.includes("\\\\") || raw.includes("\n");
 
         if (!explicitDisplayOrEnv) {
@@ -385,7 +571,6 @@
           }
         }
 
-        // Use textContent so MathJax receives raw TeX, not HTML.
         outputElement.textContent = tex;
 
         if (window.MathJax && MathJax.typesetPromise) {
@@ -405,65 +590,8 @@
 
         textarea.focus();
         textarea.selectionStart = textarea.selectionEnd = newPos;
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
       }
-
-      // Symbol buttons data
-      const SYMBOL_BUTTONS = [
-        // Logic / basic
-        { label: "⇒", code: "\\Rightarrow" },
-        { label: "⇐", code: "\\Leftarrow" },
-        { label: "⇔", code: "\\Leftrightarrow" },
-        { label: "∈", code: "\\in" },
-        { label: "∉", code: "\\notin" },
-        { label: "=", code: "=" },
-        { label: "≠", code: "\\neq" },
-        { label: "⊨", code: "\\models" },
-        { label: "⊭", code: "\\not\models" },
-        { label: "Σ", code: "\\Sigma" },
-        { label: "τ", code: "\\tau" },
-
-        // Sets
-        { label: "∅", code: "\\varnothing" },
-        { label: "{", code: "\\{" },
-        { label: "}", code: "\\}" },
-        { label: "{x | …}", code: "\\{x \\mid \\dots\\}" },
-        { label: "⊆", code: "\\subseteq" },
-        { label: "𝒫A", code: "\\mathcal{P}A" },
-        { label: "∪", code: "\\cup" },
-        { label: "∩", code: "\\cap" },
-        { label: "⋃A", code: "\\bigcup A" },
-        { label: "⋂A", code: "\\bigcap A" },
-        { label: "⋃ₙ Aₙ", code: "\\bigcup_{n\\in\\mathbb{N}} A_n" },
-
-        // Number systems / dots
-        { label: "ℕ", code: "\\mathbb{N}" },
-        { label: "ℤ", code: "\\mathbb{Z}" },
-        { label: "ℝ", code: "\\mathbb{R}" },
-        { label: "0,1,2,…", code: "0,1,2,\\ldots" },
-        { label: "…", code: "\\ldots" },
-
-        // Tuples / products
-        { label: "⟨x,y⟩", code: "\\langle x,y\\rangle" },
-        { label: "⟨x₁,…,xₙ⟩", code: "\\langle x_1,\\ldots,x_n\\rangle" },
-        { label: "A×B", code: "A \\times B" },
-        { label: "Aⁿ", code: "A^n" },
-        { label: "⟨⟨x,y⟩,z⟩", code: "\\langle\\langle x,y\\rangle,z\\rangle" },
-
-        // Order / functions / arithmetic
-        { label: "<", code: "<" },
-        { label: "≤", code: "\\leq" },
-        { label: "→", code: "\\rightarrow" },
-        { label: "f∘g", code: "f \\circ g" },
-        { label: "+", code: "+" },
-        { label: "2^{f(a₀)+1}", code: "2^{f(a_0)+1}" },
-
-        // dom / ran / fld / Id / [x]
-        { label: "dom R", code: "\\operatorname{dom} R" },
-        { label: "ran R", code: "\\operatorname{ran} R" },
-        { label: "fld R", code: "\\text{fld}\\,R" },
-        { label: "Id", code: "\\mathrm{Id}" },
-        { label: "[x]", code: "[x]" }
-      ];
 
       /* --------- Note board: LaTeX area ---------- */
       const noteTextarea = document.getElementById("note-latex");
@@ -474,15 +602,6 @@
         renderBlockTeX(noteTextarea, noteRender);
       }
 
-      // Track active textarea (only one here, but keeps parity with level pages)
-      let activeTextarea = noteTextarea;
-
-      noteTextarea.addEventListener("focus", () => {
-        activeTextarea = noteTextarea;
-      });
-      noteTextarea.addEventListener("click", () => {
-        activeTextarea = noteTextarea;
-      });
       noteTextarea.addEventListener("input", renderNotes);
 
       copyNotesBtn.addEventListener("click", async () => {
@@ -498,23 +617,60 @@
         }
       });
 
-      /* --------- Build global toolbar ---------- */
-      const globalToolbar = document.getElementById("global-latex-toolbar");
-      SYMBOL_BUTTONS.forEach(sym => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "latex-btn";
-        btn.textContent = sym.label;
-        btn.setAttribute("data-latex", sym.code);
-        globalToolbar.appendChild(btn);
-      });
+      // ---------- Backslash shortcut → symbol popup (same as Level 1) ----------
+      function openPopupAtTextareaCursor(ta) {
+        const rect = ta.getBoundingClientRect();
+        const x = rect.left + window.scrollX + 40;
+        const y = rect.top + window.scrollY + 20;
 
-      globalToolbar.addEventListener("click", (evt) => {
-        const target = evt.target.closest(".latex-btn");
-        if (!target || !activeTextarea) return;
-        const code = target.getAttribute("data-latex") || "";
-        insertAtCursor(activeTextarea, code);
-        renderNotes();
+        const pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+        const value = ta.value;
+
+        let initialQuery = "";
+        const lastBackslash = value.lastIndexOf("\\", pos - 1);
+        if (lastBackslash !== -1 && lastBackslash < pos) {
+          initialQuery = value.slice(lastBackslash + 1, pos);
+        }
+
+        if (window.showSymbolPopup) {
+          window.showSymbolPopup({
+            x,
+            y,
+            initialQuery,
+            onSelect(symbol) {
+              insertAtCursor(ta, symbol.latex);
+            }
+          });
+        }
+      }
+
+      let lastBackslashTime = 0;
+
+      noteTextarea.addEventListener("keydown", (e) => {
+        if (e.key === "\\") {
+          const now = Date.now();
+
+          if (now - lastBackslashTime < 250) {
+            e.preventDefault(); // don't type this second "\"
+
+            const pos = noteTextarea.selectionStart != null
+              ? noteTextarea.selectionStart
+              : noteTextarea.value.length;
+            const value = noteTextarea.value;
+
+            if (pos > 0 && value[pos - 1] === "\\") {
+              noteTextarea.value = value.slice(0, pos - 1) + value.slice(pos);
+              noteTextarea.selectionStart = noteTextarea.selectionEnd = pos - 1;
+              noteTextarea.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+
+            openPopupAtTextareaCursor(noteTextarea);
+            lastBackslashTime = 0;
+            return;
+          }
+
+          lastBackslashTime = now;
+        }
       });
 
       /* --------- Note board: drawing canvas ---------- */
@@ -526,7 +682,6 @@
         const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
 
-        // Reset transform before changing width/height to avoid compounding scale
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
         canvas.width  = rect.width * dpr;
