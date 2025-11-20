@@ -809,16 +809,45 @@
   <script type="text/babel" data-presets="env,react">
     // ---------- Symbol data (you can expand this later) ----------
     window.SYMBOLS = [];
+    window.RECENT_SYMBOLS = [];
 
     // ---------- Simple search ----------
     function searchSymbols(symbols, query) {
       const q = query.trim().toLowerCase();
+
+      const recentList = Array.isArray(window.RECENT_SYMBOLS)
+        ? window.RECENT_SYMBOLS
+        : [];
+      const recentSet = new Set(recentList);
+
+      // ---------- Case 1: empty query → show recent first ----------
       if (!q) {
-        return [...symbols]
-          .sort((a, b) => (b.priority || 0) - (a.priority || 0))
-          .slice(0, 20);
+        const seen = new Set();
+        const recent = [];
+        const others = [];
+
+        // 1) Put recents first, in recency order
+        for (const latex of recentList) {
+          const sym = symbols.find((s) => s.latex === latex);
+          if (sym && !seen.has(sym.latex)) {
+            recent.push(sym);
+            seen.add(sym.latex);
+          }
+        }
+
+        // 2) Then all other symbols, sorted by priority
+        for (const s of symbols) {
+          if (!seen.has(s.latex)) {
+            others.push(s);
+          }
+        }
+
+        others.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+
+        return [...recent, ...others].slice(0, 20);
       }
 
+      // ---------- Case 2: non-empty query → scoring with recency boost ----------
       return symbols
         .map((s) => {
           const haystack = [
@@ -831,6 +860,13 @@
           if (!haystack.includes(q)) return null;
 
           let score = s.priority || 0;
+
+          // Strong boost if this is a recent symbol
+          const recIndex = recentList.indexOf(s.latex);
+          if (recIndex !== -1) {
+            const recencyWeight = 1.0 + (recentList.length - recIndex) * 0.05;
+            score += recencyWeight;
+          }
 
           if (s.latex.toLowerCase().startsWith("\\" + q)) score += 0.7;
           if ((s.keywords || []).some((k) => k.toLowerCase() === q)) score += 0.5;
@@ -847,22 +883,24 @@
         .slice(0, 20);
     }
 
+
     // ---------- React popup component ----------
     const SymbolPopup = ({ x, y, initialQuery = "", onSelect, onClose }) => {
-      const [query, setQuery] = React.useState(initialQuery);
-      const [highlightIndex, setHighlightIndex] = React.useState(0);
-      const containerRef = React.useRef(null);
-      const inputRef = React.useRef(null);
+        const [query, setQuery] = React.useState("");
+        const [highlightIndex, setHighlightIndex] = React.useState(0);
+        const containerRef = React.useRef(null);
+        const inputRef = React.useRef(null);
 
-      const results = React.useMemo(
-        () => searchSymbols(window.SYMBOLS || [], query),
-        [query]
-      );
+        const results = React.useMemo(
+          () => searchSymbols(window.SYMBOLS || [], query),
+          [query]
+        );
 
-      React.useEffect(() => {
-        setQuery(initialQuery);
-        setHighlightIndex(0);
-      }, [initialQuery]);
+        React.useEffect(() => {
+          if (inputRef.current) {
+            setTimeout(() => inputRef.current.focus(), 0);
+          }
+        }, []);
 
       React.useEffect(() => {
         if (inputRef.current) {
@@ -1027,9 +1065,32 @@
 
     window.showSymbolPopup = function ({ x, y, initialQuery, onSelect }) {
       const handleSelect = (symbol) => {
+        // --- Update recent list (per session, in-memory) ---
+        if (!Array.isArray(window.RECENT_SYMBOLS)) {
+          window.RECENT_SYMBOLS = [];
+        }
+        const arr = window.RECENT_SYMBOLS;
+        const latex = symbol.latex;
+
+        // Remove if already present
+        const existingIndex = arr.indexOf(latex);
+        if (existingIndex !== -1) {
+          arr.splice(existingIndex, 1);
+        }
+        // Add to front
+        arr.unshift(latex);
+        // Keep list bounded (e.g. last 30 unique symbols)
+        if (arr.length > 30) {
+          arr.length = 30;
+        }
+
+        // Pass selection back to caller (inserts in textarea, etc.)
         onSelect(symbol);
+
+        // Close popup
         popupRoot.render(null);
       };
+
       const handleClose = () => {
         popupRoot.render(null);
       };
@@ -1044,6 +1105,7 @@
         />
       );
     };
+
   </script>
 
   <!-- Plain JS: MathJax rendering, copy, canvas, backslash trigger -->
