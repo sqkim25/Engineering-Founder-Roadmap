@@ -901,6 +901,20 @@
       "keywords": ["equivalence class", "class of x", "brackets"],
       "categories": ["relations", "equivalence"],
       "priority": 0.9
+    },
+    {
+      "label": "a/b",
+      "latex": "\\frac{}{}",
+      "keywords": ["fraction", "divide", "ratio", "a over b"],
+      "categories": ["arithmetic", "algebra"],
+      "priority": 0.9
+    },
+    {
+      "label": "𝓟",
+      "latex": "\\mathcal{P}",
+      "keywords": ["power set", "script P", "mathcal P"],
+      "categories": ["sets", "notation"],
+      "priority": 0.9
     }
   ]
 }
