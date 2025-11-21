@@ -1,0 +1,486 @@
+\documentclass[11pt]{article}
+\usepackage[sexy]{evan} % remove [sexy] if you don't want colored headings
+\fancyhead[L]{}
+
+\title{Useful Facts About Sets}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{I. Preliminaries and Notation}
+
+\subsection{Standard abbreviations}
+
+\begin{remark}
+Throughout this chapter we use several common abbreviations:
+\begin{itemize}
+  \item ``If \(\dots\), then \(\dots\)'' may be written as \(P \Rightarrow Q\).
+  \item The converse implication is written \(Q \Leftarrow P\).
+  \item ``If and only if'' is abbreviated as ``iff'', or \(P \Leftrightarrow Q\).
+  \item ``Therefore'' may be written as \(\therefore\).
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Negation rule]
+We apply negation directly to symbols:
+\[
+x = y \quad\Longrightarrow\quad x \neq y,
+\qquad
+x \in A \quad\Longrightarrow\quad x \notin A.
+\]
+This convention extends to any symbol introduced later.
+For example, once \(\Sigma \models \tau\) is defined, its negation is written \(\Sigma \not\models \tau\).
+\end{remark}
+
+\section{II. Sets and the Extensionality Principle}
+
+\subsection{What is a set?}
+
+\begin{definition}
+A \emph{set} is a collection of objects, called its \emph{elements}.
+We use:
+\[
+t \in A \text{ to mean that $t$ is an element of $A$}, \qquad
+t \notin A \text{ to mean that $t$ is not an element of $A$},
+\]
+and
+\[
+x = y \text{ to mean that $x$ and $y$ name the same object.}
+\]
+\end{definition}
+
+\begin{remark}
+If \(A = B\), then for every object \(t\),
+\[
+t \in A \iff t \in B.
+\]
+\end{remark}
+
+\subsection{Fundamental characterization}
+
+\begin{proposition}[Extensionality]
+If \(A\) and \(B\) are sets such that
+\[
+\forall t \; (t \in A \iff t \in B),
+\]
+then \(A = B\).
+\end{proposition}
+
+\begin{remark}
+This expresses the idea that a set is completely determined by its members.
+\end{remark}
+
+\section{III. Basic Constructions}
+
+\subsection{Adjoining an element}
+
+\begin{definition}
+For any set \(A\) and any object \(t\), define
+\[
+A ; t \coloneqq A \cup \{t\}.
+\]
+This is the set whose elements are the elements of \(A\), together with the (possibly new) element \(t\).
+\end{definition}
+
+\begin{proposition}
+For any set \(A\) and any object \(t\),
+\[
+t \in A \iff A ; t = A.
+\]
+\end{proposition}
+
+\section{IV. Common Sets and Notation}
+
+\subsection{Special sets}
+
+\begin{definition}
+\begin{itemize}
+  \item The \emph{empty set} \(\varnothing\) is the set with no elements.
+  \item For any object \(x\), the \emph{singleton} \(\{x\}\) is the set whose only element is \(x\).
+  \item For any finite list of objects \(x_1,\dots,x_n\), the set
+  \[
+    \{x_1,\dots,x_n\}
+  \]
+  has exactly those objects as elements.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+For any objects \(x,y\),
+\[
+\{x,y\} = \{y,x\},
+\]
+since order does not matter for sets.
+\end{remark}
+
+\subsection{Infinite sets}
+
+\begin{definition}
+We use the standard notations
+\[
+\mathbb N = \{0,1,2,\dots\}
+\]
+for the set of natural numbers, and
+\[
+\mathbb Z = \{\dots,-2,-1,0,1,2,\dots\}
+\]
+for the set of all integers.
+\end{definition}
+
+\section{V. Sets Specified by Properties}
+
+\subsection{Set-builder notation}
+
+\begin{definition}
+Given a property \(P(x)\), the set
+\[
+\{x \mid P(x)\}
+\]
+is the set of all objects \(x\) such that \(P(x)\) holds.
+\end{definition}
+
+\begin{example}
+\begin{itemize}
+  \item \(\{x \in A \mid P(x)\}\) is the set of all elements \(x\) in \(A\) that satisfy \(P(x)\).
+  \item \(\{\langle m,n\rangle \mid m < n \text{ in } \mathbb N\}\) is the set of all ordered pairs of natural numbers where the first component is smaller than the second.
+\end{itemize}
+\end{example}
+
+\section{VI. Subsets and Power Sets}
+
+\subsection{Subsets}
+
+\begin{definition}
+A set \(A\) is a \emph{subset} of a set \(B\), written \(A \subseteq B\), if
+\[
+\forall x \; (x \in A \implies x \in B).
+\]
+\end{definition}
+
+\begin{remark}
+Every set is a subset of itself, and \(\varnothing \subseteq A\) for every set \(A\).
+The statement \(\varnothing \subseteq A\) is often called ``vacuously true''.
+\end{remark}
+
+\subsection{Power set}
+
+\begin{definition}
+For any set \(A\), the \emph{power set} of \(A\) is
+\[
+\mathcal P(A) = \{x \mid x \subseteq A\},
+\]
+the set of all subsets of \(A\).
+\end{definition}
+
+\begin{example}
+We have
+\[
+\mathcal P(\varnothing) = \{\varnothing\},
+\qquad
+\mathcal P(\{\varnothing\}) = \{\varnothing,\{\varnothing\}\}.
+\]
+\end{example}
+
+\section{VII. Union and Intersection}
+
+\subsection{Binary operations}
+
+\begin{definition}
+For sets \(A\) and \(B\),
+\[
+A \cup B = \{x \mid x \in A \text{ or } x \in B\},
+\]
+the \emph{union} of \(A\) and \(B\), and
+\[
+A \cap B = \{x \mid x \in A \text{ and } x \in B\},
+\]
+the \emph{intersection} of \(A\) and \(B\).
+\end{definition}
+
+\begin{definition}
+Sets \(A\) and \(B\) are \emph{disjoint} if
+\[
+A \cap B = \varnothing.
+\]
+A family of sets is \emph{pairwise disjoint} if any two distinct sets in the family are disjoint.
+\end{definition}
+
+\subsection{Indexed unions and intersections}
+
+\begin{definition}
+Let \(\mathcal A\) be a set whose elements are themselves sets. Then
+\[
+\bigcup \mathcal A = \{x \mid \exists S \in \mathcal A,\; x \in S\}
+\]
+is the \emph{union} of all members of \(\mathcal A\), and
+\[
+\bigcap \mathcal A = \{x \mid \forall S \in \mathcal A,\; x \in S\}
+\]
+is the \emph{intersection} of all members of \(\mathcal A\) (when it makes sense to consider it).
+\end{definition}
+
+\begin{example}
+If
+\[
+\mathcal A = \{\{0,1,5\},\{1,6\},\{1,5\}\},
+\]
+then
+\[
+\bigcup \mathcal A = \{0,1,5,6\},
+\qquad
+\bigcap \mathcal A = \{1\}.
+\]
+\end{example}
+
+\begin{remark}
+When we have a family \((A_n)_{n \in \mathbb N}\) of sets indexed by natural numbers, we often write
+\[
+\bigcup_{n \in \mathbb N} A_n
+\]
+instead of \(\bigcup \{A_n \mid n \in \mathbb N\}\).
+\end{remark}
+
+\section{VIII. Ordered Pairs and Sequences}
+
+\subsection{Ordered pairs}
+
+\begin{definition}[Kuratowski]
+The \emph{ordered pair} \(\langle x,y\rangle\) of objects \(x\) and \(y\) is defined by
+\[
+\langle x,y\rangle \coloneqq \{\{x\},\{x,y\}\}.
+\]
+\end{definition}
+
+\begin{proposition}
+For any objects \(x,y,u,v\),
+\[
+\langle x,y\rangle = \langle u,v\rangle
+\quad\Longleftrightarrow\quad
+(x = u \text{ and } y = v).
+\]
+\end{proposition}
+
+\subsection{\texorpdfstring{$n$}{n}-tuples}
+
+\begin{definition}
+Define \(n\)-tuples recursively by
+\[
+\langle x_1,\dots,x_{n+1}\rangle
+\coloneqq
+\big\langle \langle x_1,\dots,x_n\rangle, x_{n+1} \big\rangle
+\]
+for \(n \ge 1\).  A \emph{finite sequence} of members of a set \(A\) is an \(n\)-tuple
+\(\langle x_1,\dots,x_n\rangle\) with each \(x_i \in A\).
+\end{definition}
+
+\subsection{Segments of a sequence}
+
+\begin{definition}
+Let \(S = \langle x_1,\dots,x_n\rangle\) be a finite sequence. A \emph{segment} of \(S\) is a finite sequence
+\[
+\langle x_k,\dots,x_m\rangle
+\]
+with \(1 \le k \le m \le n\).
+A segment is an \emph{initial segment} if \(k = 1\). An initial segment is \emph{proper} if it is different from \(S\).
+\end{definition}
+
+\subsection{A technical lemma}
+
+\begin{lemma}[Lemma 0A]
+Suppose
+\[
+\langle x_1,\dots,x_m\rangle
+=
+\langle y_1,\dots,y_{m+k}\rangle
+\]
+for some \(m,k \ge 0\). Then
+\[
+x_1 = \langle y_1,\dots,y_{k+1}\rangle.
+\]
+\end{lemma}
+
+\begin{remark}
+The proof proceeds by induction on \(m\), using the definition of ordered pairs and the basic property of Kuratowski pairs.
+\end{remark}
+
+\begin{corollary}
+Let \(A\) be a set such that no element of \(A\) is itself a finite sequence of other elements of \(A\). If
+\[
+\langle x_1,\dots,x_m\rangle = \langle y_1,\dots,y_n\rangle
+\]
+and all \(x_i,y_j\) belong to \(A\), then \(m = n\) and \(x_i = y_i\) for all \(1 \le i \le m\).
+\end{corollary}
+
+\section{IX. Cartesian Products and Relations}
+
+\subsection{Cartesian products}
+
+\begin{definition}
+For sets \(A\) and \(B\), the \emph{Cartesian product} \(A \times B\) is the set
+\[
+A \times B = \{\langle x,y\rangle \mid x \in A,\ y \in B\}.
+\]
+More generally, for a set \(A\) and integer \(n \ge 1\),
+\[
+A^n = \underbrace{A \times \cdots \times A}_{n\ \text{times}}
+\]
+is the set of all \(n\)-tuples of elements of \(A\).
+\end{definition}
+
+\subsection{Binary relations}
+
+\begin{definition}
+A \emph{(binary) relation} \(R\) is a set of ordered pairs.
+\end{definition}
+
+\begin{example}
+The strict ordering on the set \(\{0,1,2,3\}\) is represented by the relation
+\[
+\{\langle 0,1\rangle,\langle 0,2\rangle,\langle 0,3\rangle,
+  \langle 1,2\rangle,\langle 1,3\rangle,\langle 2,3\rangle\}.
+\]
+\end{example}
+
+\subsection{Domain, range, and field}
+
+\begin{definition}
+For a relation \(R\), the \emph{domain} of \(R\) is
+\[
+\mathrm{dom}(R) = \{x \mid \exists y,\ \langle x,y\rangle \in R\},
+\]
+the \emph{range} of \(R\) is
+\[
+\mathrm{ran}(R) = \{y \mid \exists x,\ \langle x,y\rangle \in R\},
+\]
+and the \emph{field} of \(R\) is
+\[
+\mathrm{fld}(R) = \mathrm{dom}(R) \cup \mathrm{ran}(R).
+\]
+\end{definition}
+
+\subsection{\texorpdfstring{$n$}{n}-ary relations and restriction}
+
+\begin{definition}
+Let \(A\) be a set. An \emph{\(n\)-ary relation} on \(A\) is a subset of \(A^n\).
+\begin{itemize}
+  \item When \(n = 1\), an \(n\)-ary relation is just a subset of \(A\) (a unary relation).
+  \item When \(n \ge 2\), this recovers the usual notion of a relation of arity \(n\).
+\end{itemize}
+The equality relation on \(A\) is the binary relation
+\[
+\{\langle x,x\rangle \mid x \in A\}.
+\]
+\end{definition}
+
+\begin{definition}[Restriction of a relation]
+Let \(R \subseteq A^n\) be an \(n\)-ary relation on \(A\) and let \(B \subseteq A\). The \emph{restriction} of \(R\) to \(B\) is
+\[
+R \upharpoonright B \coloneqq R \cap B^n.
+\]
+\end{definition}
+
+\begin{example}
+Let \(R\) be the usual strict order on \(\mathbb N\), and let \(B = \{0,1,2,3\}\). Then \(R \upharpoonright B\) is exactly the strict order relation on the set \(\{0,1,2,3\}\) shown earlier.
+\end{example}
+
+\section{X. Functions and Operations}
+
+\subsection{Functions}
+
+\begin{definition}
+A relation \(F\) is a \emph{function} if for each \(x \in \mathrm{dom}(F)\) there is exactly one \(y\) such that \(\langle x,y\rangle \in F\).
+
+We write
+\[
+F : A \to B
+\]
+to mean that \(F\) is a function with domain \(\mathrm{dom}(F) = A\) and range \(\mathrm{ran}(F) \subseteq B\).
+
+The function \(F\) \emph{maps \(A\) onto \(B\)} (or is \emph{surjective}) if \(\mathrm{ran}(F) = B\).
+
+The function \(F\) is \emph{one-to-one} (or \emph{injective}) if for each \(y \in \mathrm{ran}(F)\) there is exactly one \(x\) such that \(\langle x,y\rangle \in F\).
+\end{definition}
+
+\subsection{\texorpdfstring{$n$}{n}-ary operations and their restriction}
+
+\begin{definition}
+An \emph{\(n\)-ary operation} on a set \(A\) is a function
+\[
+f : A^n \to A.
+\]
+\end{definition}
+
+\begin{example}
+Addition is a binary operation on \(\mathbb N\), and the successor mapping \(S(n) = n+1\) is a unary operation on \(\mathbb N\).
+\end{example}
+
+\begin{definition}[Restriction of an operation]
+Let \(f : A^n \to A\) be an \(n\)-ary operation on \(A\), and let \(B \subseteq A\). Define
+\[
+g \coloneqq f \cap (B^n \times A).
+\]
+Then \(g\) has domain \(B^n\), and
+\[
+g(b_1,\dots,b_n) = f(b_1,\dots,b_n)
+\]
+whenever \(b_1,\dots,b_n \in B\).
+\end{definition}
+
+\begin{proposition}
+The restriction \(g\) is itself an \(n\)-ary operation on \(B\) if and only if \(B\) is \emph{closed under} \(f\); that is, whenever \(b_1,\dots,b_n \in B\), one has \(f(b_1,\dots,b_n) \in B\).
+\end{proposition}
+
+\begin{example}
+Consider addition on \(\mathbb R\). Its restriction to \(\mathbb N\) is the usual addition on \(\mathbb N\). The set \(\mathbb N\) is closed under this operation, so the restriction is again a binary operation on \(\mathbb N\).
+\end{example}
+
+\section{XI. Standard Classes of Relations}
+
+\subsection{Basic properties}
+
+\begin{definition}
+Let \(R\) be a relation on a set \(A\).
+\begin{itemize}
+  \item \(R\) is \emph{reflexive on \(A\)} if \(\langle x,x\rangle \in R\) for all \(x \in A\).
+  \item \(R\) is \emph{symmetric} if whenever \(\langle x,y\rangle \in R\), then \(\langle y,x\rangle \in R\).
+  \item \(R\) is \emph{transitive} if whenever \(\langle x,y\rangle \in R\) and \(\langle y,z\rangle \in R\), then \(\langle x,z\rangle \in R\).
+  \item \(R\) satisfies \emph{trichotomy on \(A\)} if for every \(x,y \in A\), exactly one of the following holds:
+  \[
+    \langle x,y\rangle \in R, \qquad x = y, \qquad \langle y,x\rangle \in R.
+  \]
+\end{itemize}
+\end{definition}
+
+\subsection{Equivalence relations and orderings}
+
+\begin{definition}
+A relation \(R\) on \(A\) is an \emph{equivalence relation} on \(A\) if it is reflexive on \(A\), symmetric, and transitive.
+\end{definition}
+
+\begin{definition}
+A relation \(R\) on \(A\) is an \emph{ordering relation} (or \emph{strict order}) on \(A\) if it is transitive and satisfies trichotomy on \(A\).
+\end{definition}
+
+\section{XII. Equivalence Classes}
+
+\begin{definition}
+Let \(R\) be an equivalence relation on a set \(A\). For each \(x \in A\), the \emph{equivalence class} of \(x\) is
+\[
+[x] = \{y \in A \mid \langle x,y\rangle \in R\}.
+\]
+\end{definition}
+
+\begin{proposition}
+Let \(R\) be an equivalence relation on \(A\).
+\begin{enumerate}
+  \item The equivalence classes \([x]\) (for \(x \in A\)) form a partition of \(A\); that is, every element of \(A\) lies in at least one equivalence class, and no element lies in two distinct classes.
+  \item For any \(x,y \in A\),
+  \[
+  [x] = [y] \iff \langle x,y\rangle \in R.
+  \]
+\end{enumerate}
+\end{proposition}
+
+\end{document}
