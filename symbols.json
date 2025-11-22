@@ -918,7 +918,7 @@
     },
     {
       "label": "Text",
-      "latex": "\\text{  }",
+      "latex": "\\text{ ",
       "keywords": ["text", "words"],
       "categories": ["text"],
       "priority": 0.95
