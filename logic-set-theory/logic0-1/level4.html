@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logic 0 – Level 1</title>
+  <title>Logic 0 – Level 4</title>
 
   <!-- Basic layout styles -->
   <style>
@@ -168,59 +168,60 @@
 </head>
 <body>
   <header>
-    <h1>Logic 0 – Level 1 Problems</h1>
+    <h1>Logic 0 – Level 4 Problems</h1>
   </header>
 
 <main>
   <section>
     <p class="note">
-      Level 1 (Remember) problems check that you can recall the key definitions,
-      symbols, and terminology from the slides. After each group of questions,
-      use the LaTeX notes area and drawing pad for working, examples, or doodles.
+      Level 4 (<strong>Analyze</strong>) problems ask you to <em>take structure apart</em>:
+      compare forms, classify by properties, draw Hasse diagrams, contrast unions vs intersections, etc.
+      After each group, use the LaTeX notes area and drawing pad to work things out.
     </p>
   </section>
 
-  <!-- 1. Standard Abbreviations and Negation -->
+  <!-- 1. Logical Form, Abbreviations, and Negation -->
   <section class="problem-group" id="group-1">
-    <h2>1. Standard Abbreviations and Negation</h2>
+    <h2>1. Logical Form, Abbreviations, and Negation</h2>
 
-    <p><strong>(L1.1)</strong>
-      What symbol is commonly used to abbreviate the statement “If … then …”?
+    <p><strong>(L4.1)</strong>
+      You are given four English patterns:
     </p>
+    <ol>
+      <li>“If \(P\), then \(Q\).”</li>
+      <li>“\(P\) only if \(Q\).”</li>
+      <li>“\(P\) if and only if \(Q\).”</li>
+      <li>“\(Q\) if \(P\).”</li>
+    </ol>
+    <p><strong>(a)</strong> Group these into pairs that are <em>logically equivalent</em> after
+      translation into symbols (using \(\Rightarrow,\Leftarrow,\Leftrightarrow\)).</p>
+    <p><strong>(b)</strong> Explain which pair is “one-way implication” and which expresses
+      “two-way implication,” and where misunderstandings usually arise.</p>
 
-    <p><strong>(L1.2)</strong>
-      What symbol is used for the <em>converse implication</em> “\(Q\) … if \(P\) …”?
+    <p><strong>(L4.2)</strong>
+      Consider the three statements about some fixed sets \(A,B\):
     </p>
+    <ol>
+      <li>\(\forall x(x\in A \Rightarrow x\in B)\)</li>
+      <li>\(\forall x(x\in B \Rightarrow x\in A)\)</li>
+      <li>\(\forall x(x\in A \Leftrightarrow x\in B)\)</li>
+    </ol>
+    <p><strong>(a)</strong> Draw the logical dependency graph: which combinations of (1) and (2)
+      imply (3)? Does (3) imply (1) and (2)?</p>
+    <p><strong>(b)</strong> Interpret each statement in plain English and explain how they relate to
+      the concepts “subset” and “equality of sets.”</p>
 
-    <p><strong>(L1.3)</strong>
-      What shorthand word is commonly used for “if and only if”?
+    <p><strong>(L4.3)</strong>
+      For each statement, write its formal negation in symbols, then <strong>compare</strong> the
+      negation to the original:
     </p>
-
-    <p><strong>(L1.4)</strong>
-      What symbol is used to abbreviate “if and only if”?
-    </p>
-
-    <p><strong>(L1.5)</strong>
-      What symbol is used to mean “therefore” in mathematical writing?
-    </p>
-
-    <p><strong>(L1.6)</strong>
-      According to the negation rule, how do we write the negation of the equation
-      \(x = y\)?
-    </p>
-
-    <p><strong>(L1.7)</strong>
-      According to the negation rule, how do we write the negation of the statement
-      \(x \in A\)?
-    </p>
-
-    <p><strong>(L1.8)</strong>
-      Once the notation \((\Sigma \models \tau)\) is introduced, how is its
-      <em>negation</em> written?
-    </p>
-
-    <p><strong>(L1.9)</strong>
-      In these notes, what are the two possible truth values called?
+    <ol>
+      <li>\(\forall x(x\in A \Rightarrow x\in B)\)</li>
+      <li>\(\forall x(x\in A \Leftrightarrow x\in B)\)</li>
+    </ol>
+    <p>
+      Explain how the quantifier change and the “slash on a symbol” encode the “failure mode” of
+      each statement.
     </p>
 
     <!-- Notes + drawing for group 1 -->
@@ -230,7 +231,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ p \Rightarrow q,\ A \Leftrightarrow B,\ \Sigma \not\models \tau"></textarea>
+        placeholder="e.g.\ P \Rightarrow Q,\ P \Leftarrow Q,\ P \Leftrightarrow Q,\ \forall x(x\in A \Rightarrow x\in B),\ \exists x(x\in A \wedge x\notin B)"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -238,9 +239,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Draw dependency graphs or Venn diagrams here.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -248,41 +247,38 @@
     </div>
   </section>
 
-  <!-- 2. Sets, Membership, and Extensionality -->
+  <!-- 2. Sets and Extensionality -->
   <section class="problem-group" id="group-2">
-    <h2>2. Sets, Membership, and Extensionality</h2>
+    <h2>2. Sets and Extensionality</h2>
 
-    <p><strong>(S2.1)</strong>
-      Give the informal definition of a <em>set</em>.
+    <p><strong>(S4.1)</strong>
+      You are given the following four descriptions:
     </p>
+    <ul>
+      <li>\(A = \{n\in \mathbb{Z} \mid n^2\le 4\}\)</li>
+      <li>\(B = \{-2,-1,0,1,2\}\)</li>
+      <li>\(C = \{x\in \mathbb{Z} \mid -2&lt;x&lt;2\}\)</li>
+      <li>\(D = \{-1,0,1\}\)</li>
+    </ul>
+    <p><strong>(a)</strong> Partition \(\{A,B,C,D\}\) into groups of sets that are equal.</p>
+    <p><strong>(b)</strong> For each equality you claim, explicitly analyze the membership condition:
+      “for all \(t\), \(t\in X\Leftrightarrow t\in Y\)”.</p>
+    <p><strong>(c)</strong> Identify which sets properly contain which others, and draw the Hasse
+      diagram for the partial order \(\subseteq\) on \(\{A,B,C,D\}\).</p>
 
-    <p><strong>(S2.2)</strong>
-      What does the notation \(t \in A\) mean?
+    <p><strong>(S4.2)</strong>
+      Two students claim:
     </p>
-
-    <p><strong>(S2.3)</strong>
-      What does the notation \(t \notin A\) mean?
-    </p>
-
-    <p><strong>(S2.4)</strong>
-      What does the statement \(x = y\) mean in this context?
-    </p>
-
-    <p><strong>(S2.5)</strong>
-      Fill in the logical equivalence that characterizes equality of sets in Remark 2.2:
-      If \(A = B\), then for every object \(t\),
-      \[
-        t \in A \iff\ \_\_\_\_\ .
-      \]
-    </p>
-
-    <p><strong>(S2.6)</strong>
-      State Proposition 2.3 (the <em>Extensionality</em> principle) in words.
-    </p>
-
-    <p><strong>(S2.7)</strong>
-      What idea about sets is expressed by Remark 2.4 (following the extensionality proposition)?
-    </p>
+    <ul>
+      <li>Student 1: “The description of a set doesn’t matter; only the elements matter.”</li>
+      <li>Student 2: “Different descriptions always give different sets.”</li>
+    </ul>
+    <ol>
+      <li>Construct one explicit example where <em>two different descriptions give the same set</em>.</li>
+      <li>Construct one example where <em>two superficially similar descriptions give different
+          sets</em> (e.g. a strict inequality vs. a non-strict one).</li>
+      <li>Analyze which student is closer to the truth and why extensionality settles the dispute.</li>
+    </ol>
 
     <!-- Notes + drawing for group 2 -->
     <div class="group-notes">
@@ -291,7 +287,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ x \in A\ \text{vs.}\ x = A,\ \forall t\,(t\in A \Leftrightarrow t\in B)"></textarea>
+        placeholder="e.g.\ t\in A \Leftrightarrow t\in B,\ \{n\in\mathbb{Z} : n^2\le 4\},\ \text{Hasse diagram for } \{A,B,C,D\}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -299,9 +295,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use this area for Hasse diagrams or membership tables.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -309,26 +303,44 @@
     </div>
   </section>
 
-  <!-- 3. Basic Constructions – Adjoining an Element -->
+  <!-- 3. Adjoining Elements and Set-Building Structure -->
   <section class="problem-group" id="group-3">
-    <h2>3. Basic Constructions – Adjoining an Element</h2>
+    <h2>3. Adjoining Elements and Set-Building Structure</h2>
 
-    <p><strong>(B3.1)</strong>
-      How is the set obtained by “adjoining” an element \(t\) to a set \(A\) denoted?
+    <p><strong>(A4.1)</strong>
+      Let \(A = \{0,2,4\}\), \(B = \{0,2,4,6\}\), and consider the operation
+      \(A;t := A\cup\{t\}\).
     </p>
+    <ol>
+      <li>For each of \(t\in\{2,3,4,5,6\}\), compute \(A;t\).</li>
+      <li>
+        Partition the values of \(t\) into:
+        <ul>
+          <li>those with \(A;t = A\),</li>
+          <li>those with \(A;t \neq A\).</li>
+        </ul>
+      </li>
+      <li>
+        Explain how the proposition “\(t\in A \Leftrightarrow A;t=A\)” shows up
+        <strong>structurally</strong> in your examples.
+      </li>
+    </ol>
 
-    <p><strong>(B3.2)</strong>
-      State in words what \(A;t := A \cup \{t\}\) means.
+    <p><strong>(A4.2)</strong>
+      Suppose you repeatedly adjoin elements to the empty set:
     </p>
-
-    <p><strong>(B3.3)</strong>
-      According to Proposition 3.2, when is \(A;t = A\)?
+    <p>
+      \[
+        \varnothing; a_1; a_2; \dots; a_n
+      \]
+      (where the notation is left-associative, i.e.
+      \(((\dots((\varnothing;a_1);a_2)\dots;a_n))\)).
     </p>
-
-    <p><strong>(B3.4)</strong>
-      Write the logical equivalence from Proposition 3.2 that characterizes when an
-      element is already in a set, using \(t \in A\) and \(A;t = A\).
-    </p>
+    <ol>
+      <li>Analyze what set you obtain in terms of \(\{a_1,\dots,a_n\}\).</li>
+      <li>Under what conditions on the \(a_i\)’s does the sequence of sets strictly increase at every step?</li>
+      <li>Describe the precise sense in which “adjoining” is a way to build <em>any finite set</em> starting from \(\varnothing\).</li>
+    </ol>
 
     <!-- Notes + drawing for group 3 -->
     <div class="group-notes">
@@ -337,7 +349,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A ; t,\ A \cup \{t\},\ \varnothing,\ \{0\},\ \{\varnothing\},\ \{0,1,2,\dots\}"></textarea>
+        placeholder="e.g.\ A;t = A\cup\{t\},\ t\in A \Leftrightarrow A;t=A,\ \varnothing;a_1;a_2;\dots;a_n"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -345,9 +357,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Sketch chains of sets A ⊆ A;t ⊆ … here.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -355,39 +365,56 @@
     </div>
   </section>
 
-  <!-- 4. Common Sets and Notation -->
+  <!-- 4. Subsets, Power Sets, and Inclusion Structure -->
   <section class="problem-group" id="group-4">
-    <h2>4. Common Sets and Notation</h2>
+    <h2>4. Subsets, Power Sets, and Inclusion Structure</h2>
 
-    <h3>4.1 Special Sets</h3>
-
-    <p><strong>(C4.1)</strong>
-      What is the <em>empty set</em> and what symbol is used to denote it?
+    <p><strong>(P4.1)</strong>
+      Let \(X = \{0,1,2\}\). Consider these four subsets:
     </p>
+    <ul>
+      <li>\(A = \{0\}\)</li>
+      <li>\(B = \{0,1\}\)</li>
+      <li>\(C = \{1,2\}\)</li>
+      <li>\(D = X\)</li>
+    </ul>
+    <ol>
+      <li>Draw the Hasse diagram of \((\mathcal{P}(X),\subseteq)\) and mark \(A,B,C,D\) on it.</li>
+      <li>Analyze which of \(A,B,C,D\) are <em>comparable</em> by \(\subseteq\) and which are not.</li>
+      <li>Explain how this diagram helps visualize the logical content of “\(\subseteq\)” and why some pairs are incomparable.</li>
+    </ol>
 
-    <p><strong>(C4.2)</strong>
-      What is a <em>singleton</em> set and how is it written for an object \(x\)?
+    <p><strong>(P4.2)</strong>
+      Let \(E = \{a,b\}\) and \(F = \{a,b,c\}\).
     </p>
+    <ol>
+      <li>List \(\mathcal{P}(E)\) and \(\mathcal{P}(F)\).</li>
+      <li>Determine whether \(\mathcal{P}(E)\subseteq \mathcal{P}(F)\).</li>
+      <li>
+        Analyze the general pattern: given \(A\subseteq B\), explain why
+        \(\mathcal{P}(A)\subseteq \mathcal{P}(B)\) <strong>must</strong> hold by unpacking definitions
+        (don’t just quote the fact—track the membership conditions).
+      </li>
+    </ol>
 
-    <p><strong>(C4.3)</strong>
-      If \(x_1, x_2, \dots, x_n\) is a finite list of objects, how do we write the set
-      that has exactly those objects as elements?
+    <p><strong>(P4.3)</strong>
+      You are given three sets:
     </p>
-
-    <p><strong>(C4.4)</strong>
-      What does Remark 4.2 say about the set \(\{x, y\}\) compared to \(\{y, x\}\)?
+    <ul>
+      <li>\(A = \{0,1\}\)</li>
+      <li>\(B = \{\varnothing\}\)</li>
+      <li>\(C = \{\varnothing,\{0\}\}\)</li>
+    </ul>
+    <p>
+      For each pair \((X,Y)\) among \(\{A,B,C\}\), analyze:
     </p>
-
-    <h3>4.2 Infinite Sets</h3>
-
-    <p><strong>(C4.5)</strong>
-      How is the set of <em>natural numbers</em> denoted, and what is its standard listing
-      in these notes?
-    </p>
-
-    <p><strong>(C4.6)</strong>
-      How is the set of <em>integers</em> denoted, and what is its standard listing in
-      these notes?
+    <ol>
+      <li>Is \(X\subseteq Y\)?</li>
+      <li>Is \(X\in Y\)?</li>
+    </ol>
+    <p>
+      Then summarize the main <em>pattern of confusion</em> that can arise when sets contain other
+      sets vs. ordinary elements like numbers.
     </p>
 
     <!-- Notes + drawing for group 4 -->
@@ -397,7 +424,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \{x : P(x)\},\ \{x \in A : P(x)\},\ \text{even integers} = \{2k : k \in \mathbb{Z}\}"></textarea>
+        placeholder="e.g.\ \mathcal{P}(X),\ \subseteq\ \text{vs}\ \in,\ \{\varnothing\},\ \{\varnothing,\{0\}\},\text{Hasse diagrams}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -405,9 +432,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for subset lattices or inclusion diagrams.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -415,29 +440,54 @@
     </div>
   </section>
 
-  <!-- 5. Sets Specified by Properties – Set-Builder Notation -->
+  <!-- 5. Unions, Intersections, and Families of Sets -->
   <section class="problem-group" id="group-5">
-    <h2>5. Sets Specified by Properties – Set-Builder Notation</h2>
+    <h2>5. Unions, Intersections, and Families of Sets</h2>
 
-    <p><strong>(SB5.1)</strong>
-      Write the general form of a set defined by a property \(P(x)\) using
-      set-builder notation.
+    <p><strong>(U4.1)</strong>
+      For each \(n\in\mathbb{N}\), let \(A_n = \{n,n+1,n+2,\dots\}\subseteq \mathbb{N}\) (tails).
     </p>
+    <ol>
+      <li>Analyze whether the sequence \((A_n)\) is <em>increasing</em> or <em>decreasing</em> under \(\subseteq\).</li>
+      <li>Determine \(\bigcup_{n\in\mathbb{N}} A_n\) and \(\bigcap_{n\in\mathbb{N}} A_n\).</li>
+      <li>Explain how the behavior of the intersection captures the intuitive idea of “what eventually belongs to every tail.”</li>
+    </ol>
 
-    <p><strong>(SB5.2)</strong>
-      What does the set \(\{x \in A \mid P(x)\}\) represent?
+    <p><strong>(U4.2)</strong>
+      Define, for each \(n\in\mathbb{N}\),
     </p>
+    <p>
+      \[
+        B_n = \{0,1,2,\dots,n\}\subseteq \mathbb{N}\ \text{(initial segments)}.
+      \]
+    </p>
+    <ol>
+      <li>Analyze whether the sequence \((B_n)\) is increasing or decreasing.</li>
+      <li>Determine \(\bigcup_{n\in\mathbb{N}} B_n\) and \(\bigcap_{n\in\mathbb{N}} B_n\).</li>
+      <li>
+        Compare the results with those for \((A_n)\) and explain how “tails” vs. “initial segments”
+        produce opposite patterns for unions and intersections.
+      </li>
+    </ol>
 
-    <p><strong>(SB5.3)</strong>
-      In the example \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\),
-      what kind of objects are the elements of this set?
+    <p><strong>(U4.3)</strong>
+      Let \(\mathcal{C} = \{\{0,1\},\{1,2\},\{2,3\}\}\).
     </p>
-
-    <p><strong>(SB5.4)</strong>
-      In words, describe the property that an ordered pair \(\langle m,n\rangle\) must
-      satisfy to belong to the set
-      \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\).
-    </p>
+    <ol>
+      <li>Compute \(\bigcup\mathcal{C}\) and \(\bigcap\mathcal{C}\).</li>
+      <li>
+        Now remove one set at a time (e.g. consider \(\{\{0,1\},\{1,2\}\}\), then
+        \(\{\{1,2\},\{2,3\}\}\), etc.).
+      </li>
+      <li>
+        Analyze how adding or removing a set from a family affects:
+        <ul>
+          <li>the union,</li>
+          <li>the intersection.</li>
+        </ul>
+        Summarize the general pattern you observe.
+      </li>
+    </ol>
 
     <!-- Notes + drawing for group 5 -->
     <div class="group-notes">
@@ -446,7 +496,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A \subseteq B,\ \varnothing \subseteq A,\ \mathcal{P}(\{1,2\}),\ \mathcal{P}(\varnothing) = \{\varnothing\}"></textarea>
+        placeholder="e.g.\ A_n = \{n,n+1,\dots\},\ B_n = \{0,1,\dots,n\},\ \bigcup A_n,\ \bigcap A_n,\ \bigcup\mathcal{C},\ \bigcap\mathcal{C}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -454,9 +504,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use this to visualize tails vs initial segments and family changes.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -464,51 +512,48 @@
     </div>
   </section>
 
-  <!-- 6. Subsets and Power Sets -->
+  <!-- 6. Ordered Pairs, Tuples, and Segments -->
   <section class="problem-group" id="group-6">
-    <h2>6. Subsets and Power Sets</h2>
+    <h2>6. Ordered Pairs, Tuples, and Segments</h2>
 
-    <h3>6.1 Subsets</h3>
-
-    <p><strong>(SP6.1)</strong>
-      What does it mean for a set \(A\) to be a <em>subset</em> of a set \(B\)?
-      Give the symbolic condition.
+    <p><strong>(OP4.1)</strong>
+      Using Kuratowski’s definition \(\langle x,y\rangle = \{\{x\},\{x,y\}\}\), compare \(\langle x,y\rangle\) and \(\{x,y\}\).
     </p>
+    <ol>
+      <li>Show explicitly (with an example) that \(\langle x,y\rangle\) and \(\{x,y\}\) can have the same <em>underlying elements</em> when \(x=y\) but differ when \(x\neq y\).</li>
+      <li>Analyze how Kuratowski’s construction “forces in” the information about order using only sets.</li>
+    </ol>
 
-    <p><strong>(SP6.2)</strong>
-      What notation is used to express that \(A\) is a subset of \(B\)?
+    <p><strong>(OP4.2)</strong>
+      Let \(S = \langle a,b,c,d\rangle\).
     </p>
+    <ol>
+      <li>List all segments of \(S\).</li>
+      <li>Group them into:
+        <ul>
+          <li>initial segments,</li>
+          <li>non-initial segments.</li>
+        </ul>
+      </li>
+      <li>
+        For each group, describe the structural property that distinguishes it (without naming specific letters).
+      </li>
+    </ol>
 
-    <p><strong>(SP6.3)</strong>
-      According to Remark 6.2, is every set a subset of itself?
+    <p><strong>(OP4.3)</strong>
+      Suppose we know that
     </p>
-
-    <p><strong>(SP6.4)</strong>
-      According to Remark 6.2, is the empty set \(\varnothing\) a subset of every set \(A\)?
+    <p>
+      \[
+        \langle x_1,x_2,\dots,x_m\rangle = \langle y_1,y_2,\dots,y_{m+k}\rangle
+      \]
+      and that we are in the setting of Lemma 0A (no element is itself a finite sequence).
     </p>
-
-    <p><strong>(SP6.5)</strong>
-      What phrase is used to describe why the statement \(\varnothing \subseteq A\)
-      is true for every set \(A\)?
-    </p>
-
-    <h3>6.2 Power Set</h3>
-
-    <p><strong>(SP6.6)</strong>
-      How is the <em>power set</em> of a set \(A\) denoted?
-    </p>
-
-    <p><strong>(SP6.7)</strong>
-      What is the definition of \(\mathcal{P}(A)\) in terms of subsets of \(A\)?
-    </p>
-
-    <p><strong>(SP6.8)</strong>
-      What is \(\mathcal{P}(\varnothing)\)?
-    </p>
-
-    <p><strong>(SP6.9)</strong>
-      What is \(\mathcal{P}(\{\varnothing\})\)?
-    </p>
+    <ol>
+      <li>Analyze what this equality says about initial segments of the longer sequence.</li>
+      <li>Explain why, under the corollary’s hypothesis, we must actually have \(k=0\) and \(x_i=y_i\) for all \(i\).</li>
+      <li>Interpret this as a statement about the “rigidity” of finite sequences.</li>
+    </ol>
 
     <!-- Notes + drawing for group 6 -->
     <div class="group-notes">
@@ -517,7 +562,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ x \in A \cup B,\ x \in A \cap B,\ \bigcup \mathcal{A},\ \bigcap \mathcal{A},\ \text{pairwise disjoint}"></textarea>
+        placeholder="e.g.\ \langle x,y\rangle = \{\{x\},\{x,y\}\},\ \text{segments of }\langle a,b,c,d\rangle,\ \text{Lemma 0A rigidity}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -525,9 +570,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for drawing nested-pair structures and segment lattices.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -535,56 +578,43 @@
     </div>
   </section>
 
-  <!-- 7. Union and Intersection -->
+  <!-- 7. Cartesian Products and Relations -->
   <section class="problem-group" id="group-7">
-    <h2>7. Union and Intersection</h2>
+    <h2>7. Cartesian Products and Relations</h2>
 
-    <h3>7.1 Binary Union and Intersection</h3>
-
-    <p><strong>(U7.1)</strong>
-      What is the definition of the union \(A \cup B\) of two sets \(A\) and \(B\)?
+    <p><strong>(R4.1)</strong>
+      Let \(A = \{0,1\}\) and \(B = \{a,b,c\}\).
     </p>
+    <ol>
+      <li>Describe structurally what every element of \(A\times B\) looks like, and every element of \(B\times A\).</li>
+      <li>Compare \(|A\times B|\) and \(|B\times A|\).</li>
+      <li>Analyze why these products have the same <em>size</em> but different <em>type</em> of objects, and how this reflects the role of order.</li>
+    </ol>
 
-    <p><strong>(U7.2)</strong>
-      What is the definition of the intersection \(A \cap B\) of two sets \(A\) and \(B\)?
+    <p><strong>(R4.2)</strong>
+      Consider the three relations on \(\{0,1,2\}\):
     </p>
+    <ul>
+      <li>\(R_1 = \{\langle 0,0\rangle,\langle 1,1\rangle,\langle 2,2\rangle\}\)</li>
+      <li>\(R_2 = \{\langle 0,1\rangle,\langle 1,0\rangle\}\)</li>
+      <li>\(R_3 = \{\langle 0,1\rangle,\langle 1,2\rangle,\langle 0,2\rangle\}\)</li>
+    </ul>
+    <ol>
+      <li>For each relation, determine \(\operatorname{dom}(R_i)\), \(\operatorname{ran}(R_i)\), and \(\operatorname{fld}(R_i)\).</li>
+      <li>Fill in a table indicating whether each is reflexive, symmetric, and/or transitive.</li>
+      <li>
+        Group the three relations into “behaviour types” based on these properties (e.g. “identity-like”, “swap-like”, “order-like”), and explain the classification.
+      </li>
+    </ol>
 
-    <p><strong>(U7.3)</strong>
-      What does it mean for two sets \(A\) and \(B\) to be <em>disjoint</em>?
+    <p><strong>(R4.3)</strong>
+      Let \((<)\) be the usual strict order on \(\{0,1,2,3\}\) viewed as a relation \(S\).
     </p>
-
-    <p><strong>(U7.4)</strong>
-      What does it mean for a family of sets to be <em>pairwise disjoint</em>?
-    </p>
-
-    <h3>7.2 Indexed Unions and Intersections</h3>
-
-    <p><strong>(U7.5)</strong>
-      Let \(A\) be a set whose elements are themselves sets. How is the union of all
-      members of \(A\) defined and written?
-    </p>
-
-    <p><strong>(U7.6)</strong>
-      In the same situation, how is the intersection of all members of \(A\) defined
-      and written?
-    </p>
-
-    <p><strong>(U7.7)</strong>
-      In Example 7.4, if
-      \[
-        A = \big\{\{0, 1, 5\}, \{1, 6\}, \{1, 5\}\big\},
-      \]
-      what is \(\bigcup A\)?
-    </p>
-
-    <p><strong>(U7.8)</strong>
-      In Example 7.4, for the same \(A\), what is \(\bigcap A\)?
-    </p>
-
-    <p><strong>(U7.9)</strong>
-      How do we usually write the union of a sequence of sets \((A_n)_{n \in \mathbb{N}}\)
-      indexed by natural numbers?
-    </p>
+    <ol>
+      <li>Write \(S\) explicitly as a subset of \(\{0,1,2,3\}^2\).</li>
+      <li>Analyze which of the four standard properties it has: reflexive, symmetric, transitive, trichotomy.</li>
+      <li>For each property that fails, identify a minimal counterexample (a specific pair of elements that witnesses the failure).</li>
+    </ol>
 
     <!-- Notes + drawing for group 7 -->
     <div class="group-notes">
@@ -593,7 +623,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \langle x,y\rangle = \{\{x\},\{x,y\}\},\ \text{finite sequence},\ \text{initial segment}"></textarea>
+        placeholder="e.g.\ A\times B,\ \operatorname{dom}R,\ \operatorname{ran}R,\ \operatorname{fld}R,\ \text{identity-like / swap-like / order-like}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -601,9 +631,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for property tables and relation diagrams.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -611,66 +639,58 @@
     </div>
   </section>
 
-  <!-- 8. Ordered Pairs and Sequences -->
+  <!-- 8. Functions and Operations -->
   <section class="problem-group" id="group-8">
-    <h2>8. Ordered Pairs and Sequences</h2>
+    <h2>8. Functions and Operations</h2>
 
-    <h3>8.1 Ordered Pairs (Kuratowski)</h3>
-
-    <p><strong>(OP8.1)</strong>
-      According to Kuratowski’s definition, how is the ordered pair
-      \(\langle x, y \rangle\) defined in terms of sets?
+    <p><strong>(F4.1)</strong>
+      You are given three relations on \(\{0,1,2\}\):
     </p>
+    <ul>
+      <li>\(F_1 = \{\langle 0,1\rangle,\langle 1,1\rangle,\langle 2,1\rangle\}\)</li>
+      <li>\(F_2 = \{\langle 0,1\rangle,\langle 0,2\rangle\}\)</li>
+      <li>\(F_3 = \{\langle 0,0\rangle,\langle 1,1\rangle\}\)</li>
+    </ul>
+    <ol>
+      <li>For each, decide whether it is a function (using the “exactly one output per input” condition).</li>
+      <li>Among those that are functions, analyze whether they are injective and/or surjective onto \(\{0,1,2\}\).</li>
+      <li>Summarize which combinations of “injective/non-injective + surjective/non-surjective” actually occur in your examples.</li>
+    </ol>
 
-    <p><strong>(OP8.2)</strong>
-      State Proposition 8.2: what condition on \(x, y, u, v\) is equivalent to
-      \(\langle x, y \rangle = \langle u, v \rangle\)?
+    <p><strong>(F4.2)</strong>
+      Let \(f:\mathbb{Z}\to\mathbb{Z}\) be given by \(f(n)=2n\), and \(g:\mathbb{Z}\to\mathbb{Z}\) be given by \(g(n)=n^2\).
     </p>
+    <ol>
+      <li>Analyze and compare:
+        <ul>
+          <li>injectivity of \(f\) vs. \(g\),</li>
+          <li>surjectivity of \(f\) vs. \(g\) onto \(\mathbb{Z}\).</li>
+        </ul>
+      </li>
+      <li>
+        Fill in a \(2\times 2\) table with rows = “injective / not injective”, columns = “surjective / not surjective”, and place \(f\) and \(g\) in the correct cells.
+      </li>
+      <li>
+        Explain how the <em>algebraic form</em> of each function (\(2n\) vs. \(n^2\)) causes its specific injective/surjective behavior.
+      </li>
+    </ol>
 
-    <h3>8.2 n-tuples</h3>
-
-    <p><strong>(OP8.3)</strong>
-      How are \((n+1)\)-tuples defined recursively from \(n\)-tuples in Definition 8.3?
+    <p><strong>(F4.3)</strong>
+      Let \(+\) be usual addition on \(\mathbb{Z}\). Consider these subsets:
     </p>
-
-    <p><strong>(OP8.4)</strong>
-      What is a <em>finite sequence</em> of members of a set \(A\), in terms of
-      \(n\)-tuples?
+    <ul>
+      <li>\(A = \mathbb{N}\)</li>
+      <li>\(B = \{0,2,4,6,\dots\}\) (even naturals)</li>
+      <li>\(C = \{0,1\}\)</li>
+    </ul>
+    <p>
+      For each subset, analyze whether it is <em>closed</em> under \(+\) (viewed as a binary operation on \(\mathbb{Z}\)):
     </p>
-
-    <h3>8.3 Segments of a Sequence</h3>
-
-    <p><strong>(OP8.5)</strong>
-      Given a finite sequence \(S = \langle x_1, \dots, x_n\rangle\), what is a
-      <em>segment</em> of \(S\)?
-    </p>
-
-    <p><strong>(OP8.6)</strong>
-      When is a segment \(\langle x_k, \dots, x_m\rangle\) called an
-      <em>initial segment</em>?
-    </p>
-
-    <p><strong>(OP8.7)</strong>
-      When is an initial segment called a <em>proper</em> initial segment?
-    </p>
-
-    <h3>8.4 Lemma 0A and Its Corollary</h3>
-
-    <p><strong>(OP8.8)</strong>
-      State Lemma 8.5 (Lemma 0A) in its general form involving
-      \(\langle x_1, \dots, x_m\rangle\) and
-      \(\langle y_1, \dots, y_{m+k}\rangle\).
-    </p>
-
-    <p><strong>(OP8.9)</strong>
-      What method is used in the proof of Lemma 0A, according to Remark 8.6?
-    </p>
-
-    <p><strong>(OP8.10)</strong>
-      State Corollary 8.7: under the given assumptions on a set \(A\) and two
-      sequences with elements in \(A\), what can we conclude when
-      \(\langle x_1, \dots, x_m\rangle = \langle y_1, \dots, y_n\rangle\)?
-    </p>
+    <ol>
+      <li>If closed, describe the induced operation \(+\upharpoonright (X^2)\) on that subset.</li>
+      <li>If not closed, exhibit a specific counterexample and explain why the restriction fails to be a binary operation on that subset.</li>
+      <li>Summarize the structural difference between subsets that do and do not inherit an operation.</li>
+    </ol>
 
     <!-- Notes + drawing for group 8 -->
     <div class="group-notes">
@@ -679,7 +699,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A \times B,\ A^3,\ \operatorname{dom}R,\ \operatorname{ran}R,\ \mathrm{fld}(R)"></textarea>
+        placeholder="e.g.\ \text{function test},\ \text{injective/surjective table},\ f(n)=2n,\ g(n)=n^2,\ \text{closed under }+"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -687,9 +707,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for mapping diagrams and closure examples.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -697,73 +715,37 @@
     </div>
   </section>
 
-  <!-- 9. Cartesian Products and Relations -->
+  <!-- 9. Standard Classes of Relations -->
   <section class="problem-group" id="group-9">
-    <h2>9. Cartesian Products and Relations</h2>
+    <h2>9. Standard Classes of Relations</h2>
 
-    <h3>9.1 Cartesian Products</h3>
-
-    <p><strong>(CR9.1)</strong>
-      How is the Cartesian product \(A \times B\) of sets \(A\) and \(B\) defined?
+    <p><strong>(SR4.1)</strong>
+      On \(A = \{1,2,3\}\), consider:
     </p>
+    <ul>
+      <li>\(R = \{\langle 1,1\rangle,\langle 2,2\rangle,\langle 3,3\rangle,\langle 1,2\rangle,\langle 2,1\rangle\}\)</li>
+      <li>\(S = \{\langle 1,2\rangle,\langle 2,3\rangle,\langle 1,3\rangle\}\)</li>
+    </ul>
+    <ol>
+      <li>Analyze whether \(R\) is an equivalence relation, an ordering relation, both, or neither. Justify by checking reflexive/symmetric/transitive/trichotomy.</li>
+      <li>Do the same for \(S\).</li>
+      <li>
+        Classify each relation into: “equivalence-like”, “order-like”, or “neither”, and explain precisely which property (or properties) fail.
+      </li>
+    </ol>
 
-    <p><strong>(CR9.2)</strong>
-      What does \(A^n\) denote for a set \(A\) and integer \(n \ge 1\)?
+    <p><strong>(SR4.2)</strong>
+      On \(\mathbb{Z}\), define:
     </p>
-
-    <p><strong>(CR9.3)</strong>
-      In words, what kind of objects are the elements of \(A^n\)?
-    </p>
-
-    <h3>9.2 Binary Relations</h3>
-
-    <p><strong>(CR9.4)</strong>
-      What is a (binary) <em>relation</em> \(R\) in this context?
-    </p>
-
-    <p><strong>(CR9.5)</strong>
-      In Example 9.3, how is the strict ordering on the set
-      \(\{0,1,2,3\}\) represented as a relation?
-    </p>
-
-    <h3>9.3 Domain, Range, and Field</h3>
-
-    <p><strong>(CR9.6)</strong>
-      How is the <em>domain</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.7)</strong>
-      How is the <em>range</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.8)</strong>
-      What is the <em>field</em> of a relation \(R\)?
-    </p>
-
-    <h3>9.4 n-ary Relations and Restriction</h3>
-
-    <p><strong>(CR9.9)</strong>
-      What is an \(n\)-ary relation on a set \(A\)?
-    </p>
-
-    <p><strong>(CR9.10)</strong>
-      When \(n = 1\), what does an \(n\)-ary relation on \(A\) reduce to?
-    </p>
-
-    <p><strong>(CR9.11)</strong>
-      How is the <em>equality relation</em> on a set \(A\) written in
-      set-builder notation?
-    </p>
-
-    <p><strong>(CR9.12)</strong>
-      Given an \(n\)-ary relation \(R \subseteq A^n\) and \(B \subseteq A\),
-      how is the <em>restriction</em> \(R \upharpoonright B\) defined?
-    </p>
-
-    <p><strong>(CR9.13)</strong>
-      In Example 9.7, if \(R\) is the usual strict order on \(\mathbb{N}\)
-      and \(B = \{0,1,2,3\}\), what is \(R \upharpoonright B\) described to be?
-    </p>
+    <ul>
+      <li>\(a \sim b\) iff \(a-b\) is even.</li>
+      <li>\(a \prec b\) iff \(a&lt;b\).</li>
+    </ul>
+    <ol>
+      <li>For each relation, fill in a property table (reflexive? symmetric? transitive? trichotomy?).</li>
+      <li>Analyze which is an equivalence relation and which is an ordering relation.</li>
+      <li>Explain how the <em>shape</em> of equivalence classes for \(\sim\) differs from the <em>shape</em> of chains for \(\prec\).</li>
+    </ol>
 
     <!-- Notes + drawing for group 9 -->
     <div class="group-notes">
@@ -772,7 +754,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \text{ternary relation on }\mathbb{R},\ \text{unary relation as subset},\ R\upharpoonright B = R \cap B^n"></textarea>
+        placeholder="e.g.\ \text{reflexive/symmetric/transitive/trichotomy tables},\ a\sim b,\ a\prec b,\ \text{equivalence vs order}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -780,9 +762,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for property tables and visualizing classes vs chains.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -790,59 +770,43 @@
     </div>
   </section>
 
-  <!-- 10. Functions and Operations -->
+  <!-- 10. Equivalence Relations and Partitions -->
   <section class="problem-group" id="group-10">
-    <h2>10. Functions and Operations</h2>
+    <h2>10. Equivalence Relations and Partitions</h2>
 
-    <h3>10.1 Functions</h3>
-
-    <p><strong>(F10.1)</strong>
-      When is a relation \(F\) called a <em>function</em>?
+    <p><strong>(EQ4.1)</strong>
+      On \(\mathbb{Z}\), define \(a \equiv_3 b\) iff \(3\mid (a-b)\).
     </p>
+    <ol>
+      <li>Describe the equivalence classes \([0]\), \([1]\), \([2]\).</li>
+      <li>Show that every integer belongs to exactly one of these classes by analyzing the possible remainders modulo 3.</li>
+      <li>
+        Explain how these three classes collectively form a partition of \(\mathbb{Z}\) and why
+        <strong>no other</strong> partition of \(\mathbb{Z}\) into three nonempty sets can define this same relation.
+      </li>
+    </ol>
 
-    <p><strong>(F10.2)</strong>
-      What does the notation \(F : A \to B\) mean in terms of domain and range?
+    <p><strong>(EQ4.2)</strong>
+      Suppose a relation \(R\) on a set \(A\) is reflexive and symmetric, but <em>not</em> transitive.
     </p>
+    <ol>
+      <li>Construct a concrete example on a small set (e.g. \(A=\{1,2,3\}\)) where transitivity fails.</li>
+      <li>Analyze how the equivalence classes \([x]\) behave in your example: do they still form a partition?</li>
+      <li>Explain why <strong>transitivity</strong> is exactly what guarantees that the sets \([x]\) are either disjoint or equal.</li>
+    </ol>
 
-    <p><strong>(F10.3)</strong>
-      When do we say that a function \(F\) “maps \(A\) <em>onto</em> \(B\)”
-      (is surjective)?
+    <p><strong>(EQ4.3)</strong>
+      Let a relation \(\approx\) on \(\mathbb{R}\setminus\{0\}\) be defined by “\(x\approx y\) iff \(\frac{x}{y}&gt;0\)” (same sign).
     </p>
-
-    <p><strong>(F10.4)</strong>
-      When is a function \(F\) called <em>one-to-one</em> (injective)?
-    </p>
-
-    <h3>10.2 n-ary Operations and Their Restriction</h3>
-
-    <p><strong>(F10.5)</strong>
-      What is an \(n\)-ary <em>operation</em> on a set \(A\)?
-    </p>
-
-    <p><strong>(F10.6)</strong>
-      Give an example of a binary operation and a unary operation on \(\mathbb{N}\)
-      from the notes.
-    </p>
-
-    <p><strong>(F10.7)</strong>
-      Given an \(n\)-ary operation \(f : A^n \to A\) and a subset \(B \subseteq A\),
-      how is the restricted operation \(g\) defined (as in Definition 10.4)?
-    </p>
-
-    <p><strong>(F10.8)</strong>
-      State Proposition 10.5: when is the restriction \(g\) itself an \(n\)-ary
-      operation on \(B\)?
-    </p>
-
-    <p><strong>(F10.9)</strong>
-      In Example 10.6, what operation is being restricted, and to which subset
-      is it restricted?
-    </p>
-
-    <p><strong>(F10.10)</strong>
-      In Example 10.6, is \(\mathbb{N}\) closed under the restricted operation?
-      What does that imply about the restriction?
-    </p>
+    <ol>
+      <li>Find the two equivalence classes explicitly.</li>
+      <li>
+        Consider the partition \(\{P,N\}\) of \(\mathbb{R}\setminus\{0\}\) into positive and negative numbers. Show that the equivalence relation induced by this partition is exactly \(\approx\).
+      </li>
+      <li>
+        Analyze the general correspondence: given a partition of a set, how do you reconstruct the equivalence relation, and why do the equivalence classes coincide with the partition blocks?
+      </li>
+    </ol>
 
     <!-- Notes + drawing for group 10 -->
     <div class="group-notes">
@@ -851,7 +815,7 @@
         Type \\\\ quickly to open LaTeX snippet app on the note.
       </div>
       <textarea class="latex-input"
-                placeholder="e.g.\ F : A \to B,\ \text{one-to-one and onto},\ f : A^n \to A\ \text{closed on }A"></textarea>
+        placeholder="e.g.\ [x] = \{y\in A : \langle x,y\rangle\in R\},\ a\equiv_3 b,\ x\approx y \iff x/y&gt;0,\ \text{partition} \leftrightarrow \text{equivalence relation}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -859,118 +823,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 11. Standard Classes of Relations -->
-  <section class="problem-group" id="group-11">
-    <h2>11. Standard Classes of Relations</h2>
-
-    <h3>11.1 Basic Properties</h3>
-
-    <p><strong>(R11.1)</strong>
-      When is a relation \(R\) on a set \(A\) called <em>reflexive on \(A\)</em>?
-    </p>
-
-    <p><strong>(R11.2)</strong>
-      When is a relation \(R\) called <em>symmetric</em>?
-    </p>
-
-    <p><strong>(R11.3)</strong>
-      When is a relation \(R\) called <em>transitive</em>?
-    </p>
-
-    <p><strong>(R11.4)</strong>
-      What does it mean for a relation \(R\) on a set \(A\) to satisfy
-      <em>trichotomy</em> on \(A\)?
-    </p>
-
-    <h3>11.2 Equivalence Relations and Orderings</h3>
-
-    <p><strong>(R11.5)</strong>
-      What three properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>equivalence relation</em> on \(A\)?
-    </p>
-
-    <p><strong>(R11.6)</strong>
-      What two properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>ordering relation</em> (strict order) on \(A\)?
-    </p>
-
-    <!-- Notes + drawing for group 11 -->
-    <div class="group-notes">
-      <h3>Notes for Group 11</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ examples of reflexive/symmetric/transitive,\ \text{trichotomy},\ m<n\ \text{strict order on }\mathbb{Z}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 12. Equivalence Classes -->
-  <section class="problem-group" id="group-12">
-    <h2>12. Equivalence Classes</h2>
-
-    <p><strong>(E12.1)</strong>
-      Given an equivalence relation \(R\) on a set \(A\), how is the
-      <em>equivalence class</em> of an element \(x \in A\) defined and denoted?
-    </p>
-
-    <p><strong>(E12.2)</strong>
-      State part (1) of Proposition 12.2: what do the equivalence classes \([x]\)
-      (for \(x \in A\)) do to the set \(A\)?
-    </p>
-
-    <p><strong>(E12.3)</strong>
-      State part (2) of Proposition 12.2: what condition is equivalent to
-      \([x] = [y]\) for \(x, y \in A\)?
-    </p>
-
-    <p><strong>(E12.4)</strong>
-      In words, what does it mean to say that equivalence classes “form a
-      partition of \(A\)”?
-    </p>
-
-    <!-- Notes + drawing for group 12 -->
-    <div class="group-notes">
-      <h3>Notes for Group 12</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ [x] = \{y \in A : \langle x,y\rangle \in R\},\ \text{partition of }A,\ \text{same-birthday classes}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for partition pictures and class diagrams (mod 3, positive/negative).</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -978,7 +831,6 @@
     </div>
   </section>
 </main>
-
 
 
   <!-- Root for the React symbol popup -->

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logic 0 – Level 1</title>
+  <title>Logic 0 – Level 7</title>
 
   <!-- Basic layout styles -->
   <style>
@@ -168,79 +168,51 @@
 </head>
 <body>
   <header>
-    <h1>Logic 0 – Level 1 Problems</h1>
+    <h1>Logic 0 – Level 7 Problems</h1>
   </header>
 
-<main>
+  <main>
   <section>
     <p class="note">
-      Level 1 (Remember) problems check that you can recall the key definitions,
-      symbols, and terminology from the slides. After each group of questions,
-      use the LaTeX notes area and drawing pad for working, examples, or doodles.
+      This page contains a boss-tier problem bank H1–H12 built only from the tools in <code>0logic.pdf</code>:
+      sets, power sets, unions/intersections, ordered pairs/tuples, Cartesian products, relations, functions,
+      equivalence relations, partitions, etc. Each section has its own notes + canvas for working.
     </p>
   </section>
 
-  <!-- 1. Standard Abbreviations and Negation -->
-  <section class="problem-group" id="group-1">
-    <h2>1. Standard Abbreviations and Negation</h2>
-
-    <p><strong>(L1.1)</strong>
-      What symbol is commonly used to abbreviate the statement “If … then …”?
+  <!-- H1 -->
+  <section class="problem-group" id="H1">
+    <h2>H1. Cantor’s Theorem for Your Chapter</h2>
+    <p>
+      Let \(A\) be any set and let \(\mathcal{P}(A)\) be its power set.
     </p>
 
-    <p><strong>(L1.2)</strong>
-      What symbol is used for the <em>converse implication</em> “\(Q\) … if \(P\) …”?
+    <p><strong>(a)</strong> Assume \(f:A\to\mathcal{P}(A)\) is an arbitrary function. Define
+      \[
+      B = \{ x\in A \mid x\notin f(x)\}.
+      \]
     </p>
+    <ol>
+      <li>Prove that \(B\subseteq A\), so \(B\in\mathcal{P}(A)\).</li>
+      <li>Show that there is no \(a\in A\) such that \(f(a)=B\).</li>
+    </ol>
 
-    <p><strong>(L1.3)</strong>
-      What shorthand word is commonly used for “if and only if”?
-    </p>
+    <p><strong>(b)</strong> Conclude that there is <strong>no surjective function</strong> from \(A\) onto \(\mathcal{P}(A)\).</p>
 
-    <p><strong>(L1.4)</strong>
-      What symbol is used to abbreviate “if and only if”?
-    </p>
+    <p><strong>(c)</strong> Explain in words why this shows that “there are always strictly more subsets of a set than elements of the set itself”, using only the function + power set notions in the PDF.</p>
 
-    <p><strong>(L1.5)</strong>
-      What symbol is used to mean “therefore” in mathematical writing?
-    </p>
-
-    <p><strong>(L1.6)</strong>
-      According to the negation rule, how do we write the negation of the equation
-      \(x = y\)?
-    </p>
-
-    <p><strong>(L1.7)</strong>
-      According to the negation rule, how do we write the negation of the statement
-      \(x \in A\)?
-    </p>
-
-    <p><strong>(L1.8)</strong>
-      Once the notation \((\Sigma \models \tau)\) is introduced, how is its
-      <em>negation</em> written?
-    </p>
-
-    <p><strong>(L1.9)</strong>
-      In these notes, what are the two possible truth values called?
-    </p>
-
-    <!-- Notes + drawing for group 1 -->
     <div class="group-notes">
-      <h3>Notes for Group 1</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H1</h3>
+      <div class="note">Type \\ to open the LaTeX snippet app and sketch the diagonal argument.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ p \Rightarrow q,\ A \Leftrightarrow B,\ \Sigma \not\models \tau"></textarea>
+        placeholder="Work through the diagonal subset B and the non-surjectivity argument here."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H1 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: diagram A, f, and the diagonal set B.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -248,362 +220,160 @@
     </div>
   </section>
 
-  <!-- 2. Sets, Membership, and Extensionality -->
-  <section class="problem-group" id="group-2">
-    <h2>2. Sets, Membership, and Extensionality</h2>
+  <!-- H2 -->
+  <section class="problem-group" id="H2">
+    <h2>H2. Equivalence Relations ↔ Partitions (Full Two-Way Equivalence)</h2>
+    <p>Let \(A\) be a nonempty set.</p>
 
-    <p><strong>(S2.1)</strong>
-      Give the informal definition of a <em>set</em>.
-    </p>
-
-    <p><strong>(S2.2)</strong>
-      What does the notation \(t \in A\) mean?
-    </p>
-
-    <p><strong>(S2.3)</strong>
-      What does the notation \(t \notin A\) mean?
-    </p>
-
-    <p><strong>(S2.4)</strong>
-      What does the statement \(x = y\) mean in this context?
-    </p>
-
-    <p><strong>(S2.5)</strong>
-      Fill in the logical equivalence that characterizes equality of sets in Remark 2.2:
-      If \(A = B\), then for every object \(t\),
+    <p><strong>(a)</strong> Suppose \(R\) is an equivalence relation on \(A\). Define the set of equivalence classes
       \[
-        t \in A \iff\ \_\_\_\_\ .
+      A/R = \{[x]\mid x\in A\},\quad [x] = \{y\in A\mid \langle x,y\rangle\in R\}.
+      \]
+      Prove that:
+    </p>
+    <ol>
+      <li>The classes in \(A/R\) are pairwise disjoint: if \([x]\cap [y]\neq\varnothing\), then \([x]=[y]\).</li>
+      <li>The union of all classes is \(A\).</li>
+    </ol>
+    <p>So the equivalence classes form a <strong>partition</strong> of \(A\).</p>
+
+    <p><strong>(b)</strong> Now start with a partition \(\mathcal{P}\) of \(A\): a set of nonempty subsets of \(A\) that are pairwise disjoint and whose union is \(A\).
+      Define a relation \(R_{\mathcal{P}}\) by
+      \[
+      \langle x,y\rangle\in R_{\mathcal{P}} \iff x,y\text{ lie in the same block }P\in\mathcal{P}.
+      \]
+      Prove that \(R_{\mathcal{P}}\) is an equivalence relation.
+    </p>
+
+    <p><strong>(c)</strong> Show that the two constructions above are <strong>inverse</strong> in the following sense:</p>
+    <ul>
+      <li>Starting with an equivalence relation \(R\), forming its partition of classes, then forming the relation from that partition gives you back \(R\).</li>
+      <li>Starting with a partition \(\mathcal{P}\), forming its relation, then forming the equivalence classes of that relation gives you back the original partition.</li>
+    </ul>
+
+    <div class="group-notes">
+      <h3>Notes for H2</h3>
+      <div class="note">Use this note to track the “back-and-forth” constructions.</div>
+      <textarea class="latex-input"
+        placeholder="Prove disjointness + cover, then show (partition → relation → partition) and (relation → partition → relation) are inverses."></textarea>
+      <div class="rendered-output"></div>
+      <div class="controls">
+        <button class="copy-btn">Copy H2 + notes</button>
+      </div>
+    </div>
+    <div class="canvas-block">
+      <div class="note">Canvas: draw partition blocks and arrows showing x ~ y iff they share a block.</div>
+      <div class="canvas-wrapper">
+        <canvas class="note-canvas"></canvas>
+      </div>
+      <button class="copy-btn clear-canvas">Clear drawing</button>
+    </div>
+  </section>
+
+  <!-- H3 -->
+  <section class="problem-group" id="H3">
+    <h2>H3. Classifying Equivalence Relations on {1,2,3,4} with Blocks of Size 2</h2>
+
+    <p>Consider all equivalence relations \(R\) on the set \(\{1,2,3,4\}\) such that <strong>every equivalence class has exactly two elements</strong>.</p>
+
+    <p><strong>(a)</strong> Describe all possible partitions of \(\{1,2,3,4\}\) into blocks of size 2.</p>
+
+    <p><strong>(b)</strong> For each such partition, write down the corresponding equivalence relation explicitly as a set of ordered pairs.</p>
+
+    <p><strong>(c)</strong> Prove that these are <strong>all</strong> equivalence relations on \(\{1,2,3,4\}\) where each class has size 2; that is, show that no other equivalence relation can satisfy that property.</p>
+
+    <div class="group-notes">
+      <h3>Notes for H3</h3>
+      <div class="note">Think in terms of perfect matchings on 4 labeled points.</div>
+      <textarea class="latex-input"
+        placeholder="List all pairings (1,2)|(3,4), etc., then expand to relations and argue classification completeness."></textarea>
+      <div class="rendered-output"></div>
+      <div class="controls">
+        <button class="copy-btn">Copy H3 + notes</button>
+      </div>
+    </div>
+    <div class="canvas-block">
+      <div class="note">Canvas: draw pairing graphs for {1,2,3,4} and label blocks.</div>
+      <div class="canvas-wrapper">
+        <canvas class="note-canvas"></canvas>
+      </div>
+      <button class="copy-btn clear-canvas">Clear drawing</button>
+    </div>
+  </section>
+
+  <!-- H4 -->
+  <section class="problem-group" id="H4">
+    <h2>H4. Infinite Equivalence Classes on ℕ with Controlled Structure</h2>
+
+    <p>Let \(\mathbb{N} = \{0,1,2,\dots\}\).</p>
+
+    <p><strong>(a)</strong> Construct an equivalence relation \(\sim\) on \(\mathbb{N}\) such that:</p>
+    <ol>
+      <li>Every equivalence class is infinite.</li>
+      <li>There are infinitely many different equivalence classes.</li>
+    </ol>
+    <p>(You must give a precise definition like “\(a\sim b\) iff …”.)</p>
+
+    <p><strong>(b)</strong> Prove that your relation \(\sim\) is reflexive, symmetric, and transitive.</p>
+
+    <p><strong>(c)</strong> Describe explicitly the equivalence classes, and prove that they are all infinite and pairwise distinct.</p>
+
+    <div class="group-notes">
+      <h3>Notes for H4</h3>
+      <div class="note">Hint: think about congruence modulo n, or grouping by some infinite pattern.</div>
+      <textarea class="latex-input"
+        placeholder="Define your ∼, then prove properties and describe classes (e.g., mod n, parity, etc.)."></textarea>
+      <div class="rendered-output"></div>
+      <div class="controls">
+        <button class="copy-btn">Copy H4 + notes</button>
+      </div>
+    </div>
+    <div class="canvas-block">
+      <div class="note">Canvas: visualize equivalence classes as infinite columns along ℕ.</div>
+      <div class="canvas-wrapper">
+        <canvas class="note-canvas"></canvas>
+      </div>
+      <button class="copy-btn clear-canvas">Clear drawing</button>
+    </div>
+  </section>
+
+  <!-- H5 -->
+  <section class="problem-group" id="H5">
+    <h2>H5. Symmetric-Difference-Finite on 𝒫(ℕ)</h2>
+
+    <p>Let \(\mathcal{P}(\mathbb{N})\) be the power set of \(\mathbb{N}\). Define, for \(A,B\subseteq\mathbb{N}\),
+      \[
+      A\Delta B = (A\setminus B)\cup (B\setminus A)
+      \]
+      (the symmetric difference), and define a relation \(\approx\) by
+      \[
+      A\approx B \iff A\Delta B\text{ is finite}.
       \]
     </p>
 
-    <p><strong>(S2.6)</strong>
-      State Proposition 2.3 (the <em>Extensionality</em> principle) in words.
-    </p>
+    <p><strong>(a)</strong> Prove that \(\approx\) is an equivalence relation on \(\mathcal{P}(\mathbb{N})\).</p>
 
-    <p><strong>(S2.7)</strong>
-      What idea about sets is expressed by Remark 2.4 (following the extensionality proposition)?
-    </p>
+    <p><strong>(b)</strong> Describe in words what it means for two subsets to be “equivalent” under \(\approx\).</p>
 
-    <!-- Notes + drawing for group 2 -->
-    <div class="group-notes">
-      <h3>Notes for Group 2</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ x \in A\ \text{vs.}\ x = A,\ \forall t\,(t\in A \Leftrightarrow t\in B)"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 3. Basic Constructions – Adjoining an Element -->
-  <section class="problem-group" id="group-3">
-    <h2>3. Basic Constructions – Adjoining an Element</h2>
-
-    <p><strong>(B3.1)</strong>
-      How is the set obtained by “adjoining” an element \(t\) to a set \(A\) denoted?
-    </p>
-
-    <p><strong>(B3.2)</strong>
-      State in words what \(A;t := A \cup \{t\}\) means.
-    </p>
-
-    <p><strong>(B3.3)</strong>
-      According to Proposition 3.2, when is \(A;t = A\)?
-    </p>
-
-    <p><strong>(B3.4)</strong>
-      Write the logical equivalence from Proposition 3.2 that characterizes when an
-      element is already in a set, using \(t \in A\) and \(A;t = A\).
-    </p>
-
-    <!-- Notes + drawing for group 3 -->
-    <div class="group-notes">
-      <h3>Notes for Group 3</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ A ; t,\ A \cup \{t\},\ \varnothing,\ \{0\},\ \{\varnothing\},\ \{0,1,2,\dots\}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 4. Common Sets and Notation -->
-  <section class="problem-group" id="group-4">
-    <h2>4. Common Sets and Notation</h2>
-
-    <h3>4.1 Special Sets</h3>
-
-    <p><strong>(C4.1)</strong>
-      What is the <em>empty set</em> and what symbol is used to denote it?
-    </p>
-
-    <p><strong>(C4.2)</strong>
-      What is a <em>singleton</em> set and how is it written for an object \(x\)?
-    </p>
-
-    <p><strong>(C4.3)</strong>
-      If \(x_1, x_2, \dots, x_n\) is a finite list of objects, how do we write the set
-      that has exactly those objects as elements?
-    </p>
-
-    <p><strong>(C4.4)</strong>
-      What does Remark 4.2 say about the set \(\{x, y\}\) compared to \(\{y, x\}\)?
-    </p>
-
-    <h3>4.2 Infinite Sets</h3>
-
-    <p><strong>(C4.5)</strong>
-      How is the set of <em>natural numbers</em> denoted, and what is its standard listing
-      in these notes?
-    </p>
-
-    <p><strong>(C4.6)</strong>
-      How is the set of <em>integers</em> denoted, and what is its standard listing in
-      these notes?
-    </p>
-
-    <!-- Notes + drawing for group 4 -->
-    <div class="group-notes">
-      <h3>Notes for Group 4</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ \{x : P(x)\},\ \{x \in A : P(x)\},\ \text{even integers} = \{2k : k \in \mathbb{Z}\}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 5. Sets Specified by Properties – Set-Builder Notation -->
-  <section class="problem-group" id="group-5">
-    <h2>5. Sets Specified by Properties – Set-Builder Notation</h2>
-
-    <p><strong>(SB5.1)</strong>
-      Write the general form of a set defined by a property \(P(x)\) using
-      set-builder notation.
-    </p>
-
-    <p><strong>(SB5.2)</strong>
-      What does the set \(\{x \in A \mid P(x)\}\) represent?
-    </p>
-
-    <p><strong>(SB5.3)</strong>
-      In the example \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\),
-      what kind of objects are the elements of this set?
-    </p>
-
-    <p><strong>(SB5.4)</strong>
-      In words, describe the property that an ordered pair \(\langle m,n\rangle\) must
-      satisfy to belong to the set
-      \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\).
-    </p>
-
-    <!-- Notes + drawing for group 5 -->
-    <div class="group-notes">
-      <h3>Notes for Group 5</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ A \subseteq B,\ \varnothing \subseteq A,\ \mathcal{P}(\{1,2\}),\ \mathcal{P}(\varnothing) = \{\varnothing\}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 6. Subsets and Power Sets -->
-  <section class="problem-group" id="group-6">
-    <h2>6. Subsets and Power Sets</h2>
-
-    <h3>6.1 Subsets</h3>
-
-    <p><strong>(SP6.1)</strong>
-      What does it mean for a set \(A\) to be a <em>subset</em> of a set \(B\)?
-      Give the symbolic condition.
-    </p>
-
-    <p><strong>(SP6.2)</strong>
-      What notation is used to express that \(A\) is a subset of \(B\)?
-    </p>
-
-    <p><strong>(SP6.3)</strong>
-      According to Remark 6.2, is every set a subset of itself?
-    </p>
-
-    <p><strong>(SP6.4)</strong>
-      According to Remark 6.2, is the empty set \(\varnothing\) a subset of every set \(A\)?
-    </p>
-
-    <p><strong>(SP6.5)</strong>
-      What phrase is used to describe why the statement \(\varnothing \subseteq A\)
-      is true for every set \(A\)?
-    </p>
-
-    <h3>6.2 Power Set</h3>
-
-    <p><strong>(SP6.6)</strong>
-      How is the <em>power set</em> of a set \(A\) denoted?
-    </p>
-
-    <p><strong>(SP6.7)</strong>
-      What is the definition of \(\mathcal{P}(A)\) in terms of subsets of \(A\)?
-    </p>
-
-    <p><strong>(SP6.8)</strong>
-      What is \(\mathcal{P}(\varnothing)\)?
-    </p>
-
-    <p><strong>(SP6.9)</strong>
-      What is \(\mathcal{P}(\{\varnothing\})\)?
-    </p>
-
-    <!-- Notes + drawing for group 6 -->
-    <div class="group-notes">
-      <h3>Notes for Group 6</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
-      <textarea class="latex-input"
-                placeholder="e.g.\ x \in A \cup B,\ x \in A \cap B,\ \bigcup \mathcal{A},\ \bigcap \mathcal{A},\ \text{pairwise disjoint}"></textarea>
-      <div class="rendered-output"></div>
-      <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
-      </div>
-    </div>
-
-    <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
-      <div class="canvas-wrapper">
-        <canvas class="note-canvas"></canvas>
-      </div>
-      <button class="copy-btn clear-canvas">Clear drawing</button>
-    </div>
-  </section>
-
-  <!-- 7. Union and Intersection -->
-  <section class="problem-group" id="group-7">
-    <h2>7. Union and Intersection</h2>
-
-    <h3>7.1 Binary Union and Intersection</h3>
-
-    <p><strong>(U7.1)</strong>
-      What is the definition of the union \(A \cup B\) of two sets \(A\) and \(B\)?
-    </p>
-
-    <p><strong>(U7.2)</strong>
-      What is the definition of the intersection \(A \cap B\) of two sets \(A\) and \(B\)?
-    </p>
-
-    <p><strong>(U7.3)</strong>
-      What does it mean for two sets \(A\) and \(B\) to be <em>disjoint</em>?
-    </p>
-
-    <p><strong>(U7.4)</strong>
-      What does it mean for a family of sets to be <em>pairwise disjoint</em>?
-    </p>
-
-    <h3>7.2 Indexed Unions and Intersections</h3>
-
-    <p><strong>(U7.5)</strong>
-      Let \(A\) be a set whose elements are themselves sets. How is the union of all
-      members of \(A\) defined and written?
-    </p>
-
-    <p><strong>(U7.6)</strong>
-      In the same situation, how is the intersection of all members of \(A\) defined
-      and written?
-    </p>
-
-    <p><strong>(U7.7)</strong>
-      In Example 7.4, if
+    <p><strong>(c)</strong> Let \([A]\) denote the equivalence class of \(A\). For two classes \([A]\) and \([B]\), define:
       \[
-        A = \big\{\{0, 1, 5\}, \{1, 6\}, \{1, 5\}\big\},
+      [A]\sqcup [B] := [A\cup B].
       \]
-      what is \(\bigcup A\)?
+      Prove that \(\sqcup\) is <strong>well-defined</strong> on equivalence classes (i.e. it does not depend on the choice of representatives \(A\) and \(B\)).
     </p>
 
-    <p><strong>(U7.8)</strong>
-      In Example 7.4, for the same \(A\), what is \(\bigcap A\)?
-    </p>
-
-    <p><strong>(U7.9)</strong>
-      How do we usually write the union of a sequence of sets \((A_n)_{n \in \mathbb{N}}\)
-      indexed by natural numbers?
-    </p>
-
-    <!-- Notes + drawing for group 7 -->
     <div class="group-notes">
-      <h3>Notes for Group 7</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H5</h3>
+      <div class="note">Track finite vs infinite symmetric differences carefully.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \langle x,y\rangle = \{\{x\},\{x,y\}\},\ \text{finite sequence},\ \text{initial segment}"></textarea>
+        placeholder="Show reflexive/symmetric/transitive, then prove [A]⊔[B] is independent of representatives."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H5 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: draw example sets and their symmetric differences to build intuition.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -611,85 +381,33 @@
     </div>
   </section>
 
-  <!-- 8. Ordered Pairs and Sequences -->
-  <section class="problem-group" id="group-8">
-    <h2>8. Ordered Pairs and Sequences</h2>
+  <!-- H6 -->
+  <section class="problem-group" id="H6">
+    <h2>H6. Infinite Family of Pairwise Disjoint Infinite Subsets of ℕ</h2>
 
-    <h3>8.1 Ordered Pairs (Kuratowski)</h3>
+    <p>Construct an infinite family \(\{A_n\}_{n\in\mathbb{N}}\) of subsets of \(\mathbb{N}\) such that:</p>
+    <ol>
+      <li>Each \(A_n\) is infinite.</li>
+      <li>The sets are pairwise disjoint: if \(m\neq n\), then \(A_m\cap A_n = \varnothing\).</li>
+      <li>Their union is all of \(\mathbb{N}\): \(\bigcup_{n\in\mathbb{N}} A_n = \mathbb{N}\).</li>
+    </ol>
 
-    <p><strong>(OP8.1)</strong>
-      According to Kuratowski’s definition, how is the ordered pair
-      \(\langle x, y \rangle\) defined in terms of sets?
-    </p>
+    <p><strong>(a)</strong> Give an explicit formula for each \(A_n\) (e.g. using arithmetic progressions or prime decompositions).</p>
 
-    <p><strong>(OP8.2)</strong>
-      State Proposition 8.2: what condition on \(x, y, u, v\) is equivalent to
-      \(\langle x, y \rangle = \langle u, v \rangle\)?
-    </p>
+    <p><strong>(b)</strong> Prove properties (1), (2), and (3) rigorously from your definition.</p>
 
-    <h3>8.2 n-tuples</h3>
-
-    <p><strong>(OP8.3)</strong>
-      How are \((n+1)\)-tuples defined recursively from \(n\)-tuples in Definition 8.3?
-    </p>
-
-    <p><strong>(OP8.4)</strong>
-      What is a <em>finite sequence</em> of members of a set \(A\), in terms of
-      \(n\)-tuples?
-    </p>
-
-    <h3>8.3 Segments of a Sequence</h3>
-
-    <p><strong>(OP8.5)</strong>
-      Given a finite sequence \(S = \langle x_1, \dots, x_n\rangle\), what is a
-      <em>segment</em> of \(S\)?
-    </p>
-
-    <p><strong>(OP8.6)</strong>
-      When is a segment \(\langle x_k, \dots, x_m\rangle\) called an
-      <em>initial segment</em>?
-    </p>
-
-    <p><strong>(OP8.7)</strong>
-      When is an initial segment called a <em>proper</em> initial segment?
-    </p>
-
-    <h3>8.4 Lemma 0A and Its Corollary</h3>
-
-    <p><strong>(OP8.8)</strong>
-      State Lemma 8.5 (Lemma 0A) in its general form involving
-      \(\langle x_1, \dots, x_m\rangle\) and
-      \(\langle y_1, \dots, y_{m+k}\rangle\).
-    </p>
-
-    <p><strong>(OP8.9)</strong>
-      What method is used in the proof of Lemma 0A, according to Remark 8.6?
-    </p>
-
-    <p><strong>(OP8.10)</strong>
-      State Corollary 8.7: under the given assumptions on a set \(A\) and two
-      sequences with elements in \(A\), what can we conclude when
-      \(\langle x_1, \dots, x_m\rangle = \langle y_1, \dots, y_n\rangle\)?
-    </p>
-
-    <!-- Notes + drawing for group 8 -->
     <div class="group-notes">
-      <h3>Notes for Group 8</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H6</h3>
+      <div class="note">Classic idea: partition ℕ into infinite arithmetic progressions or “columns”.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A \times B,\ A^3,\ \operatorname{dom}R,\ \operatorname{ran}R,\ \mathrm{fld}(R)"></textarea>
+        placeholder="Define A₀, A₁, … explicitly and prove infinitude, disjointness, and union = ℕ."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H6 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: visualize ℕ as a grid and color different Aₙ.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -697,92 +415,38 @@
     </div>
   </section>
 
-  <!-- 9. Cartesian Products and Relations -->
-  <section class="problem-group" id="group-9">
-    <h2>9. Cartesian Products and Relations</h2>
+  <!-- H7 -->
+  <section class="problem-group" id="H7">
+    <h2>H7. A Deep “Zoo” of Relations on ℕ</h2>
 
-    <h3>9.1 Cartesian Products</h3>
+    <p>On \(\mathbb{N}\), define the following relations (you can modify them as long as they’re explicit):</p>
+    <ol>
+      <li>\(R_1\): \(\langle a,b\rangle\in R_1 \iff a\le b\).</li>
+      <li>\(R_2\): \(\langle a,b\rangle\in R_2 \iff a-b\text{ is even}\).</li>
+      <li>\(R_3\): \(\langle a,b\rangle\in R_3 \iff a\mid b\) (a divides b).</li>
+      <li>\(R_4\): \(\langle a,b\rangle\in R_4 \iff a=b\text{ or }a=b+1\).</li>
+      <li>\(R_5\): \(\langle a,b\rangle\in R_5 \iff |a-b|\le 1\).</li>
+      <li>\(R_6\): \(\langle a,b\rangle\in R_6 \iff \max(a,b)\text{ is prime}\).</li>
+    </ol>
 
-    <p><strong>(CR9.1)</strong>
-      How is the Cartesian product \(A \times B\) of sets \(A\) and \(B\) defined?
-    </p>
+    <p>For each \(R_i\):</p>
+    <p><strong>(a)</strong> Determine whether it is reflexive, symmetric, and transitive.</p>
+    <p><strong>(b)</strong> Determine whether it is an equivalence relation, an ordering relation (in the sense of the notes), both, or neither.</p>
+    <p><strong>(c)</strong> For those that are equivalence relations, describe their equivalence classes. For those that are orders, describe informally the “shape” of the order (chains, minimal elements, etc.).</p>
+    <p><strong>(d)</strong> Summarize your findings in a table. Then explain which properties are “compatible” and which combinations cannot occur, based on the examples.</p>
 
-    <p><strong>(CR9.2)</strong>
-      What does \(A^n\) denote for a set \(A\) and integer \(n \ge 1\)?
-    </p>
-
-    <p><strong>(CR9.3)</strong>
-      In words, what kind of objects are the elements of \(A^n\)?
-    </p>
-
-    <h3>9.2 Binary Relations</h3>
-
-    <p><strong>(CR9.4)</strong>
-      What is a (binary) <em>relation</em> \(R\) in this context?
-    </p>
-
-    <p><strong>(CR9.5)</strong>
-      In Example 9.3, how is the strict ordering on the set
-      \(\{0,1,2,3\}\) represented as a relation?
-    </p>
-
-    <h3>9.3 Domain, Range, and Field</h3>
-
-    <p><strong>(CR9.6)</strong>
-      How is the <em>domain</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.7)</strong>
-      How is the <em>range</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.8)</strong>
-      What is the <em>field</em> of a relation \(R\)?
-    </p>
-
-    <h3>9.4 n-ary Relations and Restriction</h3>
-
-    <p><strong>(CR9.9)</strong>
-      What is an \(n\)-ary relation on a set \(A\)?
-    </p>
-
-    <p><strong>(CR9.10)</strong>
-      When \(n = 1\), what does an \(n\)-ary relation on \(A\) reduce to?
-    </p>
-
-    <p><strong>(CR9.11)</strong>
-      How is the <em>equality relation</em> on a set \(A\) written in
-      set-builder notation?
-    </p>
-
-    <p><strong>(CR9.12)</strong>
-      Given an \(n\)-ary relation \(R \subseteq A^n\) and \(B \subseteq A\),
-      how is the <em>restriction</em> \(R \upharpoonright B\) defined?
-    </p>
-
-    <p><strong>(CR9.13)</strong>
-      In Example 9.7, if \(R\) is the usual strict order on \(\mathbb{N}\)
-      and \(B = \{0,1,2,3\}\), what is \(R \upharpoonright B\) described to be?
-    </p>
-
-    <!-- Notes + drawing for group 9 -->
     <div class="group-notes">
-      <h3>Notes for Group 9</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H7</h3>
+      <div class="note">Make a 6×4 property table: reflexive / symmetric / transitive / type.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \text{ternary relation on }\mathbb{R},\ \text{unary relation as subset},\ R\upharpoonright B = R \cap B^n"></textarea>
+        placeholder="Analyze each Rᵢ, then summarize compatibility patterns (e.g. equivalence vs order)."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H7 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: draw Hasse diagrams or equivalence-class pictures for the different Rᵢ.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -790,78 +454,38 @@
     </div>
   </section>
 
-  <!-- 10. Functions and Operations -->
-  <section class="problem-group" id="group-10">
-    <h2>10. Functions and Operations</h2>
+  <!-- H8 -->
+  <section class="problem-group" id="H8">
+    <h2>H8. Injective Self-Map on ℕ and an Invariant Subset</h2>
 
-    <h3>10.1 Functions</h3>
+    <p>Let \(f:\mathbb{N}\to\mathbb{N}\) be an <strong>injective</strong> function (but not assumed surjective).</p>
 
-    <p><strong>(F10.1)</strong>
-      When is a relation \(F\) called a <em>function</em>?
+    <p><strong>(a)</strong> For each \(n\in\mathbb{N}\), consider the <strong>forward orbit</strong>:
+      \[
+      \mathcal{O}(n) = \{f^k(n)\mid k\in\mathbb{N}\}
+      \]
+      (where \(f^0(n)=n\), and \(f^{k+1}(n) = f(f^k(n))\)).
+      Prove that if \(f^k(n)=f^m(n)\) with \(k&lt;m\), then the orbit \(\mathcal{O}(n)\) is eventually periodic (i.e. there is a cycle).
     </p>
 
-    <p><strong>(F10.2)</strong>
-      What does the notation \(F : A \to B\) mean in terms of domain and range?
+    <p><strong>(b)</strong> Show that the orbits \(\mathcal{O}(n)\) for different \(n\) are either identical or disjoint.</p>
+
+    <p><strong>(c)</strong> Using the orbits, construct a subset \(S\subseteq\mathbb{N}\) such that the restriction \(f\upharpoonright S: S\to S\) is a <strong>bijection</strong>.<br>
+      (You are allowed to pick one representative from each orbit in some systematic way.)
     </p>
 
-    <p><strong>(F10.3)</strong>
-      When do we say that a function \(F\) “maps \(A\) <em>onto</em> \(B\)”
-      (is surjective)?
-    </p>
-
-    <p><strong>(F10.4)</strong>
-      When is a function \(F\) called <em>one-to-one</em> (injective)?
-    </p>
-
-    <h3>10.2 n-ary Operations and Their Restriction</h3>
-
-    <p><strong>(F10.5)</strong>
-      What is an \(n\)-ary <em>operation</em> on a set \(A\)?
-    </p>
-
-    <p><strong>(F10.6)</strong>
-      Give an example of a binary operation and a unary operation on \(\mathbb{N}\)
-      from the notes.
-    </p>
-
-    <p><strong>(F10.7)</strong>
-      Given an \(n\)-ary operation \(f : A^n \to A\) and a subset \(B \subseteq A\),
-      how is the restricted operation \(g\) defined (as in Definition 10.4)?
-    </p>
-
-    <p><strong>(F10.8)</strong>
-      State Proposition 10.5: when is the restriction \(g\) itself an \(n\)-ary
-      operation on \(B\)?
-    </p>
-
-    <p><strong>(F10.9)</strong>
-      In Example 10.6, what operation is being restricted, and to which subset
-      is it restricted?
-    </p>
-
-    <p><strong>(F10.10)</strong>
-      In Example 10.6, is \(\mathbb{N}\) closed under the restricted operation?
-      What does that imply about the restriction?
-    </p>
-
-    <!-- Notes + drawing for group 10 -->
     <div class="group-notes">
-      <h3>Notes for Group 10</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H8</h3>
+      <div class="note">Think of the directed graph of f: chains into cycles; pick one point per orbit.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ F : A \to B,\ \text{one-to-one and onto},\ f : A^n \to A\ \text{closed on }A"></textarea>
+        placeholder="Analyze orbit structure, prove disjoint-or-same, then define S so f|S is bijective."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H8 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: orbit/cycle diagrams of an injective map on ℕ.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -869,59 +493,34 @@
     </div>
   </section>
 
-  <!-- 11. Standard Classes of Relations -->
-  <section class="problem-group" id="group-11">
-    <h2>11. Standard Classes of Relations</h2>
+  <!-- H9 -->
+  <section class="problem-group" id="H9">
+    <h2>H9. Encodings of Tuples as Functions</h2>
 
-    <h3>11.1 Basic Properties</h3>
-
-    <p><strong>(R11.1)</strong>
-      When is a relation \(R\) on a set \(A\) called <em>reflexive on \(A\)</em>?
+    <p>
+      In the notes, tuples like \(\langle x_1,\dots,x_n\rangle\) are built recursively from ordered pairs.
+      Another approach: view a tuple as a <strong>function</strong> from an initial segment of \(\mathbb{N}\) into a set.
+      Let \(A\) be a set.
     </p>
 
-    <p><strong>(R11.2)</strong>
-      When is a relation \(R\) called <em>symmetric</em>?
-    </p>
+    <p><strong>(a)</strong> Define precisely what it means to regard an \(n\)-tuple \(\langle x_1,\dots,x_n\rangle\) of elements of \(A\) as a function \(t:\{1,\dots,n\}\to A\).</p>
 
-    <p><strong>(R11.3)</strong>
-      When is a relation \(R\) called <em>transitive</em>?
-    </p>
+    <p><strong>(b)</strong> Prove that two \(n\)-tuples \(\langle x_1,\dots,x_n\rangle\) and \(\langle y_1,\dots,y_n\rangle\) are equal (as tuples in the sense of the PDF) if and only if the corresponding functions \(t_x\) and \(t_y\) are equal (as relations/functions in the sense of the PDF).</p>
 
-    <p><strong>(R11.4)</strong>
-      What does it mean for a relation \(R\) on a set \(A\) to satisfy
-      <em>trichotomy</em> on \(A\)?
-    </p>
+    <p><strong>(c)</strong> Use this viewpoint to give an alternative definition of the Cartesian power \(A^n\) and prove that it is equivalent to the one in the notes.</p>
 
-    <h3>11.2 Equivalence Relations and Orderings</h3>
-
-    <p><strong>(R11.5)</strong>
-      What three properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>equivalence relation</em> on \(A\)?
-    </p>
-
-    <p><strong>(R11.6)</strong>
-      What two properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>ordering relation</em> (strict order) on \(A\)?
-    </p>
-
-    <!-- Notes + drawing for group 11 -->
     <div class="group-notes">
-      <h3>Notes for Group 11</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H9</h3>
+      <div class="note">Connect “tuple as nested pairs” with “tuple as function from {1,…,n}”.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ examples of reflexive/symmetric/transitive,\ \text{trichotomy},\ m<n\ \text{strict order on }\mathbb{Z}"></textarea>
+        placeholder="Spell out the identification between sequences and functions; then define Aⁿ via functions."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H9 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Canvas: draw mapping diagrams from {1,…,n} to A for tuples.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -929,48 +528,122 @@
     </div>
   </section>
 
-  <!-- 12. Equivalence Classes -->
-  <section class="problem-group" id="group-12">
-    <h2>12. Equivalence Classes</h2>
+  <!-- H10 -->
+  <section class="problem-group" id="H10">
+    <h2>H10. A Nonstandard Strict Order on ℤ</h2>
 
-    <p><strong>(E12.1)</strong>
-      Given an equivalence relation \(R\) on a set \(A\), how is the
-      <em>equivalence class</em> of an element \(x \in A\) defined and denoted?
+    <p>Define a relation \(\prec\) on \(\mathbb{Z}\) by:
+      \[
+      a\prec b \iff \big(|a| &lt; |b|\big)\ \text{or}\ \big(|a|=|b|\text{ and }a&lt;b\big).
+      \]
+      So we order integers by increasing absolute value, breaking ties by the usual &lt;.
     </p>
 
-    <p><strong>(E12.2)</strong>
-      State part (1) of Proposition 12.2: what do the equivalence classes \([x]\)
-      (for \(x \in A\)) do to the set \(A\)?
-    </p>
+    <p><strong>(a)</strong> Prove that \(\prec\) is a strict ordering relation on \(\mathbb{Z}\) (in the sense of the notes: transitive, trichotomy, etc.).</p>
 
-    <p><strong>(E12.3)</strong>
-      State part (2) of Proposition 12.2: what condition is equivalent to
-      \([x] = [y]\) for \(x, y \in A\)?
-    </p>
+    <p><strong>(b)</strong> Write the first 15 integers in increasing order under \(\prec\).</p>
 
-    <p><strong>(E12.4)</strong>
-      In words, what does it mean to say that equivalence classes “form a
-      partition of \(A\)”?
-    </p>
+    <p><strong>(c)</strong> Compare this order with the usual order &lt; on \(\mathbb{Z}\). Explain one way in which they behave similarly, and one way in which they differ dramatically.</p>
 
-    <!-- Notes + drawing for group 12 -->
     <div class="group-notes">
-      <h3>Notes for Group 12</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <h3>Notes for H10</h3>
+      <div class="note">This is the “by absolute value, then sign” order. Lay out examples.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ [x] = \{y \in A : \langle x,y\rangle \in R\},\ \text{partition of }A,\ \text{same-birthday classes}"></textarea>
+        placeholder="Prove trichotomy + transitivity, then list the sequence, and compare to usual order."></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
-        <button class="copy-btn">Copy problems + notes</button>
+        <button class="copy-btn">Copy H10 + notes</button>
       </div>
     </div>
-
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
+      <div class="note">Canvas: place integers on a number line by |·| order to visualize ≺.</div>
+      <div class="canvas-wrapper">
+        <canvas class="note-canvas"></canvas>
       </div>
+      <button class="copy-btn clear-canvas">Clear drawing</button>
+    </div>
+  </section>
+
+  <!-- H11 -->
+  <section class="problem-group" id="H11">
+    <h2>H11. Designing an Equivalence on ℤ via an Iterated Operation</h2>
+
+    <p>Define a function \(g:\mathbb{Z}\to\mathbb{Z}\) by \(g(n)=\lfloor n/2\rfloor\) (integer division by 2).
+      Define a relation \(\sim\) on \(\mathbb{Z}\) by:
+      \[
+      a\sim b \iff \text{there exists }k\in\mathbb{N}\text{ such that } g^k(a)=g^k(b),
+      \]
+      where \(g^k\) is the \(k\)-fold composition of \(g\) with itself.
+    </p>
+
+    <p><strong>(a)</strong> Prove that \(\sim\) is an equivalence relation on \(\mathbb{Z}\).</p>
+
+    <p><strong>(b)</strong> Describe the equivalence class \([n]\) in terms of the binary expansion of \(n\) (you don’t need full binary theory; informal reasoning is fine as long as you can justify the pattern via division by 2).</p>
+
+    <p><strong>(c)</strong> Argue that the set of equivalence classes is infinite.</p>
+
+    <div class="group-notes">
+      <h3>Notes for H11</h3>
+      <div class="note">Think: repeatedly halving numbers eventually chops off lower bits of binary expansion.</div>
+      <textarea class="latex-input"
+        placeholder="Show reflexive/symmetric/transitive for ∼, then describe classes via eventual halving behavior."></textarea>
+      <div class="rendered-output"></div>
+      <div class="controls">
+        <button class="copy-btn">Copy H11 + notes</button>
+      </div>
+    </div>
+    <div class="canvas-block">
+      <div class="note">Canvas: orbit trees under n ↦ ⌊n/2⌋ for sample integers.</div>
+      <div class="canvas-wrapper">
+        <canvas class="note-canvas"></canvas>
+      </div>
+      <button class="copy-btn clear-canvas">Clear drawing</button>
+    </div>
+  </section>
+
+  <!-- H12 -->
+  <section class="problem-group" id="H12">
+    <h2>H12. A Monster Problem: Set Families, Equivalence, and Functions at Once</h2>
+
+    <p>
+      Let \(\mathcal{F}\) be the set of all <strong>infinite</strong> subsets of \(\mathbb{N}\). Consider the following:
+    </p>
+    <ul>
+      <li>For \(A,B\in\mathcal{F}\), define \(A\preceq B\) if \(A\subseteq B\).</li>
+      <li>
+        Define an equivalence relation \(\approx\) on \(\mathcal{F}\) by:
+        \[
+        A\approx B \iff A\Delta B\text{ is finite}
+        \]
+        (as in H5).
+      </li>
+      <li>Let \(\mathcal{F}/\approx\) be the set of equivalence classes.</li>
+    </ul>
+
+    <p><strong>(a)</strong> Prove that every equivalence class in \(\mathcal{F}/\approx\) contains infinitely many different subsets of \(\mathbb{N}\).</p>
+
+    <p><strong>(b)</strong> Define a function
+      \[
+      \Phi:\mathcal{F}/\approx \to \mathcal{P}(\mathbb{N}),\quad \Phi([A]) = \{n\in\mathbb{N}\mid n\in A\text{ for all but finitely many }A'\in [A]\}
+      \]
+      (where you have to make precise what “for all but finitely many \(A'\in [A]\)” means in terms of subsets and quantifiers).
+      Explain why this map is well-defined (i.e. does not depend on the choice of representative \(A\) in the class \([A]\)).
+    </p>
+
+    <p><strong>(c)</strong> Discuss informally whether you expect \(\Phi\) to be injective, surjective, both, or neither, and justify your expectation using only the notions introduced in the PDF (sets, families, equivalence, power sets, functions).</p>
+
+    <div class="group-notes">
+      <h3>Notes for H12</h3>
+      <div class="note">Heavy: combine “almost equality”, infinite families, and a class-level map Φ.</div>
+      <textarea class="latex-input"
+        placeholder="Formalize 'all but finitely many', prove Φ is well-defined, and explore injective/surjective heuristics."></textarea>
+      <div class="rendered-output"></div>
+      <div class="controls">
+        <button class="copy-btn">Copy H12 + notes</button>
+      </div>
+    </div>
+    <div class="canvas-block">
+      <div class="note">Canvas: sketch equivalence classes in 𝒫(ℕ) and how Φ reads their “limit behavior”.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -978,7 +651,6 @@
     </div>
   </section>
 </main>
-
 
 
   <!-- Root for the React symbol popup -->

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logic 0 – Level 1</title>
+  <title>Logic 0 – Level 5</title>
 
   <!-- Basic layout styles -->
   <style>
@@ -168,69 +168,84 @@
 </head>
 <body>
   <header>
-    <h1>Logic 0 – Level 1 Problems</h1>
+    <h1>Logic 0 – Level 5 Problems</h1>
   </header>
 
 <main>
   <section>
     <p class="note">
-      Level 1 (Remember) problems check that you can recall the key definitions,
-      symbols, and terminology from the slides. After each group of questions,
-      use the LaTeX notes area and drawing pad for working, examples, or doodles.
+      Level 5 (<strong>Evaluate</strong>) problems ask you to <em>make a judgment</em>:
+      accept or reject a claim, compare alternatives, justify which definition or convention
+      is better and why. Use the LaTeX notes area and drawing pad under each group to
+      structure your arguments.
     </p>
   </section>
 
-  <!-- 1. Standard Abbreviations and Negation -->
+  <!-- 1. Preliminaries and Notation -->
   <section class="problem-group" id="group-1">
-    <h2>1. Standard Abbreviations and Negation</h2>
+    <h2>1. Preliminaries and Notation</h2>
 
-    <p><strong>(L1.1)</strong>
-      What symbol is commonly used to abbreviate the statement “If … then …”?
+    <p><strong>(E1.1)</strong>
+      Two ways to translate “\(P\) only if \(Q\)” into symbols are:
+    </p>
+    <ul>
+      <li>(a) \(P \Rightarrow Q\)</li>
+      <li>(b) \(Q \Leftarrow P\)</li>
+    </ul>
+    <p>
+      Evaluate whether (a) and (b) are genuinely equivalent in the sense of Remark 1.1. Defend
+      one of these possibilities, with reasons:
+    </p>
+    <ol>
+      <li>They are always equivalent.</li>
+      <li>They differ in subtle but important ways.</li>
+    </ol>
+    <p>
+      Back up your verdict with explicit examples and a clear argument using the conventions of
+      the notes.
     </p>
 
-    <p><strong>(L1.2)</strong>
-      What symbol is used for the <em>converse implication</em> “\(Q\) … if \(P\) …”?
+    <p><strong>(E1.2)</strong>
+      A student claims:
     </p>
+    <blockquote>
+      “Instead of introducing a special symbol \(\Sigma \not\models \tau\), we should always
+      write \(\Sigma \models \neg \tau\) for the negation of \(\Sigma \models \tau\).”
+    </blockquote>
+    <p>
+      Using the negation rule in Remark 1.2 and the intended reading of \(\models\), evaluate
+      this proposal:
+    </p>
+    <ul>
+      <li>Is \(\Sigma \not\models \tau\) equivalent to \(\Sigma \models \neg \tau\) in general?</li>
+      <li>
+        Give a reasoned judgment, with either a convincing argument for equivalence or a
+        counterexample-style scenario where they differ.
+      </li>
+    </ul>
 
-    <p><strong>(L1.3)</strong>
-      What shorthand word is commonly used for “if and only if”?
+    <p><strong>(E1.3)</strong>
+      The notes adopt a “negation by slashing symbols” convention (e.g.
+      \(x = y \Rightarrow x \neq y\), \(x \in A \Rightarrow x \notin A\)). Evaluate this design
+      choice:
     </p>
-
-    <p><strong>(L1.4)</strong>
-      What symbol is used to abbreviate “if and only if”?
-    </p>
-
-    <p><strong>(L1.5)</strong>
-      What symbol is used to mean “therefore” in mathematical writing?
-    </p>
-
-    <p><strong>(L1.6)</strong>
-      According to the negation rule, how do we write the negation of the equation
-      \(x = y\)?
-    </p>
-
-    <p><strong>(L1.7)</strong>
-      According to the negation rule, how do we write the negation of the statement
-      \(x \in A\)?
-    </p>
-
-    <p><strong>(L1.8)</strong>
-      Once the notation \((\Sigma \models \tau)\) is introduced, how is its
-      <em>negation</em> written?
-    </p>
-
-    <p><strong>(L1.9)</strong>
-      In these notes, what are the two possible truth values called?
-    </p>
+    <ul>
+      <li>
+        Give at least one <em>advantage</em> and one <em>potential drawback</em> of this
+        convention compared with always writing “\(\neg(x = y)\)” or “\(\neg(x\in A)\)”.
+      </li>
+      <li>
+        In your judgment, is this convention more clarifying or more likely to create
+        confusion? Defend your view.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 1 -->
     <div class="group-notes">
       <h3>Notes for Group 1</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ p \Rightarrow q,\ A \Leftrightarrow B,\ \Sigma \not\models \tau"></textarea>
+        placeholder="e.g. translate &quot;only if&quot;, analyze Σ ⊭ τ vs Σ ⊨ ¬τ, pros/cons of slashed negation"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -238,9 +253,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use to sketch truth tables or counterexamples.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -248,50 +261,58 @@
     </div>
   </section>
 
-  <!-- 2. Sets, Membership, and Extensionality -->
+  <!-- 2. Sets and the Extensionality Principle -->
   <section class="problem-group" id="group-2">
-    <h2>2. Sets, Membership, and Extensionality</h2>
+    <h2>2. Sets and the Extensionality Principle</h2>
 
-    <p><strong>(S2.1)</strong>
-      Give the informal definition of a <em>set</em>.
+    <p><strong>(E2.1)</strong>
+      Someone proposes the following as a <em>definition</em> of equality of sets:
+    </p>
+    <blockquote>
+      “Two sets \(A\) and \(B\) are equal iff: (i) \(A\subseteq B\) and (ii) \(B\subseteq A\).”
+    </blockquote>
+    <p>
+      Compare this with Proposition 2.3 (Extensionality:
+      \(\forall t(t\in A \Leftrightarrow t\in B) \Rightarrow A=B\)). Evaluate whether the proposed
+      definition is:
+    </p>
+    <ol>
+      <li>Completely equivalent to the extensionality-based characterization,</li>
+      <li>Strictly weaker/stronger, or</li>
+      <li>Somehow circular or problematic.</li>
+    </ol>
+    <p>
+      Give a detailed justification, explicitly unpacking the meanings of “subset” and
+      “\(\forall t(t\in A \Leftrightarrow t\in B)\)”.
     </p>
 
-    <p><strong>(S2.2)</strong>
-      What does the notation \(t \in A\) mean?
+    <p><strong>(E2.2)</strong>
+      A classmate says:
     </p>
-
-    <p><strong>(S2.3)</strong>
-      What does the notation \(t \notin A\) mean?
+    <blockquote>
+      “Extensionality (Proposition 2.3) is just obvious set-theoretic common sense, so it isn’t
+      necessary to state or use it explicitly.”
+    </blockquote>
+    <p>
+      Evaluate this claim. In your answer:
     </p>
-
-    <p><strong>(S2.4)</strong>
-      What does the statement \(x = y\) mean in this context?
-    </p>
-
-    <p><strong>(S2.5)</strong>
-      Fill in the logical equivalence that characterizes equality of sets in Remark 2.2:
-      If \(A = B\), then for every object \(t\),
-      \[
-        t \in A \iff\ \_\_\_\_\ .
-      \]
-    </p>
-
-    <p><strong>(S2.6)</strong>
-      State Proposition 2.3 (the <em>Extensionality</em> principle) in words.
-    </p>
-
-    <p><strong>(S2.7)</strong>
-      What idea about sets is expressed by Remark 2.4 (following the extensionality proposition)?
-    </p>
+    <ul>
+      <li>
+        Identify at least one place in the notes where Extensionality (or its converse in Remark
+        2.2) is <em>actually doing work</em>.
+      </li>
+      <li>
+        Argue whether those arguments would still be valid if extensionality were not taken as a
+        principle.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 2 -->
     <div class="group-notes">
       <h3>Notes for Group 2</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ x \in A\ \text{vs.}\ x = A,\ \forall t\,(t\in A \Leftrightarrow t\in B)"></textarea>
+        placeholder="e.g. unfold A⊆B, B⊆A, compare to ∀t(t∈A ⇔ t∈B), find where Extensionality is used"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -299,9 +320,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for Venn-style sketches or implication diagrams.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -313,31 +332,48 @@
   <section class="problem-group" id="group-3">
     <h2>3. Basic Constructions – Adjoining an Element</h2>
 
-    <p><strong>(B3.1)</strong>
-      How is the set obtained by “adjoining” an element \(t\) to a set \(A\) denoted?
+    <p><strong>(E3.1)</strong>
+      Definition 3.1 sets \(A;t := A \cup \{t\}\) and Proposition 3.2 characterizes when
+      \(A;t = A\). Suppose an alternative convention is proposed:
     </p>
-
-    <p><strong>(B3.2)</strong>
-      State in words what \(A;t := A \cup \{t\}\) means.
+    <blockquote>
+      “Define \(A;t\) only when \(t\notin A\); otherwise leave \(A;t\) undefined.”
+    </blockquote>
+    <p>
+      Evaluate this alternative from the standpoint of:
     </p>
+    <ol>
+      <li>Mathematical convenience (e.g. in proofs and constructions).</li>
+      <li>Conceptual clarity about what it means to ‘adjoin’ an element.</li>
+      <li>Compatibility with Proposition 3.2.</li>
+    </ol>
+    <p>Make a reasoned case for which convention (notes vs. alternative) is better.</p>
 
-    <p><strong>(B3.3)</strong>
-      According to Proposition 3.2, when is \(A;t = A\)?
+    <p><strong>(E3.2)</strong>
+      Consider building a finite set by repeated adjoining starting from \(\varnothing\). Two
+      students propose different descriptions:
     </p>
-
-    <p><strong>(B3.4)</strong>
-      Write the logical equivalence from Proposition 3.2 that characterizes when an
-      element is already in a set, using \(t \in A\) and \(A;t = A\).
+    <ul>
+      <li>
+        Student A: “Every finite set can be obtained this way, and the order in which you adjoin
+        elements never matters.”
+      </li>
+      <li>
+        Student B: “The order sometimes matters because \(\varnothing;a;b\) could differ from
+        \(\varnothing;b;a\).”
+      </li>
+    </ul>
+    <p>
+      Evaluate who is correct, using the definitions of “finite list of objects” and the notion
+      of set equality. Support your judgment with a rigorous argument or counterexample.
     </p>
 
     <!-- Notes + drawing for group 3 -->
     <div class="group-notes">
       <h3>Notes for Group 3</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A ; t,\ A \cup \{t\},\ \varnothing,\ \{0\},\ \{\varnothing\},\ \{0,1,2,\dots\}"></textarea>
+        placeholder="e.g. compare total vs partial definition of A;t, analyze {a,b} via different orders"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -345,9 +381,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for chains ∅ ⊆ {a} ⊆ {a,b} etc.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -359,45 +393,49 @@
   <section class="problem-group" id="group-4">
     <h2>4. Common Sets and Notation</h2>
 
-    <h3>4.1 Special Sets</h3>
-
-    <p><strong>(C4.1)</strong>
-      What is the <em>empty set</em> and what symbol is used to denote it?
+    <p><strong>(E4.1)</strong>
+      Definition 4.3 takes \(\mathbb{N} = \{0,1,2,\dots\}\). Some authors prefer
+      \(\{1,2,3,\dots\}\).
     </p>
-
-    <p><strong>(C4.2)</strong>
-      What is a <em>singleton</em> set and how is it written for an object \(x\)?
+    <p>
+      Evaluate the choice made in the notes:
     </p>
+    <ul>
+      <li>
+        Give at least two concrete situations (using material in this PDF) where including 0 in
+        \(\mathbb{N}\) simplifies statements or proofs.
+      </li>
+      <li>
+        Mention at least one context where this convention might cause friction when comparing
+        with other texts.
+      </li>
+      <li>
+        Conclude with your judgment on whether this is a good foundational choice for a first
+        logic/set theory chapter.
+      </li>
+    </ul>
 
-    <p><strong>(C4.3)</strong>
-      If \(x_1, x_2, \dots, x_n\) is a finite list of objects, how do we write the set
-      that has exactly those objects as elements?
+    <p><strong>(E4.2)</strong>
+      Remark 4.2 says \(\{x,y\} = \{y,x\}\) because “order does not matter for sets.” Evaluate
+      how essential this remark is for the later development:
     </p>
-
-    <p><strong>(C4.4)</strong>
-      What does Remark 4.2 say about the set \(\{x, y\}\) compared to \(\{y, x\}\)?
-    </p>
-
-    <h3>4.2 Infinite Sets</h3>
-
-    <p><strong>(C4.5)</strong>
-      How is the set of <em>natural numbers</em> denoted, and what is its standard listing
-      in these notes?
-    </p>
-
-    <p><strong>(C4.6)</strong>
-      How is the set of <em>integers</em> denoted, and what is its standard listing in
-      these notes?
-    </p>
+    <ul>
+      <li>
+        Identify a later definition or proposition (e.g. about ordered pairs) that <em>relies</em>
+        on distinguishing ordered vs unordered collections.
+      </li>
+      <li>
+        Argue whether suppressing or skipping Remark 4.2 would risk conceptual confusion between
+        sets and ordered pairs.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 4 -->
     <div class="group-notes">
       <h3>Notes for Group 4</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \{x : P(x)\},\ \{x \in A : P(x)\},\ \text{even integers} = \{2k : k \in \mathbb{Z}\}"></textarea>
+        placeholder="e.g. examples where 0∈ℕ helps, where it clashes, importance of {x,y}={y,x} vs ⟨x,y⟩"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -405,9 +443,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for comparing conventions across texts.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -415,38 +451,56 @@
     </div>
   </section>
 
-  <!-- 5. Sets Specified by Properties – Set-Builder Notation -->
+  <!-- 5. Sets Specified by Properties – Set-builder Notation -->
   <section class="problem-group" id="group-5">
-    <h2>5. Sets Specified by Properties – Set-Builder Notation</h2>
+    <h2>5. Sets Specified by Properties – Set-builder Notation</h2>
 
-    <p><strong>(SB5.1)</strong>
-      Write the general form of a set defined by a property \(P(x)\) using
-      set-builder notation.
+    <p><strong>(E5.1)</strong>
+      Compare the following notations:
     </p>
+    <ol>
+      <li>\(\{x\in A \mid P(x)\}\)</li>
+      <li>\(\{x \mid x\in A \text{ and } P(x)\}\)</li>
+    </ol>
+    <p>
+      Evaluate whether (1) and (2) are interchangeable in practice within this chapter. Your
+      answer should:
+    </p>
+    <ul>
+      <li>
+        Identify any subtle advantages of (1) over (2) or vice versa (readability, scoping of
+        variables, etc.).
+      </li>
+      <li>
+        Argue whether a careful reader should treat them as notational variants of the
+        <em>same</em> underlying idea.
+      </li>
+    </ul>
 
-    <p><strong>(SB5.2)</strong>
-      What does the set \(\{x \in A \mid P(x)\}\) represent?
+    <p><strong>(E5.2)</strong>
+      A student uses set-builder notation to define:
     </p>
-
-    <p><strong>(SB5.3)</strong>
-      In the example \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\),
-      what kind of objects are the elements of this set?
+    <p>\[
+      C = \{x \mid x\in \mathbb{N},\ x &lt; 0\}.
+    \]</p>
+    <p>
+      Evaluate whether this is a “good definition” of a set in the sense of Definition 5.1:
     </p>
-
-    <p><strong>(SB5.4)</strong>
-      In words, describe the property that an ordered pair \(\langle m,n\rangle\) must
-      satisfy to belong to the set
-      \(\{\langle m, n \rangle \mid m < n \text{ in } \mathbb{N}\}\).
-    </p>
+    <ul>
+      <li>Is the property \(P(x)\) precise enough?</li>
+      <li>Does this construction actually define a set, and if so, which one?</li>
+      <li>
+        From the point of view of the notes, is this legitimate or misleading usage? Justify your
+        judgment.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 5 -->
     <div class="group-notes">
       <h3>Notes for Group 5</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A \subseteq B,\ \varnothing \subseteq A,\ \mathcal{P}(\{1,2\}),\ \mathcal{P}(\varnothing) = \{\varnothing\}"></textarea>
+        placeholder="e.g. compare {x∈A | P(x)} vs {x | x∈A and P(x)}, analyze C={x∈ℕ | x&lt;0}"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -454,9 +508,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for property diagrams or truth tables for P(x).</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -468,56 +520,42 @@
   <section class="problem-group" id="group-6">
     <h2>6. Subsets and Power Sets</h2>
 
-    <h3>6.1 Subsets</h3>
-
-    <p><strong>(SP6.1)</strong>
-      What does it mean for a set \(A\) to be a <em>subset</em> of a set \(B\)?
-      Give the symbolic condition.
+    <p><strong>(E6.1)</strong>
+      Consider the statement:
+    </p>
+    <blockquote>
+      “If \(\mathcal{P}(A) = \mathcal{P}(B)\), then \(A = B\).”
+    </blockquote>
+    <p>
+      Evaluate this statement using the definitions of subset and power set (Definition 6.1 and
+      6.3) and the extensionality idea. Decide whether you accept or reject it, and defend your
+      verdict with a full argument.
     </p>
 
-    <p><strong>(SP6.2)</strong>
-      What notation is used to express that \(A\) is a subset of \(B\)?
+    <p><strong>(E6.2)</strong>
+      Remark 6.2 calls “\(\varnothing \subseteq A\)” <em>vacuously true</em>. Some people find
+      this unsatisfying or “cheating.”
     </p>
-
-    <p><strong>(SP6.3)</strong>
-      According to Remark 6.2, is every set a subset of itself?
+    <p>
+      Evaluate the role of vacuous truth here:
     </p>
-
-    <p><strong>(SP6.4)</strong>
-      According to Remark 6.2, is the empty set \(\varnothing\) a subset of every set \(A\)?
-    </p>
-
-    <p><strong>(SP6.5)</strong>
-      What phrase is used to describe why the statement \(\varnothing \subseteq A\)
-      is true for every set \(A\)?
-    </p>
-
-    <h3>6.2 Power Set</h3>
-
-    <p><strong>(SP6.6)</strong>
-      How is the <em>power set</em> of a set \(A\) denoted?
-    </p>
-
-    <p><strong>(SP6.7)</strong>
-      What is the definition of \(\mathcal{P}(A)\) in terms of subsets of \(A\)?
-    </p>
-
-    <p><strong>(SP6.8)</strong>
-      What is \(\mathcal{P}(\varnothing)\)?
-    </p>
-
-    <p><strong>(SP6.9)</strong>
-      What is \(\mathcal{P}(\{\varnothing\})\)?
-    </p>
+    <ul>
+      <li>
+        Explain why rejecting vacuous truth would break some of the later statements about power
+        sets and unions/intersections of families.
+      </li>
+      <li>
+        On balance, argue whether the vacuous-truth convention is philosophically acceptable and
+        mathematically necessary in this framework.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 6 -->
     <div class="group-notes">
       <h3>Notes for Group 6</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ x \in A \cup B,\ x \in A \cap B,\ \bigcup \mathcal{A},\ \bigcap \mathcal{A},\ \text{pairwise disjoint}"></textarea>
+        placeholder="e.g. argue P(A)=P(B) ⇒ A=B, role of ∅⊆A and vacuous truth in later theorems"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -525,9 +563,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for reasoning about P(A), P(B) and subset chains.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -535,65 +571,57 @@
     </div>
   </section>
 
-  <!-- 7. Union and Intersection -->
+  <!-- 7. Union and Intersection (Families of Sets) -->
   <section class="problem-group" id="group-7">
-    <h2>7. Union and Intersection</h2>
+    <h2>7. Union and Intersection (Families of Sets)</h2>
 
-    <h3>7.1 Binary Union and Intersection</h3>
-
-    <p><strong>(U7.1)</strong>
-      What is the definition of the union \(A \cup B\) of two sets \(A\) and \(B\)?
+    <p><strong>(E7.1)</strong>
+      An alternative “definition” of union and intersection of two sets is mistakenly proposed:
     </p>
-
-    <p><strong>(U7.2)</strong>
-      What is the definition of the intersection \(A \cap B\) of two sets \(A\) and \(B\)?
+    <p>\[
+      A \cup' B = \{x \mid x\in A \text{ and } x\in B\},\quad
+      A \cap' B = \{x \mid x\in A \text{ or } x\in B\}.
+    \]</p>
+    <p>
+      Evaluate this swapped definition against Definition 7.1:
     </p>
+    <ul>
+      <li>
+        Identify at least two concrete examples where using \(\cup',\cap'\) instead of
+        \(\cup,\cap\) would seriously distort results.
+      </li>
+      <li>
+        Explain why the correct choice of “or” vs “and” is not merely a convention but
+        structurally essential.
+      </li>
+    </ul>
 
-    <p><strong>(U7.3)</strong>
-      What does it mean for two sets \(A\) and \(B\) to be <em>disjoint</em>?
+    <p><strong>(E7.2)</strong>
+      For a family of sets \(A\) (whose elements are themselves sets), Definition 7.3 introduces
+      \(\bigcup A\) and \(\bigcap A\). Some authors insist that \(\bigcap A\) should only be
+      defined when \(A\neq \varnothing\) and \(\bigcup A\) when \(A\neq \varnothing\).
     </p>
-
-    <p><strong>(U7.4)</strong>
-      What does it mean for a family of sets to be <em>pairwise disjoint</em>?
+    <p>
+      Evaluate the decision in the notes:
     </p>
-
-    <h3>7.2 Indexed Unions and Intersections</h3>
-
-    <p><strong>(U7.5)</strong>
-      Let \(A\) be a set whose elements are themselves sets. How is the union of all
-      members of \(A\) defined and written?
-    </p>
-
-    <p><strong>(U7.6)</strong>
-      In the same situation, how is the intersection of all members of \(A\) defined
-      and written?
-    </p>
-
-    <p><strong>(U7.7)</strong>
-      In Example 7.4, if
-      \[
-        A = \big\{\{0, 1, 5\}, \{1, 6\}, \{1, 5\}\big\},
-      \]
-      what is \(\bigcup A\)?
-    </p>
-
-    <p><strong>(U7.8)</strong>
-      In Example 7.4, for the same \(A\), what is \(\bigcap A\)?
-    </p>
-
-    <p><strong>(U7.9)</strong>
-      How do we usually write the union of a sequence of sets \((A_n)_{n \in \mathbb{N}}\)
-      indexed by natural numbers?
-    </p>
+    <ul>
+      <li>Should \(\bigcup \varnothing\) and \(\bigcap \varnothing\) be left undefined in this framework?</li>
+      <li>
+        Using the style of definitions in the chapter, argue for one of the following positions:
+        <ul>
+          <li>They <em>must</em> be defined (and suggest what they should be), or</li>
+          <li>It is better to leave them undefined.</li>
+        </ul>
+      </li>
+      <li>Support your position with logical and practical considerations.</li>
+    </ul>
 
     <!-- Notes + drawing for group 7 -->
     <div class="group-notes">
       <h3>Notes for Group 7</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \langle x,y\rangle = \{\{x\},\{x,y\}\},\ \text{finite sequence},\ \text{initial segment}"></textarea>
+        placeholder="e.g. test A∪'B vs A∩'B on examples, reason about ⋃∅ and ⋂∅ definitions/choices"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -601,9 +629,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for Venn diagrams and family-of-sets behavior.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -615,71 +641,43 @@
   <section class="problem-group" id="group-8">
     <h2>8. Ordered Pairs and Sequences</h2>
 
-    <h3>8.1 Ordered Pairs (Kuratowski)</h3>
-
-    <p><strong>(OP8.1)</strong>
-      According to Kuratowski’s definition, how is the ordered pair
-      \(\langle x, y \rangle\) defined in terms of sets?
+    <p><strong>(E8.1)</strong>
+      Kuratowski defines \(\langle x,y\rangle := \{\{x\},\{x,y\}\}\), and Proposition 8.2 shows
+      this behaves correctly as an ordered pair. Evaluate this choice:
     </p>
+    <ul>
+      <li>
+        Compare Kuratowski’s definition with the informal idea that “\(\langle x,y\rangle\) is just
+        a primitive object with first coordinate \(x\) and second coordinate \(y\).”
+      </li>
+      <li>
+        Argue whether the set-theoretic definition adds real value in this chapter, given the
+        later use in Cartesian products and relations, or whether it is an unnecessary
+        complication for beginners.
+      </li>
+    </ul>
 
-    <p><strong>(OP8.2)</strong>
-      State Proposition 8.2: what condition on \(x, y, u, v\) is equivalent to
-      \(\langle x, y \rangle = \langle u, v \rangle\)?
+    <p><strong>(E8.2)</strong>
+      Lemma 8.5 (Lemma 0A) and Corollary 8.7 are somewhat technical results about sequences.
+      Evaluate their necessity:
     </p>
-
-    <h3>8.2 n-tuples</h3>
-
-    <p><strong>(OP8.3)</strong>
-      How are \((n+1)\)-tuples defined recursively from \(n\)-tuples in Definition 8.3?
-    </p>
-
-    <p><strong>(OP8.4)</strong>
-      What is a <em>finite sequence</em> of members of a set \(A\), in terms of
-      \(n\)-tuples?
-    </p>
-
-    <h3>8.3 Segments of a Sequence</h3>
-
-    <p><strong>(OP8.5)</strong>
-      Given a finite sequence \(S = \langle x_1, \dots, x_n\rangle\), what is a
-      <em>segment</em> of \(S\)?
-    </p>
-
-    <p><strong>(OP8.6)</strong>
-      When is a segment \(\langle x_k, \dots, x_m\rangle\) called an
-      <em>initial segment</em>?
-    </p>
-
-    <p><strong>(OP8.7)</strong>
-      When is an initial segment called a <em>proper</em> initial segment?
-    </p>
-
-    <h3>8.4 Lemma 0A and Its Corollary</h3>
-
-    <p><strong>(OP8.8)</strong>
-      State Lemma 8.5 (Lemma 0A) in its general form involving
-      \(\langle x_1, \dots, x_m\rangle\) and
-      \(\langle y_1, \dots, y_{m+k}\rangle\).
-    </p>
-
-    <p><strong>(OP8.9)</strong>
-      What method is used in the proof of Lemma 0A, according to Remark 8.6?
-    </p>
-
-    <p><strong>(OP8.10)</strong>
-      State Corollary 8.7: under the given assumptions on a set \(A\) and two
-      sequences with elements in \(A\), what can we conclude when
-      \(\langle x_1, \dots, x_m\rangle = \langle y_1, \dots, y_n\rangle\)?
-    </p>
+    <ul>
+      <li>
+        Identify at least one later definition or fact (e.g. about \(A^n\), n-ary relations, or
+        functions) whose <em>rigor</em> depends on the uniqueness of tuple decomposition.
+      </li>
+      <li>
+        Give a judgment: is it worth introducing such a technical lemma this early, or could the
+        chapter have safely hand-waved this? Defend your answer.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 8 -->
     <div class="group-notes">
       <h3>Notes for Group 8</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ A \times B,\ A^3,\ \operatorname{dom}R,\ \operatorname{ran}R,\ \mathrm{fld}(R)"></textarea>
+        placeholder="e.g. pros/cons of Kuratowski pairs, where Lemma 0A is used for Aⁿ, relations, functions"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -687,9 +685,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for visualizing ordered pairs vs primitive black boxes.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -701,78 +697,48 @@
   <section class="problem-group" id="group-9">
     <h2>9. Cartesian Products and Relations</h2>
 
-    <h3>9.1 Cartesian Products</h3>
-
-    <p><strong>(CR9.1)</strong>
-      How is the Cartesian product \(A \times B\) of sets \(A\) and \(B\) defined?
+    <p><strong>(E9.1)</strong>
+      Definition 9.1 gives \(A\times B = \{\langle x,y\rangle \mid x\in A, y\in B\}\). Someone
+      suggests:
     </p>
-
-    <p><strong>(CR9.2)</strong>
-      What does \(A^n\) denote for a set \(A\) and integer \(n \ge 1\)?
+    <blockquote>
+      “We don’t need ordered pairs; we can perfectly well define \(A\times B\) as the set of all
+      two-element subsets \(\{x,y\}\) with \(x\in A\), \(y\in B\).”
+    </blockquote>
+    <p>
+      Evaluate this suggestion:
     </p>
+    <ul>
+      <li>
+        Give a precise argument why this alternative either fails or succeeds in representing all
+        the structural information needed for binary relations and functions as developed in
+        Section 9–10.
+      </li>
+      <li>
+        Give your overall judgment on whether Kuratowski pairs are essential for the later theory
+        in this chapter.
+      </li>
+    </ul>
 
-    <p><strong>(CR9.3)</strong>
-      In words, what kind of objects are the elements of \(A^n\)?
+    <p><strong>(E9.2)</strong>
+      Definition 9.2 calls a relation “a set of ordered pairs,” while Definition 9.5 later says
+      “an \(n\)-ary relation on \(A\) is a subset of \(A^n\).” Evaluate the consistency of these
+      two viewpoints:
     </p>
-
-    <h3>9.2 Binary Relations</h3>
-
-    <p><strong>(CR9.4)</strong>
-      What is a (binary) <em>relation</em> \(R\) in this context?
-    </p>
-
-    <p><strong>(CR9.5)</strong>
-      In Example 9.3, how is the strict ordering on the set
-      \(\{0,1,2,3\}\) represented as a relation?
-    </p>
-
-    <h3>9.3 Domain, Range, and Field</h3>
-
-    <p><strong>(CR9.6)</strong>
-      How is the <em>domain</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.7)</strong>
-      How is the <em>range</em> of a relation \(R\) defined and denoted?
-    </p>
-
-    <p><strong>(CR9.8)</strong>
-      What is the <em>field</em> of a relation \(R\)?
-    </p>
-
-    <h3>9.4 n-ary Relations and Restriction</h3>
-
-    <p><strong>(CR9.9)</strong>
-      What is an \(n\)-ary relation on a set \(A\)?
-    </p>
-
-    <p><strong>(CR9.10)</strong>
-      When \(n = 1\), what does an \(n\)-ary relation on \(A\) reduce to?
-    </p>
-
-    <p><strong>(CR9.11)</strong>
-      How is the <em>equality relation</em> on a set \(A\) written in
-      set-builder notation?
-    </p>
-
-    <p><strong>(CR9.12)</strong>
-      Given an \(n\)-ary relation \(R \subseteq A^n\) and \(B \subseteq A\),
-      how is the <em>restriction</em> \(R \upharpoonright B\) defined?
-    </p>
-
-    <p><strong>(CR9.13)</strong>
-      In Example 9.7, if \(R\) is the usual strict order on \(\mathbb{N}\)
-      and \(B = \{0,1,2,3\}\), what is \(R \upharpoonright B\) described to be?
-    </p>
+    <ul>
+      <li>Are these essentially two perspectives on the same idea, or is there a real conceptual shift?</li>
+      <li>
+        Argue whether the chapter’s sequence of definitions (binary first, then n-ary) is
+        logically clean and pedagogically sound, or whether it could mislead a careful reader.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 9 -->
     <div class="group-notes">
       <h3>Notes for Group 9</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ \text{ternary relation on }\mathbb{R},\ \text{unary relation as subset},\ R\upharpoonright B = R \cap B^n"></textarea>
+        placeholder="e.g. test {x,y} vs ⟨x,y⟩ in functions, compare &quot;set of pairs&quot; vs &quot;subset of Aⁿ&quot;"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -780,9 +746,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for diagrams of A×B and relation arity.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -794,64 +758,50 @@
   <section class="problem-group" id="group-10">
     <h2>10. Functions and Operations</h2>
 
-    <h3>10.1 Functions</h3>
-
-    <p><strong>(F10.1)</strong>
-      When is a relation \(F\) called a <em>function</em>?
+    <p><strong>(E10.1)</strong>
+      A student writes:
     </p>
-
-    <p><strong>(F10.2)</strong>
-      What does the notation \(F : A \to B\) mean in terms of domain and range?
+    <blockquote>
+      “A function \(F:A\to B\) is just any relation with \(\operatorname{dom}(F)=A\) and
+      \(\operatorname{ran}(F)\subseteq B\).”
+    </blockquote>
+    <p>
+      Compare this with Definition 10.1 (the “exactly one output for each input” condition) and
+      evaluate the student’s definition:
     </p>
+    <ul>
+      <li>Does it fully capture the intended notion of function?</li>
+      <li>
+        If not, identify precisely what is missing and give a counterexample relation that
+        satisfies the student’s condition but fails to be a function in the sense of the notes.
+      </li>
+    </ul>
 
-    <p><strong>(F10.3)</strong>
-      When do we say that a function \(F\) “maps \(A\) <em>onto</em> \(B\)”
-      (is surjective)?
+    <p><strong>(E10.2)</strong>
+      Definition 10.2 requires an \(n\)-ary operation on \(A\) to be a function
+      \(f:A^n\to A\) (codomain \(A\) again). Some might argue it’s enough to require a function
+      \(f:A^n\to B\) for some set \(B\).
     </p>
-
-    <p><strong>(F10.4)</strong>
-      When is a function \(F\) called <em>one-to-one</em> (injective)?
+    <p>
+      Evaluate this alternative:
     </p>
-
-    <h3>10.2 n-ary Operations and Their Restriction</h3>
-
-    <p><strong>(F10.5)</strong>
-      What is an \(n\)-ary <em>operation</em> on a set \(A\)?
-    </p>
-
-    <p><strong>(F10.6)</strong>
-      Give an example of a binary operation and a unary operation on \(\mathbb{N}\)
-      from the notes.
-    </p>
-
-    <p><strong>(F10.7)</strong>
-      Given an \(n\)-ary operation \(f : A^n \to A\) and a subset \(B \subseteq A\),
-      how is the restricted operation \(g\) defined (as in Definition 10.4)?
-    </p>
-
-    <p><strong>(F10.8)</strong>
-      State Proposition 10.5: when is the restriction \(g\) itself an \(n\)-ary
-      operation on \(B\)?
-    </p>
-
-    <p><strong>(F10.9)</strong>
-      In Example 10.6, what operation is being restricted, and to which subset
-      is it restricted?
-    </p>
-
-    <p><strong>(F10.10)</strong>
-      In Example 10.6, is \(\mathbb{N}\) closed under the restricted operation?
-      What does that imply about the restriction?
-    </p>
+    <ul>
+      <li>
+        Using the examples of addition and successor on \(\mathbb{N}\), explain why requiring the
+        codomain to be \(A\) itself is more than a cosmetic choice.
+      </li>
+      <li>
+        Decide whether the “operation on \(A\)” viewpoint is worth the extra restriction in this
+        chapter.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 10 -->
     <div class="group-notes">
       <h3>Notes for Group 10</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ F : A \to B,\ \text{one-to-one and onto},\ f : A^n \to A\ \text{closed on }A"></textarea>
+        placeholder="e.g. find relation with dom(F)=A, ran(F)⊆B but not single-valued; analyze f:Aⁿ→A vs f:Aⁿ→B"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -859,9 +809,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for mapping diagrams and closure pictures.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -873,45 +821,51 @@
   <section class="problem-group" id="group-11">
     <h2>11. Standard Classes of Relations</h2>
 
-    <h3>11.1 Basic Properties</h3>
-
-    <p><strong>(R11.1)</strong>
-      When is a relation \(R\) on a set \(A\) called <em>reflexive on \(A\)</em>?
+    <p><strong>(E11.1)</strong>
+      Definitions 11.1–11.3 (reflexive, symmetric, transitive, trichotomy; equivalence
+      relations; ordering relations) carve out two big families of “nice” relations. Evaluate
+      this classification scheme:
     </p>
+    <ul>
+      <li>
+        Argue whether it is reasonable to treat <em>equivalence relations</em> and
+        <em>ordering relations</em> as the two central “well-behaved” relation types in
+        elementary set/logic texts.
+      </li>
+      <li>
+        Suggest one property or relation-type that might deserve equal prominence but is not
+        singled out here, and justify your suggestion.
+      </li>
+    </ul>
 
-    <p><strong>(R11.2)</strong>
-      When is a relation \(R\) called <em>symmetric</em>?
+    <p><strong>(E11.2)</strong>
+      You are given two relations on \(\mathbb{Z}\):
     </p>
-
-    <p><strong>(R11.3)</strong>
-      When is a relation \(R\) called <em>transitive</em>?
+    <ul>
+      <li>\(a \sim b\) iff \(a-b\) is divisible by 2,</li>
+      <li>\(a \prec b\) iff \(a&lt;b\).</li>
+    </ul>
+    <p>
+      Evaluate the decision (in the notes) to classify the first as an equivalence relation and
+      the second as an ordering relation:
     </p>
-
-    <p><strong>(R11.4)</strong>
-      What does it mean for a relation \(R\) on a set \(A\) to satisfy
-      <em>trichotomy</em> on \(A\)?
-    </p>
-
-    <h3>11.2 Equivalence Relations and Orderings</h3>
-
-    <p><strong>(R11.5)</strong>
-      What three properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>equivalence relation</em> on \(A\)?
-    </p>
-
-    <p><strong>(R11.6)</strong>
-      What two properties must a relation \(R\) on \(A\) satisfy to be an
-      <em>ordering relation</em> (strict order) on \(A\)?
-    </p>
+    <ul>
+      <li>
+        Explain how the <em>behaviour</em> of equivalence classes under \(\sim\) qualitatively
+        differs from the behaviour of chains under \(\prec\).
+      </li>
+      <li>
+        Assess whether this contrast justifies treating equivalence and order as fundamentally
+        different archetypes, rather than variations of the same idea.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 11 -->
     <div class="group-notes">
       <h3>Notes for Group 11</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ examples of reflexive/symmetric/transitive,\ \text{trichotomy},\ m<n\ \text{strict order on }\mathbb{Z}"></textarea>
+        placeholder="e.g. defend focus on equivalence + order, propose other &quot;nice&quot; relation types, compare classes vs chains"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -919,9 +873,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for diagrams of equivalence classes and ordered chains.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -934,33 +886,45 @@
     <h2>12. Equivalence Classes</h2>
 
     <p><strong>(E12.1)</strong>
-      Given an equivalence relation \(R\) on a set \(A\), how is the
-      <em>equivalence class</em> of an element \(x \in A\) defined and denoted?
+      Proposition 12.2 states that equivalence classes of an equivalence relation form a
+      partition of \(A\), and conversely that being in the same class is equivalent to being
+      related. Evaluate this result:
     </p>
+    <ul>
+      <li>
+        Argue how much of the “meaning” of an equivalence relation is already captured by its set
+        of equivalence classes.
+      </li>
+      <li>
+        Decide whether, in the context of this chapter, it would be cleaner to <em>define</em>
+        equivalence relations in terms of partitions rather than reflexive/symmetric/transitive
+        properties. Defend your answer.
+      </li>
+    </ul>
 
     <p><strong>(E12.2)</strong>
-      State part (1) of Proposition 12.2: what do the equivalence classes \([x]\)
-      (for \(x \in A\)) do to the set \(A\)?
+      Suppose someone defines a relation \(R\) on a set \(A\) that is <em>symmetric</em> and
+      <em>transitive</em> but not reflexive.
     </p>
-
-    <p><strong>(E12.3)</strong>
-      State part (2) of Proposition 12.2: what condition is equivalent to
-      \([x] = [y]\) for \(x, y \in A\)?
-    </p>
-
-    <p><strong>(E12.4)</strong>
-      In words, what does it mean to say that equivalence classes “form a
-      partition of \(A\)”?
-    </p>
+    <ul>
+      <li>Evaluate whether the usual language of “equivalence classes of \(R\)” still makes sense.</li>
+      <li>
+        In your judgment, is reflexivity a merely technical condition, or does dropping it
+        fundamentally change the status of the “classes”
+        \([x] = \{y\in A \mid \langle x,y\rangle\in R\}\)?
+      </li>
+      <li>
+        Support your view by carefully analyzing which parts of Proposition 12.2 break if
+        reflexivity is removed.
+      </li>
+    </ul>
 
     <!-- Notes + drawing for group 12 -->
     <div class="group-notes">
       <h3>Notes for Group 12</h3>
-      <div class="note">
-        Type \\\\ quickly to open LaTeX snippet app on the note.
-      </div>
+      <div class="note">Type \\ quickly to open LaTeX snippet app on the note.</div>
       <textarea class="latex-input"
-                placeholder="e.g.\ [x] = \{y \in A : \langle x,y\rangle \in R\},\ \text{partition of }A,\ \text{same-birthday classes}"></textarea>
+        placeholder="e.g. equivalence via partitions vs properties, what fails if R is not reflexive"></textarea>
       <div class="rendered-output"></div>
       <div class="controls">
         <button class="copy-btn">Copy problems + notes</button>
@@ -968,9 +932,7 @@
     </div>
 
     <div class="canvas-block">
-      <div class="note">
-        Draw/write here (mouse or touch). Use “Clear drawing” to reset.
-      </div>
+      <div class="note">Use for partition diagrams and &quot;almost-equivalence&quot; examples.</div>
       <div class="canvas-wrapper">
         <canvas class="note-canvas"></canvas>
       </div>
@@ -978,7 +940,6 @@
     </div>
   </section>
 </main>
-
 
 
   <!-- Root for the React symbol popup -->

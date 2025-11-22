@@ -915,6 +915,13 @@
       "keywords": ["power set", "script P", "mathcal P"],
       "categories": ["sets", "notation"],
       "priority": 0.9
+    },
+    {
+      "label": "Text",
+      "latex": "\\text{  }",
+      "keywords": ["text", "words"],
+      "categories": ["text"],
+      "priority": 0.95
     }
   ]
 }
